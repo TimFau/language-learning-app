@@ -1,0 +1,63 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+#root {
+  width: 70%;
+  height: auto;
+  background: white;
+  border-radius: 2%;
+	text-align: center;
+	padding: 0px;
+	.container {
+		padding: 0px;
+	}
+	input {
+		width: 350px;
+		margin: 0 auto;
+	}
+	&.success, &.incorrect {
+		.button-container > button {
+			display: none;
+		}
+	}
+}
+.button-container {
+	border-top: 1px solid grey;
+	margin-top: 20px;
+	padding: 20px 0;
+	position: relative;
+	min-height: 90px;
+	.btn-left {
+		position: absolute;
+		left: 20px;
+	}
+	.btn-right {
+		position: absolute;
+		right: 20px;
+	}
+}
+.button-container .alert {
+	.message {
+		text-align: left;
+	}
+	button {
+		position: absolute;
+		right: 10px;
+		bottom: 10px;
+	}
+}
+.alert-success {
+	display: none;
+	#root.success & {
+		display: block;
+	}
+}
+.alert-danger {
+	display: none;
+	#root.incorrect & {
+		display: block;
+	}
+}
