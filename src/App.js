@@ -5,49 +5,59 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './App.scss';
 
 const spreadsheetID  = "1DNL5d4bJXOdAMnWtQesxksF4aTDFjtAV5xnFVfVbc5w";
+//const spreadsheetID = "1J9qvr4HrfVHcclbiW8jOCKzDZzu-mLwn8X0ne2EMB-w";
+var langOneArr = [];
+var langTwoArr = [];
+var progressWidth = {};
 
-class FlashCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+class TranslationApp extends React.Component {
+  	constructor(props) {
+    	super(props);
+    	this.state = {
 			language1: '',
 			language2: '',
-      word: '',
-			translation: '',
-			inputValue: '',
-			langOneArr: [],
-			langTwoArr: []
-    };
+			inputValue: ''
+    	};
 		this.getCard = this.getCard.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
-  }
-	
-	getCard() {
-		$('#root').removeClass('success');
-		$('#root').removeClass('incorrect');
-		var langOneArr = [];
-		var langTwoArr = [];
+	}
+	  
+	getData() {
 		$.get("https://spreadsheets.google.com/feeds/list/" + spreadsheetID + "/od6/public/values?alt=json", function(json) {
-			var jsonData = json.feed.entry;
-			$(jsonData).each(function(){
+			$(json.feed.entry).each(function(){
 				langOneArr.push(this.gsx$language1.$t);
 				langTwoArr.push(this.gsx$langauge2.$t);
 			})
-			var num = Math.floor(Math.random() * langOneArr.length) + 2;
 			this.setState({
-				language1: langOneArr[0],
-				language2: langTwoArr[0],
-				word: langOneArr[num],
-				translation: langTwoArr[num],
-				wordsLeft: langOneArr.length
+				language1: langOneArr.shift(),
+				language2: langTwoArr.shift(),
+				initialCount: langOneArr.length,
+				randomNum: Math.floor(Math.random() * langOneArr.length),
+				success: ''
 			})
 		}.bind(this));
 	}
 	
+	getCard() {
+		$('#root').removeClass('success').removeClass('incorrect');
+		if (this.state.success === 'yes') {
+			langOneArr.splice(this.state.randomNum, 1);
+			langTwoArr.splice(this.state.randomNum, 1);
+		}
+		this.setState({
+			randomNum: Math.floor(Math.random() * langOneArr.length),
+			success: ''
+		})
+		progressWidth = {
+			width: (this.state.initialCount - langOneArr.length) * (100 / this.state.initialCount) + '%'
+		}
+	}
+	
 	componentDidMount() {
-    this.getCard();
-  }
+		this.getData();
+		this.getCard();
+	}
 	
 	handleChange(event) {
 		this.setState({inputValue: event.target.value})
@@ -55,22 +65,29 @@ class FlashCard extends React.Component {
 	
 	handleSubmit(event) {
 		event.preventDefault();
-		var value = this.state.inputValue;
-		if (value.toLowerCase() === this.state.translation.toLowerCase()) {
-				$('#root').addClass('success');
+		if (this.state.inputValue.toLowerCase() === langTwoArr[this.state.randomNum].toLowerCase()) {
+			$('#root').addClass('success');
+			this.setState({success: 'yes'})
+		} else if($('.success, .incorrect')[0]) {
+			this.getCard();
 		} else {
 			$('#root').addClass('incorrect');
 		}
-		this.setState({inputValue: ''})
+		this.setState({
+			inputValue: ''
+		})
+
 	}
 	
-	
 	render() {
-    return (
+    	return (
 			<div className="container">
-				<span>{this.state.wordsLeft} words left to practice</span><br/>
+				<div className="progress">
+					<div className="progress-bar"  role="progressbar" aria-valuenow={this.state.initialCount - langOneArr.length} aria-valuemin="0" aria-valuemax={this.state.initialCount} style={progressWidth}></div>
+				</div>
+				<span>{langOneArr.length} words left to practice</span><br/>
 				<form onSubmit={this.handleSubmit}>
-					<h1>Write "{this.state.word}" in {this.state.language2}</h1>
+					<h1>Write "{langOneArr[this.state.randomNum]}" in {this.state.language2}</h1>
 					<input type="text" placeholder="Enter translation" value={this.state.inputValue} onChange={this.handleChange} className="form-control"></input>
 					<div className="button-container">
 						<button type="button" onClick={this.getCard} className="btn btn-lg btn-left">Skip</button>
@@ -78,14 +95,14 @@ class FlashCard extends React.Component {
 						<div className="alert alert-success container-fluid">
 							<div className="message">
 								<h4>Correct:</h4>
-								<span>{this.state.translation}</span>
+								<span>{langTwoArr[this.state.randomNum]}</span>
 							</div>
 							<button type="button" onClick={this.getCard} className="btn btn-success">Continue</button>
 						</div>
 						<div className="alert alert-danger container-fluid">
 							<div className="message">
 								<h4>Correct answer:</h4>
-								<span>{this.state.translation}</span>
+								<span>{langTwoArr[this.state.randomNum]}</span>
 							</div>
 							<button type="button" onClick={this.getCard} className="btn btn-danger">Continue</button>
 						</div>
@@ -96,5 +113,4 @@ class FlashCard extends React.Component {
 	}
 }
 
-
-export default FlashCard;
+export default TranslationApp;
