@@ -81,33 +81,35 @@ class TranslationApp extends React.Component {
 	
 	render() {
     	return (
-			<div className="container">
-				<div className="progress">
-					<div className="progress-bar"  role="progressbar" aria-valuenow={this.state.initialCount - langOneArr.length} aria-valuemin="0" aria-valuemax={this.state.initialCount} style={progressWidth}></div>
+			<div className="container main-container">
+				<div className="container progress-container">
+					<div className="progress">
+						<div className="progress-bar"  role="progressbar" aria-valuenow={this.state.initialCount - langOneArr.length} aria-valuemin="0" aria-valuemax={this.state.initialCount} style={progressWidth}></div>
+					</div>
+					<span>{langOneArr.length} out of {this.state.initialCount} words left</span>
 				</div>
-				<span>{langOneArr.length} words left to practice</span><br/>
-				<form onSubmit={this.handleSubmit}>
+				<form onSubmit={this.handleSubmit} id="form">
 					<h1>Write "{langOneArr[this.state.randomNum]}" in {this.state.language2}</h1>
 					<input type="text" placeholder="Enter translation" value={this.state.inputValue} onChange={this.handleChange} className="form-control"></input>
-					<div className="button-container">
-						<button type="button" onClick={this.getCard} className="btn btn-lg btn-left">Skip</button>
-						<button type="submit" value="submit" className="btn btn-primary btn-lg btn-right">Submit</button>
-						<div className="alert alert-success container-fluid">
-							<div className="message">
-								<h4>Correct:</h4>
-								<span>{langTwoArr[this.state.randomNum]}</span>
-							</div>
-							<button type="button" onClick={this.getCard} className="btn btn-success">Continue</button>
-						</div>
-						<div className="alert alert-danger container-fluid">
-							<div className="message">
-								<h4>Correct answer:</h4>
-								<span>{langTwoArr[this.state.randomNum]}</span>
-							</div>
-							<button type="button" onClick={this.getCard} className="btn btn-danger">Continue</button>
-						</div>
-					</div>
 				</form>
+				<div className="button-container">
+					<button type="button" onClick={this.getCard} className="btn btn-lg btn-left">Skip</button>
+					<button type="submit" value="submit" className="btn btn-primary btn-lg btn-right">Submit</button>
+					<div className="alert alert-success container-fluid">
+						<div className="message">
+							<h4>Correct:</h4>
+							<span>{langTwoArr[this.state.randomNum]}</span>
+						</div>
+						<button type="button" onClick={this.getCard} className="btn btn-success">Continue</button>
+					</div>
+					<div className="alert alert-danger container-fluid">
+						<div className="message">
+							<h4>Correct answer:</h4>
+							<span>{langTwoArr[this.state.randomNum]}</span>
+						</div>
+						<button type="button" onClick={this.getCard} className="btn btn-danger">Continue</button>
+					</div>
+				</div>
 			</div>
 		)
 	}
