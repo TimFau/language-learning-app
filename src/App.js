@@ -84,12 +84,13 @@ class TranslationApp extends React.Component {
 			<div className="container main-container">
 				<div className="container progress-container">
 					<div className="progress">
-						<div className="progress-bar"  role="progressbar" aria-valuenow={this.state.initialCount - langOneArr.length} aria-valuemin="0" aria-valuemax={this.state.initialCount} style={progressWidth}></div>
+						<div className="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow={this.state.initialCount - langOneArr.length} aria-valuemin="0" aria-valuemax={this.state.initialCount} style={progressWidth}></div>
 					</div>
 					<span>{langOneArr.length} out of {this.state.initialCount} words left</span>
 				</div>
 				<form onSubmit={this.handleSubmit} id="form">
-					<h1>Write "{langOneArr[this.state.randomNum]}" in {this.state.language2}</h1>
+					<h3>Write in {this.state.language2}:</h3>
+					<h1>"{langOneArr[this.state.randomNum]}"</h1>
 					<input type="text" placeholder="Enter translation" value={this.state.inputValue} onChange={this.handleChange} className="form-control"></input>
 				</form>
 				<div className="button-container">
@@ -100,14 +101,14 @@ class TranslationApp extends React.Component {
 							<h4>Correct:</h4>
 							<span>{langTwoArr[this.state.randomNum]}</span>
 						</div>
-						<button type="button" onClick={this.getCard} className="btn btn-success">Continue</button>
+						<button type="button" onClick={this.getCard} className="btn btn-success btn-lg">Continue</button>
 					</div>
 					<div className="alert alert-danger container-fluid">
 						<div className="message">
 							<h4>Correct answer:</h4>
 							<span>{langTwoArr[this.state.randomNum]}</span>
 						</div>
-						<button type="button" onClick={this.getCard} className="btn btn-danger">Continue</button>
+						<button type="button" onClick={this.getCard} className="btn btn-danger btn-lg">Continue</button>
 					</div>
 				</div>
 			</div>

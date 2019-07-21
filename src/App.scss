@@ -5,10 +5,10 @@ body {
   height: 100vh;
 }
 #root {
-  width: 100%;
-  height: 100%;
-  background: white;
-  border-radius: 2%;
+	width: 100%;
+	height: 100%;
+	background: white;
+	border-radius: 2%;
 	text-align: center;
 	padding: 0px;
 	.main-container {
@@ -16,20 +16,27 @@ body {
 		height: 100%;
 	}
 	input {
-		width: 350px;
 		margin: 0 auto;
 		margin-top: 20px;
+		width: 90%;
+		@media screen and (min-width: 660px) {
+			width: 350px;
+		}
 	}
 	&.success, &.incorrect {
 		.button-container > button {
 			display: none;
 		}
 	}
-	#form {
-		position: fixed;
-		top: 45%;
-		left: 50%;
-		transform: translate(-50%, -50%);
+}
+#form {
+	position: fixed;
+	width: 100%;
+	top: 45%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	h4 {
+		color: grey;
 	}
 }
 .progress-container {
@@ -46,12 +53,15 @@ body {
 }
 .button-container {
 	border-top: 1px solid grey;
-	padding: 40px 0;
 	position: absolute;
-	min-height: 130px;
+	min-height: 100px;
 	left: 0;
 	bottom: 0;
 	width: 100%;
+	button {
+		top: 50%;
+		transform: translatey(-50%);
+	}
 	.btn-left {
 		position: absolute;
 		left: 20px;
@@ -60,15 +70,17 @@ body {
 		position: absolute;
 		right: 20px;
 	}
-}
-.button-container .alert {
-	.message {
-		text-align: left;
-	}
-	button {
-		position: absolute;
-		right: 10px;
-		bottom: 10px;
+	.alert {
+		margin-bottom: 0;
+		padding-bottom: 25px;
+		border-radius: 0;
+		.message {
+			text-align: left;
+		}
+		button {
+			position: absolute;
+			right: 20px;
+		}
 	}
 }
 .alert-success {
