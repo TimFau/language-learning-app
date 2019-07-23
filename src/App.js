@@ -10,17 +10,28 @@ var langOneArr = [];
 var langTwoArr = [];
 var progressWidth = {};
 
+function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
 class TranslationApp extends React.Component {
   	constructor(props) {
     	super(props);
     	this.state = {
 			language1: '',
 			language2: '',
-			inputValue: ''
+			inputValue: '',
+			wordBank: [],
+			inputMode: 'Word Bank'
     	};
 		this.getCard = this.getCard.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
+		this.switchInput = this.switchInput.bind(this);
 	}
 	  
 	getData() {
@@ -29,54 +40,84 @@ class TranslationApp extends React.Component {
 				langOneArr.push(this.gsx$language1.$t);
 				langTwoArr.push(this.gsx$langauge2.$t);
 			})
-			this.setState({
+			this.setState(state => ({
 				language1: langOneArr.shift(),
 				language2: langTwoArr.shift(),
 				initialCount: langOneArr.length,
 				randomNum: Math.floor(Math.random() * langOneArr.length),
+				randomNum2: (Math.floor(Math.random() * langOneArr.length) - 4),
 				success: ''
-			})
+			}))
+			this.handleWordBank();
 		}.bind(this));
 	}
 	
 	getCard() {
+		console.log('getCard');
 		$('#root').removeClass('success').removeClass('incorrect');
 		if (this.state.success === 'yes') {
 			langOneArr.splice(this.state.randomNum, 1);
 			langTwoArr.splice(this.state.randomNum, 1);
 		}
-		this.setState({
+		this.setState((state, props) =>  ({
 			randomNum: Math.floor(Math.random() * langOneArr.length),
-			success: ''
-		})
+			randomNum2: Math.floor(Math.random() * langOneArr.length),
+			success: '',
+			inputValue: ''
+		}));
+		this.handleWordBank();
 		progressWidth = {
 			width: (this.state.initialCount - langOneArr.length) * (100 / this.state.initialCount) + '%'
 		}
 	}
-	
-	componentDidMount() {
-		this.getData();
-		this.getCard();
+
+	handleWordBank() {
+		console.log('handleWordBank');
+		this.setState((state) => {
+			return {
+				wordBank: shuffle(langTwoArr.slice(state.randomNum2, state.randomNum2 + 3).concat(langTwoArr[state.randomNum]))
+			}
+		})
 	}
 	
 	handleChange(event) {
+		console.log('handleChange');
 		this.setState({inputValue: event.target.value})
 	}
 	
 	handleSubmit(event) {
+		console.log('handleSubmit');
 		event.preventDefault();
-		if (this.state.inputValue.toLowerCase() === langTwoArr[this.state.randomNum].toLowerCase()) {
+		if (this.state.success === 'yes' || $('.success, .incorrect')[0]) {
+			this.getCard();
+			console.log(1);
+		}
+		else if (this.state.inputValue.toLowerCase() === langTwoArr[this.state.randomNum].toLowerCase()) {
 			$('#root').addClass('success');
 			this.setState({success: 'yes'})
-		} else if($('.success, .incorrect')[0]) {
-			this.getCard();
-		} else {
+			console.log('2 ' + langTwoArr[this.state.randomNum]);
+		}  else {
 			$('#root').addClass('incorrect');
+			console.log(3);
 		}
-		this.setState({
-			inputValue: ''
-		})
+	}
 
+	switchInput() {
+		$('.form-control, .word-bank').toggleClass('d-none');
+		if(this.state.inputMode === 'Word Bank'){
+			this.setState({
+				inputMode: 'Keyboard'
+			})
+		} else {
+			this.setState({
+				inputMode: 'Word Bank'
+			})
+		}
+	}
+
+	componentWillMount() {
+		this.getData();
+		this.getCard();
 	}
 	
 	render() {
@@ -89,13 +130,22 @@ class TranslationApp extends React.Component {
 					<span>{langOneArr.length} out of {this.state.initialCount} words left</span>
 				</div>
 				<form onSubmit={this.handleSubmit} id="form">
-					<h3>Write in {this.state.language2}:</h3>
+					<h3>Translate to {this.state.language2}:</h3>
 					<h1>"{langOneArr[this.state.randomNum]}"</h1>
-					<input type="text" placeholder="Enter translation" value={this.state.inputValue} onChange={this.handleChange} className="form-control"></input>
+					{<input type="text" placeholder="Enter translation" value={this.state.inputValue} onChange={this.handleChange} className="form-control d-none"></input>}
+					<div className="list-group word-bank">
+						{
+						this.state.wordBank.map((word) =>
+						<button type="button" className="list-group-item" value={word}  onClick={this.handleChange}>{word}</button>
+						)}
+					</div>
 				</form>
 				<div className="button-container">
 					<button type="button" onClick={this.getCard} className="btn btn-lg btn-left">Skip</button>
-					<button type="submit" value="submit" className="btn btn-primary btn-lg btn-right">Submit</button>
+
+					<button className="btn btn-lg btn-center btn-outline-secondary" onClick={this.switchInput}>{this.state.inputMode}</button>
+
+					<button type="submit" value="submit" className="btn btn-lg btn-primary btn-right" onClick={this.handleSubmit}>Submit</button>
 					<div className="alert alert-success container-fluid">
 						<div className="message">
 							<h4>Correct:</h4>
