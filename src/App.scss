@@ -88,6 +88,12 @@ body {
 		}
 	}
 }
+.word-bank {
+	button:focus {
+		background: #e8e8e8;
+		outline: none;
+	}
+}
 .alert-success {
 	display: none;
 	#root.success & {

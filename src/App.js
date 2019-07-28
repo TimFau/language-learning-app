@@ -3,20 +3,13 @@ import $ from 'jquery';
 import 'bootstrap/dist/css/bootstrap.css';
 //import logo from './logo.svg';
 import './App.scss';
+import {shuffle} from './Functions';
 
 const spreadsheetID  = "1DNL5d4bJXOdAMnWtQesxksF4aTDFjtAV5xnFVfVbc5w";
 //const spreadsheetID = "1J9qvr4HrfVHcclbiW8jOCKzDZzu-mLwn8X0ne2EMB-w";
 var langOneArr = [];
 var langTwoArr = [];
 var progressWidth = {};
-
-function shuffle(a) {
-    for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-}
 
 class TranslationApp extends React.Component {
   	constructor(props) {
@@ -53,7 +46,6 @@ class TranslationApp extends React.Component {
 	}
 	
 	getCard() {
-		console.log('getCard');
 		$('#root').removeClass('success').removeClass('incorrect');
 		if (this.state.success === 'yes') {
 			langOneArr.splice(this.state.randomNum, 1);
@@ -72,7 +64,6 @@ class TranslationApp extends React.Component {
 	}
 
 	handleWordBank() {
-		console.log('handleWordBank');
 		this.setState((state) => {
 			return {
 				wordBank: shuffle(langTwoArr.slice(state.randomNum2, state.randomNum2 + 3).concat(langTwoArr[state.randomNum]))
@@ -81,24 +72,19 @@ class TranslationApp extends React.Component {
 	}
 	
 	handleChange(event) {
-		console.log('handleChange');
 		this.setState({inputValue: event.target.value})
 	}
 	
 	handleSubmit(event) {
-		console.log('handleSubmit');
 		event.preventDefault();
 		if (this.state.success === 'yes' || $('.success, .incorrect')[0]) {
 			this.getCard();
-			console.log(1);
 		}
-		else if (this.state.inputValue.toLowerCase() === langTwoArr[this.state.randomNum].toLowerCase()) {
+		else if (this.state.inputValue.toLowerCase().trim() === langTwoArr[this.state.randomNum].toLowerCase().trim()) {
 			$('#root').addClass('success');
 			this.setState({success: 'yes'})
-			console.log('2 ' + langTwoArr[this.state.randomNum]);
 		}  else {
 			$('#root').addClass('incorrect');
-			console.log(3);
 		}
 	}
 
@@ -143,7 +129,7 @@ class TranslationApp extends React.Component {
 				<div className="button-container">
 					<button type="button" onClick={this.getCard} className="btn btn-lg btn-left">Skip</button>
 
-					<button className="btn btn-lg btn-center btn-outline-secondary" onClick={this.switchInput}>{this.state.inputMode}</button>
+					<button className="btn btn-lg btn-center btn-outline-secondary" onClick={this.switchInput}>{this.state.inputMode === 'Word Bank' ? 'Keyboard' : 'Word Bank'}</button>
 
 					<button type="submit" value="submit" className="btn btn-lg btn-primary btn-right" onClick={this.handleSubmit}>Submit</button>
 					<div className="alert alert-success container-fluid">
