@@ -38,6 +38,11 @@ body {
 	h4 {
 		color: grey;
 	}
+	@media screen and (max-width: 660px) {
+		h1 {
+			font-size: 2em;
+		}
+	}
 }
 .progress-container {
 	padding-top: 20px;
@@ -74,6 +79,9 @@ body {
 		position: absolute;
 		left: 50%;
 		transform: translate(-50%, -50%);
+		@media screen and (max-width: 660px) {
+			top: -33px;
+		}
 	}
 	.alert {
 		margin-bottom: 0;
