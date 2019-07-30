@@ -3,13 +3,16 @@ import $ from 'jquery';
 import 'bootstrap/dist/css/bootstrap.css';
 //import logo from './logo.svg';
 import './App.scss';
-import {shuffle} from './Functions';
+// import {shuffle} from './Functions';
+import {wordBankHelper} from './Functions';
 
 const spreadsheetID  = "1DNL5d4bJXOdAMnWtQesxksF4aTDFjtAV5xnFVfVbc5w";
 //const spreadsheetID = "1J9qvr4HrfVHcclbiW8jOCKzDZzu-mLwn8X0ne2EMB-w";
 var langOneArr = [];
 var langTwoArr = [];
 var progressWidth = {};
+var langOneArrInit = [];
+var langTwoArrInit = [];
 
 class TranslationApp extends React.Component {
   	constructor(props) {
@@ -41,6 +44,8 @@ class TranslationApp extends React.Component {
 				randomNum2: (Math.floor(Math.random() * langOneArr.length) - 4),
 				success: ''
 			}))
+			langOneArrInit = langOneArr;
+			langTwoArrInit = langTwoArr;
 			this.handleWordBank();
 		}.bind(this));
 	}
@@ -53,7 +58,7 @@ class TranslationApp extends React.Component {
 		}
 		this.setState((state, props) =>  ({
 			randomNum: Math.floor(Math.random() * langOneArr.length),
-			randomNum2: Math.floor(Math.random() * langOneArr.length),
+			randomNum2: Math.floor(Math.random() * langOneArrInit.length),
 			success: '',
 			inputValue: ''
 		}));
@@ -65,8 +70,11 @@ class TranslationApp extends React.Component {
 
 	handleWordBank() {
 		this.setState((state) => {
+			// return {
+			// 	wordBank: shuffle(langTwoArr.slice(state.randomNum2, state.randomNum2 + 3).concat(langTwoArr[state.randomNum]))
+			// }
 			return {
-				wordBank: shuffle(langTwoArr.slice(state.randomNum2, state.randomNum2 + 3).concat(langTwoArr[state.randomNum]))
+				wordBank: wordBankHelper(state.randomNum,  state.randomnNum2, langTwoArr, langTwoArrInit)
 			}
 		})
 	}
