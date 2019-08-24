@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # Project is still in development phase, but works
 
-## To test the initial (less developed) version of this project go to https://codepen.io/TimFau/pen/wLOLzq
+## To test the current version of this project go to https://timfau.github.io/language-learning-app/
 
 
 Idea came after seeing this : https://www.reddit.com/r/lifehacks/comments/b81zqh/using_google_sheets_to_translate_batches_of_words/
