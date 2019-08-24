@@ -6,8 +6,9 @@ import './App.scss';
 // import {shuffle} from './Functions';
 import {wordBankHelper} from './Functions';
 
-const spreadsheetID  = "1DNL5d4bJXOdAMnWtQesxksF4aTDFjtAV5xnFVfVbc5w";
-//const spreadsheetID = "1J9qvr4HrfVHcclbiW8jOCKzDZzu-mLwn8X0ne2EMB-w";
+const spreadsheetID  = "1DntQwj2nfvobtxkOExsSMm2DLHQNlzf2q48WhWlMqAM"; // Italian
+//const spreadsheetID  = "1DNL5d4bJXOdAMnWtQesxksF4aTDFjtAV5xnFVfVbc5w"; // Spanish Full
+//const spreadsheetID = "1J9qvr4HrfVHcclbiW8jOCKzDZzu-mLwn8X0ne2EMB-w"; // Spanish Test
 var langOneArr = [];
 var langTwoArr = [];
 var progressWidth = {};
@@ -130,7 +131,7 @@ class TranslationApp extends React.Component {
 					<div className="list-group word-bank">
 						{
 						this.state.wordBank.map((word) =>
-						<button type="button" className="list-group-item" value={word}  onClick={this.handleChange}>{word}</button>
+						<button type="button" className="list-group-item" value={word}  onClick={this.handleChange}>{word} <a href={"https://translate.google.com/#view=home&textMi%20chaimo%20Tim&text=" + word + "&op=translate&sl=it&tl=en"} target="_blank">GT</a></button>
 						)}
 					</div>
 				</form>
