@@ -23,12 +23,16 @@ class TranslationApp extends React.Component {
 			language2: '',
 			inputValue: '',
 			wordBank: [],
-			inputMode: 'Word Bank'
+			inputMode: 'Word Bank',
+			translateMode: '1to2',
+			langFrom: '',
+			langTo: ''
     	};
 		this.getCard = this.getCard.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.switchInput = this.switchInput.bind(this);
+		this.switchTranslationMode = this.switchTranslationMode.bind(this);
 	}
 	  
 	getData() {
@@ -61,7 +65,9 @@ class TranslationApp extends React.Component {
 			randomNum: Math.floor(Math.random() * langOneArr.length),
 			randomNum2: Math.floor(Math.random() * langOneArrInit.length),
 			success: '',
-			inputValue: ''
+			inputValue: '',
+			langFrom: this.state.translateMode === '1to2' ? langOneArr : langTwoArr,
+			langTo: this.state.translateMode === '1to2' ? langTwoArr : langOneArr,
 		}));
 		this.handleWordBank();
 		progressWidth = {
@@ -71,11 +77,14 @@ class TranslationApp extends React.Component {
 
 	handleWordBank() {
 		this.setState((state) => {
-			// return {
-			// 	wordBank: shuffle(langTwoArr.slice(state.randomNum2, state.randomNum2 + 3).concat(langTwoArr[state.randomNum]))
-			// }
-			return {
-				wordBank: wordBankHelper(state.randomNum,  state.randomnNum2, langTwoArr, langTwoArrInit)
+			if(this.state.translateMode === '1to2'){
+				return {
+					wordBank: wordBankHelper(state.randomNum,  state.randomnNum2, langTwoArr, langTwoArrInit)
+				}
+			} else {
+				return {
+					wordBank: wordBankHelper(state.randomNum,  state.randomnNum2, langOneArr, langOneArrInit)
+				}
 			}
 		})
 	}
@@ -89,7 +98,7 @@ class TranslationApp extends React.Component {
 		if (this.state.success === 'yes' || $('.success, .incorrect')[0]) {
 			this.getCard();
 		}
-		else if (this.state.inputValue.toLowerCase().trim() === langTwoArr[this.state.randomNum].toLowerCase().trim()) {
+		else if (this.state.inputValue.toLowerCase().trim() === this.state.langTo[this.state.randomNum].toLowerCase().trim()) {
 			$('#root').addClass('success');
 			this.setState({success: 'yes'})
 		}  else {
@@ -110,6 +119,19 @@ class TranslationApp extends React.Component {
 		}
 	}
 
+	switchTranslationMode() {
+		if(this.state.translateMode === '1to2'){
+			this.setState({
+				translateMode: '2to1'
+			})
+		} else {
+			this.setState({
+				translateMode: '1to2'
+			})
+		}
+		this.getCard();
+	}
+
 	componentWillMount() {
 		this.getData();
 		this.getCard();
@@ -125,8 +147,10 @@ class TranslationApp extends React.Component {
 					<span>{langOneArr.length} out of {this.state.initialCount} words left</span>
 				</div>
 				<form onSubmit={this.handleSubmit} id="form">
-					<h3>Translate to {this.state.language2}:</h3>
-					<h1>"{langOneArr[this.state.randomNum]}"</h1>
+					<i class="material-icons switch-icon" onClick={this.switchTranslationMode}>swap_horiz
+</i>
+					<h3>Translate to {this.state.translateMode === "1to2" ? this.state.language2 : this.state.language1}:</h3>
+					<h1>"{this.state.langFrom[this.state.randomNum]}"</h1>
 					{<input type="text" placeholder="Enter translation" value={this.state.inputValue} onChange={this.handleChange} className="form-control d-none"></input>}
 					<div className="list-group word-bank">
 						{
