@@ -147,15 +147,16 @@ class TranslationApp extends React.Component {
 					<span>{langOneArr.length} out of {this.state.initialCount} words left</span>
 				</div>
 				<form onSubmit={this.handleSubmit} id="form">
-					<i class="material-icons switch-icon" onClick={this.switchTranslationMode}>swap_horiz
-</i>
-					<h3>Translate to {this.state.translateMode === "1to2" ? this.state.language2 : this.state.language1}:</h3>
+					<h3 onClick={this.switchTranslationMode}>Translate to <span><i class="material-icons switch-icon">swap_horiz
+</i>{this.state.translateMode === "1to2" ? this.state.language2 : this.state.language1}</span>:</h3>
 					<h1>"{this.state.langFrom[this.state.randomNum]}"</h1>
 					{<input type="text" placeholder="Enter translation" value={this.state.inputValue} onChange={this.handleChange} className="form-control d-none"></input>}
 					<div className="list-group word-bank">
 						{
 						this.state.wordBank.map((word) =>
-						<button type="button" className="list-group-item" value={word}  onClick={this.handleChange}>{word} <a href={"https://translate.google.com/#view=home&textMi%20chaimo%20Tim&text=" + word + "&op=translate&sl=it&tl=en"} target="_blank">GT</a></button>
+						<button type="button" className="list-group-item" value={word}  onClick={this.handleChange}>{word} <a class="google-translate" href={"https://translate.google.com/#view=home&textMi%20chaimo%20Tim&text=" + word + "&op=translate&sl=it&tl=en"} target="_blank"><i class="material-icons">
+						g_translate
+						</i></a></button>
 						)}
 					</div>
 				</form>
