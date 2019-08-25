@@ -26,13 +26,16 @@ class TranslationApp extends React.Component {
 			inputMode: 'Word Bank',
 			translateMode: '1to2',
 			langFrom: '',
-			langTo: ''
+			langTo: '',
+			flashCardMode: 'flashCardModeOff'
     	};
 		this.getCard = this.getCard.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.switchInput = this.switchInput.bind(this);
 		this.switchTranslationMode = this.switchTranslationMode.bind(this);
+		this.showAnswerFc = this.showAnswerFc.bind(this);
+		this.switchToFlashCardMode = this.switchToFlashCardMode.bind(this);
 	}
 	  
 	getData() {
@@ -132,6 +135,22 @@ class TranslationApp extends React.Component {
 		this.getCard();
 	}
 
+	switchToFlashCardMode() {
+		if(this.state.flashCardMode === 'flashCardModeOn'){
+			this.setState({
+				flashCardMode: 'flashCardModeOff'
+			})
+		} else {
+			this.setState({
+				flashCardMode: 'flashCardModeOn'
+			})
+		}
+	}
+
+	showAnswerFc() {
+		$('.main-container').toggleClass('show-answer');
+	}
+
 	componentWillMount() {
 		this.getData();
 		this.getCard();
@@ -139,7 +158,7 @@ class TranslationApp extends React.Component {
 	
 	render() {
     	return (
-			<div className="container main-container">
+			<div className={"container main-container " + this.state.flashCardMode}>
 				<div className="container progress-container">
 					<div className="progress">
 						<div className="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow={this.state.initialCount - langOneArr.length} aria-valuemin="0" aria-valuemax={this.state.initialCount} style={progressWidth}></div>
@@ -147,9 +166,15 @@ class TranslationApp extends React.Component {
 					<span>{langOneArr.length} out of {this.state.initialCount} words left</span>
 				</div>
 				<form onSubmit={this.handleSubmit} id="form">
+					<button className="btn btn-lg btn-center btn-outline-secondary flash-card-button" onClick={this.switchToFlashCardMode}>{this.state.flashCardMode === 'flashCardModeOn' ? 'Switch On FC Mode' : 'Switch Off FC Mode'}</button>
 					<h3 onClick={this.switchTranslationMode}>Translate to <span><i class="material-icons switch-icon">swap_horiz
 </i>{this.state.translateMode === "1to2" ? this.state.language2 : this.state.language1}</span>:</h3>
-					<h1>"{this.state.langFrom[this.state.randomNum]}"</h1>
+					<h1 class="lang-from">"{this.state.langFrom[this.state.randomNum]}"</h1>
+					{this.state.flashCardMode === 'flashCardModeOn' && [
+						<h1 className="lang-to">"{this.state.langTo[this.state.randomNum]}"</h1>,
+						<i className="material-icons swap-card" onClick={this.showAnswerFc}>swap_vertical_circle</i>,
+						<i className="material-icons navigate-next" onClick={this.getCard}>navigate_next</i>
+					]}
 					{<input type="text" placeholder="Enter translation" value={this.state.inputValue} onChange={this.handleChange} className="form-control d-none"></input>}
 					<div className="list-group word-bank">
 						{

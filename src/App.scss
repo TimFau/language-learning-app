@@ -35,6 +35,9 @@ body {
 	top: 45%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	h1.lang-to{
+		display: none;
+	}
 	h3 {
 		cursor: pointer;
 		width: fit-content;
@@ -132,5 +135,47 @@ body {
 	display: none;
 	#root.incorrect & {
 		display: block;
+	}
+}
+
+.flash-card-button {
+	margin-bottom: 30px;
+}
+
+.flashCardModeOn {
+	.word-bank, .button-container, .progress-container {
+		display: none;
+	}
+	h1.lang-from, h1.lang-to {
+		padding: 100px;
+		border: 1px solid grey;
+		margin: 25px 100px;
+		@media screen and (max-width: 660px) {
+			margin: 25px 0;
+		}
+	}
+	.swap-card, .navigate-next{
+		position: absolute;
+		right: 120px;
+		font-size: 50px;
+		cursor: pointer;
+	}
+	.swap-card {
+		bottom: 40px;
+	}
+	.navigate-next {
+		top: 70px;
+		@media screen and (max-width: 660px) {
+			top: 150px;
+		}
+	}
+	&.show-answer {
+		h1.lang-from {
+			display: none;
+		}
+		#form h1.lang-to {
+			display: block;
+			background:lightgreen;
+		}
 	}
 }
