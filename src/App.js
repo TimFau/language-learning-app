@@ -36,6 +36,7 @@ class TranslationApp extends React.Component {
 		this.switchTranslationMode = this.switchTranslationMode.bind(this);
 		this.showAnswerFc = this.showAnswerFc.bind(this);
 		this.switchToFlashCardMode = this.switchToFlashCardMode.bind(this);
+		this.archiveCard = this.archiveCard.bind(this);
 	}
 	  
 	getData() {
@@ -76,6 +77,12 @@ class TranslationApp extends React.Component {
 		progressWidth = {
 			width: (this.state.initialCount - langOneArr.length) * (100 / this.state.initialCount) + '%'
 		}
+	}
+
+	archiveCard() {
+		langOneArr.splice(this.state.randomNum, 1);
+		langTwoArr.splice(this.state.randomNum, 1);
+		this.getCard();
 	}
 
 	handleWordBank() {
@@ -166,20 +173,20 @@ class TranslationApp extends React.Component {
 					<span>{langOneArr.length} out of {this.state.initialCount} words left</span>
 				</div>
 				<form onSubmit={this.handleSubmit} id="form">
-					<button className="btn btn-lg btn-center btn-outline-secondary flash-card-button" onClick={this.switchToFlashCardMode}>{this.state.flashCardMode === 'flashCardModeOn' ? 'Switch On FC Mode' : 'Switch Off FC Mode'}</button>
-					<h3 onClick={this.switchTranslationMode}>Translate to <span><i class="material-icons switch-icon">swap_horiz
-</i>{this.state.translateMode === "1to2" ? this.state.language2 : this.state.language1}</span>:</h3>
-					<h1 class="lang-from">"{this.state.langFrom[this.state.randomNum]}"</h1>
+					<button className="btn btn-lg btn-center btn-outline-secondary flash-card-button" onClick={this.switchToFlashCardMode}>{this.state.flashCardMode === 'flashCardModeOn' ? 'Switch Off FC Mode' : 'Switch On FC Mode'}</button>
+					<h3 onClick={this.switchTranslationMode}>Translate to <span><i className="material-icons switch-icon">swap_horiz</i>{this.state.translateMode === "1to2" ? this.state.language2 : this.state.language1}</span>:</h3>
+					<h1 className="lang-from">"{this.state.langFrom[this.state.randomNum]}"</h1>
 					{this.state.flashCardMode === 'flashCardModeOn' && [
 						<h1 className="lang-to">"{this.state.langTo[this.state.randomNum]}"</h1>,
 						<i className="material-icons swap-card" onClick={this.showAnswerFc}>swap_vertical_circle</i>,
-						<i className="material-icons navigate-next" onClick={this.getCard}>navigate_next</i>
+						<i className="material-icons navigate-next" onClick={this.getCard}>navigate_next</i>,
+						<i className="material-icons archive" onClick={this.archiveCard}>archive</i>
 					]}
 					{<input type="text" placeholder="Enter translation" value={this.state.inputValue} onChange={this.handleChange} className="form-control d-none"></input>}
 					<div className="list-group word-bank">
 						{
 						this.state.wordBank.map((word) =>
-						<button type="button" className="list-group-item" value={word}  onClick={this.handleChange}>{word} <a class="google-translate" href={"https://translate.google.com/#view=home&textMi%20chaimo%20Tim&text=" + word + "&op=translate&sl=it&tl=en"} target="_blank"><i class="material-icons">
+						<button type="button" className="list-group-item" value={word}  onClick={this.handleChange}>{word} <a className="google-translate" href={"https://translate.google.com/#view=home&textMi%20chaimo%20Tim&text=" + word + "&op=translate&sl=it&tl=en"} target="_blank"><i className="material-icons">
 						g_translate
 						</i></a></button>
 						)}

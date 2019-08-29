@@ -143,7 +143,7 @@ body {
 }
 
 .flashCardModeOn {
-	.word-bank, .button-container, .progress-container {
+	.word-bank, .button-container {
 		display: none;
 	}
 	h1.lang-from, h1.lang-to {
@@ -154,19 +154,27 @@ body {
 			margin: 25px 0;
 		}
 	}
-	.swap-card, .navigate-next{
+	.swap-card, .navigate-next, .archive{
 		position: absolute;
 		right: 120px;
 		font-size: 50px;
 		cursor: pointer;
+		@media screen and (max-width: 660px) {
+			right: 20px;
+		}
 	}
 	.swap-card {
 		bottom: 40px;
 	}
 	.navigate-next {
-		top: 70px;
+		top: 150px;
+	}
+	.archive {
+		right: initial;
+		left: 120px;
+		bottom: 40px;
 		@media screen and (max-width: 660px) {
-			top: 150px;
+			left: 20px;
 		}
 	}
 	&.show-answer {
