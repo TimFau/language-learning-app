@@ -8,6 +8,7 @@
     "gity": "^1.0.5",
     "jquery": "^3.4.1",
     "node-sass": "^4.12.0",
+    "popper.js": "^1.15.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",

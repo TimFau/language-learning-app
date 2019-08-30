@@ -28,6 +28,12 @@ body {
 			display: none;
 		}
 	}
+	nav {
+		z-index: 1;
+		position: absolute;
+		width: 100%;
+		left: 0;
+	}
 }
 #form {
 	position: fixed;
@@ -65,7 +71,7 @@ body {
 	}
 }
 .progress-container {
-	padding-top: 20px;
+	padding-top: 70px;
 	position: absolute;
 	.progress {
 		height: 30px;
@@ -115,6 +121,19 @@ body {
 			right: 20px;
 		}
 	}
+	.dropdown-toggle {
+		top: 50px;
+	}
+}
+.dropdown-menu {
+	.dropdown-item {
+		cursor: pointer;
+	}
+}
+.Wordbank {
+	.form-control {
+		display: none;
+	}
 }
 .word-bank {
 	button:focus {
@@ -123,6 +142,9 @@ body {
 	}
 	.google-translate {
 		float: right;
+	}
+	.Wordbank & {
+		display: flex;
 	}
 }
 .alert-success {
@@ -142,8 +164,17 @@ body {
 	margin-bottom: 30px;
 }
 
-.flashCardModeOn {
-	.word-bank, .button-container {
+.Keyboard {
+	.word-bank {
+		display: none;
+	}
+	.form-control {
+		display: block;
+	}
+}
+
+.Flashcard {
+	.word-bank, .form-control, .button-container {
 		display: none;
 	}
 	h1.lang-from, h1.lang-to {
@@ -167,7 +198,7 @@ body {
 		bottom: 40px;
 	}
 	.navigate-next {
-		top: 150px;
+		top: 70px;
 	}
 	.archive {
 		right: initial;

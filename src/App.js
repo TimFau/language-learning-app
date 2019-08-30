@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
 //import logo from './logo.svg';
 import './App.scss';
 // import {shuffle} from './Functions';
@@ -23,11 +24,10 @@ class TranslationApp extends React.Component {
 			language2: '',
 			inputValue: '',
 			wordBank: [],
-			inputMode: 'Word Bank',
+			inputMode: 'Flashcard',
 			translateMode: '1to2',
 			langFrom: '',
-			langTo: '',
-			flashCardMode: 'flashCardModeOff'
+			langTo: ''
     	};
 		this.getCard = this.getCard.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,12 +35,18 @@ class TranslationApp extends React.Component {
 		this.switchInput = this.switchInput.bind(this);
 		this.switchTranslationMode = this.switchTranslationMode.bind(this);
 		this.showAnswerFc = this.showAnswerFc.bind(this);
-		this.switchToFlashCardMode = this.switchToFlashCardMode.bind(this);
 		this.archiveCard = this.archiveCard.bind(this);
+		this.setList = this.setList.bind(this);
 	}
 	  
-	getData() {
-		$.get("https://spreadsheets.google.com/feeds/list/" + spreadsheetID + "/od6/public/values?alt=json", function(json) {
+	getData(value) {
+		// Set default list
+		if (value === undefined) {
+			value = "1DntQwj2nfvobtxkOExsSMm2DLHQNlzf2q48WhWlMqAM"
+		}
+		$.get("https://spreadsheets.google.com/feeds/list/" + value + "/od6/public/values?alt=json", function(json) {
+			langOneArr = [];
+			langTwoArr = [];
 			$(json.feed.entry).each(function(){
 				langOneArr.push(this.gsx$language1.$t);
 				langTwoArr.push(this.gsx$langauge2.$t);
@@ -56,6 +62,7 @@ class TranslationApp extends React.Component {
 			langOneArrInit = langOneArr;
 			langTwoArrInit = langTwoArr;
 			this.handleWordBank();
+			this.getCard();
 		}.bind(this));
 	}
 	
@@ -82,6 +89,7 @@ class TranslationApp extends React.Component {
 	archiveCard() {
 		langOneArr.splice(this.state.randomNum, 1);
 		langTwoArr.splice(this.state.randomNum, 1);
+		$('.main-container').removeClass('show-answer');
 		this.getCard();
 	}
 
@@ -116,15 +124,18 @@ class TranslationApp extends React.Component {
 		}
 	}
 
-	switchInput() {
-		$('.form-control, .word-bank').toggleClass('d-none');
-		if(this.state.inputMode === 'Word Bank'){
+	switchInput(value) {
+		if(value === 'Wordbank' && this.state.inputMode !== 'Wordbank'){
+			this.setState({
+				inputMode: 'Wordbank'
+			})
+		} else if(value === 'Keyboard' && this.state.inputMode !== 'Keyboard'){
 			this.setState({
 				inputMode: 'Keyboard'
 			})
-		} else {
+		} else if(value === 'Flashcard' && this.state.inputMode !== 'Flashcard'){
 			this.setState({
-				inputMode: 'Word Bank'
+				inputMode: 'Flashcard'
 			})
 		}
 	}
@@ -142,30 +153,61 @@ class TranslationApp extends React.Component {
 		this.getCard();
 	}
 
-	switchToFlashCardMode() {
-		if(this.state.flashCardMode === 'flashCardModeOn'){
-			this.setState({
-				flashCardMode: 'flashCardModeOff'
-			})
-		} else {
-			this.setState({
-				flashCardMode: 'flashCardModeOn'
-			})
-		}
-	}
-
 	showAnswerFc() {
 		$('.main-container').toggleClass('show-answer');
 	}
 
+	setList(value) {
+		alert(value);
+		if (value === 'es-basics') {
+			const spreadsheetID = "1DNL5d4bJXOdAMnWtQesxksF4aTDFjtAV5xnFVfVbc5w";
+			this.getData(spreadsheetID);
+			this.getCard();
+		} else if (value === 'it-basics') {
+			const spreadsheetID  = "1DntQwj2nfvobtxkOExsSMm2DLHQNlzf2q48WhWlMqAM";
+			this.getData(spreadsheetID);
+		} else if (value === 'it-other') {
+			const spreadsheetID  = "16PNgsOyvfz6BIpjCqHMtMWBg59qLhyj5TVvmXzSzmPA";
+			this.getData(spreadsheetID);
+		}
+	}
+
 	componentWillMount() {
 		this.getData();
-		this.getCard();
 	}
 	
 	render() {
     	return (
-			<div className={"container main-container " + this.state.flashCardMode}>
+			<div className={"container main-container " + this.state.inputMode}>
+				<nav className="navbar navbar-expand-lg navbar-light bg-light">
+					<a className="navbar-brand" href="#">Options</a>
+					<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+						<span className="navbar-toggler-icon"></span>
+					</button>
+					<div className="collapse navbar-collapse" id="navbarNav">
+						<ul className="navbar-nav">
+							{/* <li className="nav-item active">
+								<a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+							</li> */}
+							<li className="nav-item dropdown">
+								<a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select List</a>
+								<div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+									<span className="dropdown-item"  onClick={(value) => this.setList('it-basics')}>Italian Basics</span>
+									<span className="dropdown-item" onClick={(value) => this.setList('it-other')}>Italian Other</span>
+									<span className="dropdown-item" onClick={(value) => this.setList('es-basics')}>Spanish</span>
+								</div>
+							</li>
+							<li className="nav-item dropdown">
+								<a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Input Mode</a>
+								<div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+									<span className="dropdown-item" onClick={(Keyboard) => this.switchInput('Keyboard')}>Keyboard</span>
+									<span className="dropdown-item" onClick={(Keyboard) => this.switchInput('Wordbank')}>Wordbank</span>
+									<span className="dropdown-item" onClick={(Keyboard) => this.switchInput('Flashcard')}>Flashcard</span>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</nav>
 				<div className="container progress-container">
 					<div className="progress">
 						<div className="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow={this.state.initialCount - langOneArr.length} aria-valuemin="0" aria-valuemax={this.state.initialCount} style={progressWidth}></div>
@@ -173,16 +215,15 @@ class TranslationApp extends React.Component {
 					<span>{langOneArr.length} out of {this.state.initialCount} words left</span>
 				</div>
 				<form onSubmit={this.handleSubmit} id="form">
-					<button className="btn btn-lg btn-center btn-outline-secondary flash-card-button" onClick={this.switchToFlashCardMode}>{this.state.flashCardMode === 'flashCardModeOn' ? 'Switch Off FC Mode' : 'Switch On FC Mode'}</button>
 					<h3 onClick={this.switchTranslationMode}>Translate to <span><i className="material-icons switch-icon">swap_horiz</i>{this.state.translateMode === "1to2" ? this.state.language2 : this.state.language1}</span>:</h3>
 					<h1 className="lang-from">"{this.state.langFrom[this.state.randomNum]}"</h1>
-					{this.state.flashCardMode === 'flashCardModeOn' && [
+					{this.state.inputMode === 'Flashcard' && [
 						<h1 className="lang-to">"{this.state.langTo[this.state.randomNum]}"</h1>,
 						<i className="material-icons swap-card" onClick={this.showAnswerFc}>swap_vertical_circle</i>,
 						<i className="material-icons navigate-next" onClick={this.getCard}>navigate_next</i>,
 						<i className="material-icons archive" onClick={this.archiveCard}>archive</i>
 					]}
-					{<input type="text" placeholder="Enter translation" value={this.state.inputValue} onChange={this.handleChange} className="form-control d-none"></input>}
+					{<input type="text" placeholder="Enter translation" value={this.state.inputValue} onChange={this.handleChange} className="form-control"></input>}
 					<div className="list-group word-bank">
 						{
 						this.state.wordBank.map((word) =>
@@ -194,8 +235,6 @@ class TranslationApp extends React.Component {
 				</form>
 				<div className="button-container">
 					<button type="button" onClick={this.getCard} className="btn btn-lg btn-left">Skip</button>
-
-					<button className="btn btn-lg btn-center btn-outline-secondary" onClick={this.switchInput}>{this.state.inputMode === 'Word Bank' ? 'Keyboard' : 'Word Bank'}</button>
 
 					<button type="submit" value="submit" className="btn btn-lg btn-primary btn-right" onClick={this.handleSubmit}>Submit</button>
 					<div className="alert alert-success container-fluid">
