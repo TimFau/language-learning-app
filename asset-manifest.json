@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/language-learning-app/static/css/main.0b0dbb6e.chunk.css",
-    "main.js": "/language-learning-app/static/js/main.664ed90e.chunk.js",
-    "main.js.map": "/language-learning-app/static/js/main.664ed90e.chunk.js.map",
+    "main.css": "/language-learning-app/static/css/main.fb18d323.chunk.css",
+    "main.js": "/language-learning-app/static/js/main.ca2d00bc.chunk.js",
+    "main.js.map": "/language-learning-app/static/js/main.ca2d00bc.chunk.js.map",
     "runtime~main.js": "/language-learning-app/static/js/runtime~main.6ed3a6ba.js",
     "runtime~main.js.map": "/language-learning-app/static/js/runtime~main.6ed3a6ba.js.map",
     "static/css/2.22a7d4ef.chunk.css": "/language-learning-app/static/css/2.22a7d4ef.chunk.css",
     "static/js/2.7a5e943e.chunk.js": "/language-learning-app/static/js/2.7a5e943e.chunk.js",
     "static/js/2.7a5e943e.chunk.js.map": "/language-learning-app/static/js/2.7a5e943e.chunk.js.map",
     "index.html": "/language-learning-app/index.html",
-    "precache-manifest.26c23eae2479fa51727a3b84301aa452.js": "/language-learning-app/precache-manifest.26c23eae2479fa51727a3b84301aa452.js",
+    "precache-manifest.3316657c58b350721a9c86e444704e0c.js": "/language-learning-app/precache-manifest.3316657c58b350721a9c86e444704e0c.js",
     "service-worker.js": "/language-learning-app/service-worker.js",
     "static/css/2.22a7d4ef.chunk.css.map": "/language-learning-app/static/css/2.22a7d4ef.chunk.css.map",
-    "static/css/main.0b0dbb6e.chunk.css.map": "/language-learning-app/static/css/main.0b0dbb6e.chunk.css.map"
+    "static/css/main.fb18d323.chunk.css.map": "/language-learning-app/static/css/main.fb18d323.chunk.css.map"
   }
 }
