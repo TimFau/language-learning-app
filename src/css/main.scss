@@ -1,3 +1,5 @@
+@import 'custom';
+
 body {
   display: flex;
   justify-content: center;
@@ -11,6 +13,7 @@ body {
 	border-radius: 2%;
 	text-align: center;
 	padding: 0px;
+	background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(239, 239, 239) 100%);
 	.main-container {
 		padding: 0px;
 		height: 100%;
@@ -35,7 +38,7 @@ body {
 		left: 0;
 	}
 }
-#form {
+form {
 	position: fixed;
 	width: 100%;
 	top: 45%;
@@ -62,16 +65,19 @@ body {
 		}
 	}
 	span{
-		color: #007bff;
+		color: $blue;
 	}
 	.switch-icon {
-		color: #007bff;
+		color: $blue;
 		display: none;
 		padding-right: 6px;
 	}
+	.material-icons {
+		color: $white;
+	}
 }
 .progress-container {
-	padding-top: 70px;
+	padding-top: 90px;
 	position: absolute;
 	.progress {
 		height: 30px;
@@ -89,6 +95,7 @@ body {
 	left: 0;
 	bottom: 0;
 	width: 100%;
+	background: $gray-800;
 	button {
 		top: 50%;
 		transform: translatey(-50%);
@@ -146,6 +153,9 @@ body {
 	.Wordbank & {
 		display: flex;
 	}
+	.material-icons {
+		color: $black;
+	}
 }
 .alert-success {
 	display: none;
@@ -179,8 +189,11 @@ body {
 	}
 	h1.lang-from, h1.lang-to {
 		padding: 100px;
-		border: 1px solid grey;
 		margin: 25px 100px;
+		background: $blue;
+		border-radius: 10px;
+		color: $white;
+		box-shadow: 2px 2px #efefef;
 		@media screen and (max-width: 660px) {
 			margin: 25px 0;
 		}
@@ -214,7 +227,7 @@ body {
 		}
 		#form h1.lang-to {
 			display: block;
-			background:lightgreen;
+			background: $green;
 		}
 	}
 }

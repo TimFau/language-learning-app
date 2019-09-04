@@ -1,9 +1,10 @@
 import React from 'react';
 import $ from 'jquery';
-import 'bootstrap/dist/css/bootstrap.css';
+//import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 //import logo from './logo.svg';
-import './App.scss';
+import './css/custom.scss';
+import './css/main.scss';
 import {wordBankHelper} from './Functions';
 
 const spreadsheetID  = "1DntQwj2nfvobtxkOExsSMm2DLHQNlzf2q48WhWlMqAM"; // Italian
@@ -197,7 +198,7 @@ class TranslationApp extends React.Component {
 	render() {
     	return (
 			<div className={"container main-container " + this.state.inputMode}>
-				<nav className="navbar navbar-expand-lg navbar-light bg-light">
+				<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
 					<a className="navbar-brand" href="#">Options</a>
 					<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 						<span className="navbar-toggler-icon"></span>
@@ -252,7 +253,7 @@ class TranslationApp extends React.Component {
 					</div>
 				</form>
 				<div className="button-container">
-					<button type="button" onClick={this.getCard} className="btn btn-lg btn-left">Skip</button>
+					<button type="button" onClick={this.getCard} className="btn btn-lg btn-left btn-light">Skip</button>
 					<button type="submit" value="submit" className="btn btn-lg btn-primary btn-right" onClick={this.handleSubmit}>Submit</button>
 					<div className="alert alert-success container-fluid">
 						<div className="message">
