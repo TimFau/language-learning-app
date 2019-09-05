@@ -220,9 +220,10 @@ class TranslationApp extends React.Component {
 							<li className="nav-item dropdown">
 								<a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Input Mode</a>
 								<div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+									<span className="dropdown-item" onClick={(Keyboard) => this.switchInput('Flashcard')}>Flashcard</span>
 									<span className="dropdown-item" onClick={(Keyboard) => this.switchInput('Keyboard')}>Keyboard</span>
 									<span className="dropdown-item" onClick={(Keyboard) => this.switchInput('Wordbank')}>Wordbank</span>
-									<span className="dropdown-item" onClick={(Keyboard) => this.switchInput('Flashcard')}>Flashcard</span>
+									
 								</div>
 							</li>
 						</ul>
@@ -235,13 +236,13 @@ class TranslationApp extends React.Component {
 					<span>{langOneArr.length} out of {this.state.initialCount} words left</span>
 				</div>
 				<form onSubmit={this.handleSubmit} id="form">
-					<h3 onClick={this.switchTranslationMode}>Translate to <span><i className="material-icons switch-icon">swap_horiz</i>{this.state.translateMode === "1to2" ? this.state.language1 : this.state.language2}</span>:</h3>
-					<h1 className="lang-from">"{this.state.langFrom[this.state.randomNum]}"</h1>
+					<h3 onClick={this.switchTranslationMode}>Translate to <span>{this.state.translateMode === "1to2" ? this.state.language1 : this.state.language2}</span>:</h3>
+					<h1 className="lang-from" onClick={this.state.inputMode === 'Flashcard' ? this.showAnswerFc : ''}>"{this.state.langFrom[this.state.randomNum]}"</h1>
 					{this.state.inputMode === 'Flashcard' && [
-						<h1 className="lang-to">"{this.state.langTo[this.state.randomNum]}"</h1>,
+						<h1 className="lang-to" onClick={this.showAnswerFc}>"{this.state.langTo[this.state.randomNum]}"</h1>,
 						<i className="material-icons swap-card" onClick={this.showAnswerFc}>swap_vertical_circle</i>,
-						<i className="material-icons navigate-next" onClick={this.getCard}>navigate_next</i>,
-						<i className="material-icons archive" onClick={this.archiveCard}>archive</i>
+						<span className="navigate-next" onClick={this.getCard}><i className="material-icons">navigate_next</i></span>,
+						<span className="archive" onClick={this.archiveCard}><i className="material-icons">archive</i></span>
 					]}
 					{<input type="text" placeholder="Enter translation" value={this.state.translationInputValue} onChange={this.keyboardModehandleChange} className="form-control" />}
 					<div className="list-group word-bank">

@@ -41,9 +41,12 @@ body {
 form {
 	position: fixed;
 	width: 100%;
-	top: 45%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	top: 45%;
+	@media screen and (max-height: 700px) {
+		top: 60%;
+	}
 	h1.lang-to{
 		display: none;
 	}
@@ -52,6 +55,7 @@ form {
 		width: fit-content;
 		position: relative;
 		margin: 0 auto;
+		padding-bottom: 10px;
 		&:hover .switch-icon {
 			display: inline;
 		}
@@ -184,41 +188,53 @@ form {
 }
 
 .Flashcard {
+	form {
+		max-width: 800px;
+	}
 	.word-bank, .form-control, .button-container {
 		display: none;
 	}
 	h1.lang-from, h1.lang-to {
-		padding: 100px;
-		margin: 25px 100px;
+		padding: 100px 25px;
 		background: $blue;
 		border-radius: 10px;
 		color: $white;
 		box-shadow: 2px 2px #efefef;
+		margin: 0;
 		@media screen and (max-width: 660px) {
 			margin: 25px 0;
 		}
 	}
 	.swap-card, .navigate-next, .archive{
 		position: absolute;
-		right: 120px;
-		font-size: 50px;
 		cursor: pointer;
-		@media screen and (max-width: 660px) {
-			right: 20px;
+		i {
+			font-size: 50px;
 		}
 	}
 	.swap-card {
-		bottom: 40px;
+		right: 50%;
+		transform: translate(50%, -37%);
+		font-size: 170px;
+		opacity: .2;
+		top: 50%;
 	}
 	.navigate-next {
-		top: 70px;
+		bottom: 0%;
+		right: 0;
+		padding: 96px 15px 96px 20px;
+		&:hover {
+			background: #80808047;
+			border-radius: 0 10px 10px 0;
+		}
 	}
 	.archive {
-		right: initial;
-		left: 120px;
-		bottom: 40px;
-		@media screen and (max-width: 660px) {
-			left: 20px;
+		bottom: 0%;
+		left: 0;
+		padding: 96px 15px 96px 24px;
+		&:hover {
+			background: #80808047;
+			border-radius: 10px 0px 0px 10px;
 		}
 	}
 	.show-answer &{
