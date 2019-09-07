@@ -64,8 +64,8 @@ class TranslationApp extends React.Component {
 				success: '',
 				currentList: value
 			}))
-			langOneArrInit = langOneArr;
-			langTwoArrInit = langTwoArr;
+			langOneArrInit = langOneArr.slice();
+			langTwoArrInit = langTwoArr.slice();
 			this.handleWordBank();
 			this.getCard();
 		}.bind(this)
@@ -112,11 +112,11 @@ class TranslationApp extends React.Component {
 		this.setState((state) => {
 			if(this.state.translateMode === '1to2'){
 				return {
-					wordBank: wordBankHelper(state.randomNum,  state.randomnNum2, langTwoArr, langTwoArrInit)
+					wordBank: wordBankHelper(state.randomNum, langTwoArr, langTwoArrInit)
 				}
 			} else {
 				return {
-					wordBank: wordBankHelper(state.randomNum,  state.randomnNum2, langOneArr, langOneArrInit)
+					wordBank: wordBankHelper(state.randomNum, langOneArr, langOneArrInit)
 				}
 			}
 		})
@@ -321,9 +321,9 @@ class TranslationApp extends React.Component {
 							<div className="modal-content">
 							<div className="modal-header">
 								<h5 className="modal-title">Congralutations!</h5>
-								<button type="button" className="close" id="close-custom-list-modal" data-dismiss="modal" aria-label="Close">
+								{/* <button type="button" className="close" id="close-custom-list-modal" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
-								</button>
+								</button> */}
 							</div>
 							<div className="modal-body">
 								<h3>You've finished the list!</h3>

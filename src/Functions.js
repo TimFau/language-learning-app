@@ -4,8 +4,16 @@ function shuffle(a) {
         [a[i], a[j]] = [a[j], a[i]];
     } return a;
 }
-export function wordBankHelper(ranNum1, ranNum2, curArr, initArr) {
+export function wordBankHelper(ranNum1, curArr, initArr) {
+    var returnValue = [curArr[ranNum1]];
+    var i = 0;
+    while (returnValue.length < 4 && i < 10) {
+        i++;
+        returnValue = returnValue.concat(initArr[Math.floor(Math.random() * initArr.length)]);
+        returnValue = new Set(returnValue); // removes duplicates
+        returnValue = [...returnValue]; // converts back to array
+    }
     return (
-        shuffle(initArr.slice(ranNum2, 3).concat(curArr[ranNum1]))
+        shuffle(returnValue)
     )
 }
