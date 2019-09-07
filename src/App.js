@@ -29,7 +29,8 @@ class TranslationApp extends React.Component {
 			langFrom: '',
 			langTo: '',
 			customListInputValue: '',
-			currentList: ''
+			currentList: '',
+			checkAccents: false
     	};
 		this.getCard = this.getCard.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -128,10 +129,16 @@ class TranslationApp extends React.Component {
 	
 	handleSubmit(event) {
 		event.preventDefault();
+		var inputValueRegex = this.state.translationInputValue.toLowerCase().trim();
+		var correctAnswerRegex = this.state.langTo[this.state.randomNum].toLowerCase().trim()
+		if(this.state.checkAccents === false) {
+			inputValueRegex = inputValueRegex.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+			correctAnswerRegex = correctAnswerRegex.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+		}
 		if (this.state.success === 'yes' || $('.success, .incorrect')[0]) {
 			this.getCard();
 		}
-		else if (this.state.translationInputValue.toLowerCase().trim() === this.state.langTo[this.state.randomNum].toLowerCase().trim()) {
+		else if (inputValueRegex === correctAnswerRegex) {
 			$('#root').addClass('success');
 			this.setState({success: 'yes'})
 		}  else {
