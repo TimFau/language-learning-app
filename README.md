@@ -1,5 +1,3 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 # Project is still in development phase, but works (with plenty of bugs)
 
 ## To test the current version of this project go to https://timfau.github.io/language-learning-app/

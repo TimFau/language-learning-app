@@ -28,7 +28,8 @@ class TranslationApp extends React.Component {
 			translateMode: '1to2',
 			langFrom: '',
 			langTo: '',
-			customListInputValue: ''
+			customListInputValue: '',
+			currentList: ''
     	};
 		this.getCard = this.getCard.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -49,6 +50,7 @@ class TranslationApp extends React.Component {
 		$.get("https://spreadsheets.google.com/feeds/list/" + value + "/od6/public/values?alt=json", function(json) {
 			langOneArr = [];
 			langTwoArr = [];
+			progressWidth = {};
 			$(json.feed.entry).each(function(){
 				langOneArr.push(this.gsx$language1.$t);
 				langTwoArr.push(this.gsx$langauge2.$t);
@@ -59,7 +61,8 @@ class TranslationApp extends React.Component {
 				initialCount: langOneArr.length,
 				randomNum: Math.floor(Math.random() * langOneArr.length),
 				randomNum2: (Math.floor(Math.random() * langOneArr.length) - 4),
-				success: ''
+				success: '',
+				currentList: value
 			}))
 			langOneArrInit = langOneArr;
 			langTwoArrInit = langTwoArr;
@@ -76,6 +79,7 @@ class TranslationApp extends React.Component {
 	
 	getCard() {
 		$('#root').removeClass('success').removeClass('incorrect').removeClass('show-answer');
+		$('.modal').hide();
 		if (this.state.success === 'yes') {
 			langOneArr.splice(this.state.randomNum, 1);
 			langTwoArr.splice(this.state.randomNum, 1);
@@ -91,6 +95,9 @@ class TranslationApp extends React.Component {
 		this.handleWordBank();
 		progressWidth = {
 			width: (this.state.initialCount - langOneArr.length) * (100 / this.state.initialCount) + '%'
+		}
+		if(langOneArr.length === 0){
+			$('#success-modal').show();
 		}
 	}
 
@@ -182,6 +189,10 @@ class TranslationApp extends React.Component {
 			const spreadsheetID  = "16PNgsOyvfz6BIpjCqHMtMWBg59qLhyj5TVvmXzSzmPA";
 			this.getData(spreadsheetID);
 			alert('List Changed to Italian Other')
+		} else if (value === 'test') {
+			const spreadsheetID  = "1_qux2HIN3GhyYmaDF2KCg1JAAoe8c6xhPV228mR5hq8";
+			this.getData(spreadsheetID);
+			alert('List Changed to Test List')
 		} else {
 			const spreadsheetID = value;
 			this.getData(spreadsheetID);
@@ -198,8 +209,10 @@ class TranslationApp extends React.Component {
 	render() {
     	return (
 			<div className={"container main-container " + this.state.inputMode}>
+				{/* 
+				----------------------- Top Navigation -----------------------
+				 */}
 				<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-					<a className="navbar-brand" href="#">Options</a>
 					<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 						<span className="navbar-toggler-icon"></span>
 					</button>
@@ -214,6 +227,7 @@ class TranslationApp extends React.Component {
 									<span className="dropdown-item"  onClick={(value) => this.setList('it-basics')}>Italian Basics</span>
 									<span className="dropdown-item" onClick={(value) => this.setList('it-other')}>Italian Other</span>
 									<span className="dropdown-item" onClick={(value) => this.setList('es-basics')}>Spanish</span>
+									<span className="dropdown-item" onClick={(value) => this.setList('test')}>Test List</span>
 									<button type="button" className="dropdown-item" data-toggle="modal" data-target="#custom-list-modal">Load Custom</button>
 								</div>
 							</li>
@@ -229,12 +243,18 @@ class TranslationApp extends React.Component {
 						</ul>
 					</div>
 				</nav>
+				{/* 
+				----------------------- Progress Bar -----------------------
+				 */}
 				<div className="container progress-container">
 					<div className="progress">
 						<div className="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow={this.state.initialCount - langOneArr.length} aria-valuemin="0" aria-valuemax={this.state.initialCount} style={progressWidth} />
 					</div>
 					<span>{langOneArr.length} out of {this.state.initialCount} words left</span>
 				</div>
+				{/* 
+				----------------------- Form -----------------------
+				 */}
 				<form onSubmit={this.handleSubmit} id="form">
 					<h3 onClick={this.switchTranslationMode}>Translate to <span>{this.state.translateMode === "1to2" ? this.state.language1 : this.state.language2}</span>:</h3>
 					<h1 className="lang-from" onClick={this.state.inputMode === 'Flashcard' ? this.showAnswerFc : ''}>"{this.state.langFrom[this.state.randomNum]}"</h1>
@@ -271,7 +291,11 @@ class TranslationApp extends React.Component {
 						<button type="button" onClick={this.getCard} className="btn btn-danger btn-lg">Continue</button>
 					</div>
 				</div>
+				{/* 
+				----------------------- Modals --------------------
+				 */}
 				<div className="modals">
+					{/* Set Custom List Modal */}
 					<div className="modal" id="custom-list-modal" tabindex="-1" role="dialog">
 						<div className="modal-dialog" role="document">
 							<div className="modal-content">
@@ -287,11 +311,36 @@ class TranslationApp extends React.Component {
 							</div>
 							<div className="modal-footer">
 								<button type="button" className="btn btn-primary" onClick={(value) => this.setList(this.state.customListInputValue)}>Load</button>
-								{/* <button type="button" className="btn btn-secondary" id="close-custom-list-modal" data-dismiss="modal">Close</button> */}
 							</div>
 							</div>
 						</div>
+					</div>
+					{/* Success Modal */}
+					<div className="modal" id="success-modal" tabindex="-1" role="dialog">
+						<div className="modal-dialog modal-lg modal-dialog-centered" role="document">
+							<div className="modal-content">
+							<div className="modal-header">
+								<h5 className="modal-title">Congralutations!</h5>
+								<button type="button" className="close" id="close-custom-list-modal" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div className="modal-body">
+								<h3>You've finished the list!</h3>
+								<button className="btn btn-secondary"  onClick={(value) => this.getData(this.state.currentList)}>Repeat List</button>
+								<div className="dropdown">
+									<button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select New</button>
+									<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+										<span className="dropdown-item"  onClick={(value) => this.setList('it-basics')}>Italian Basics</span>
+										<span className="dropdown-item" onClick={(value) => this.setList('it-other')}>Italian Other</span>
+										<span className="dropdown-item" onClick={(value) => this.setList('es-basics')}>Spanish</span>
+										<span className="dropdown-item" onClick={(value) => this.setList('test')}>Test List</span>
+									</div>
+								</div>
+							</div>
+							</div>
 						</div>
+					</div>
 				</div>
 			</div>
 		)
