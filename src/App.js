@@ -8,8 +8,7 @@ import './css/main.scss';
 import {wordBankHelper} from './Functions';
 
 const spreadsheetID  = "1DntQwj2nfvobtxkOExsSMm2DLHQNlzf2q48WhWlMqAM"; // Italian
-//const spreadsheetID  = "1DNL5d4bJXOdAMnWtQesxksF4aTDFjtAV5xnFVfVbc5w"; // Spanish Full
-//const spreadsheetID = "1J9qvr4HrfVHcclbiW8jOCKzDZzu-mLwn8X0ne2EMB-w"; // Spanish Test
+// global vars
 var langOneArr = [];
 var langTwoArr = [];
 var progressWidth = {};
@@ -18,20 +17,23 @@ var langTwoArrInit = [];
 
 class TranslationApp extends React.Component {
   	constructor(props) {
-    	super(props);
+		super(props);
+		// state initialization
     	this.state = {
 			language1: '',
 			language2: '',
-			translationInputValue: '',
-			wordBank: [],
-			inputMode: 'Flashcard',
-			translateMode: '1to2',
 			langFrom: '',
 			langTo: '',
+			translationInputValue: '',
+			wordBank: [],
 			customListInputValue: '',
 			currentList: '',
+			// set default state values
+			translateMode: '1to2',
+			inputMode: 'Flashcard',
 			checkAccents: false
-    	};
+		};
+		// bindings
 		this.getCard = this.getCard.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.keyboardModehandleChange = this.keyboardModehandleChange.bind(this);
@@ -76,6 +78,27 @@ class TranslationApp extends React.Component {
 
 	componentWillMount() {
 		this.getData();
+	}
+	
+	componentDidMount() {
+		document.addEventListener("keydown", event => {
+			// show card on space, up, or down
+			if (event.isComposing || event.keyCode === 32 || event.keyCode === 40 || event.keyCode === 38) {
+				this.showAnswerFc();
+			}
+			// archive card/skip on left or '~'
+			if (event.isComposing || event.keyCode === 37 || event.keyCode === 192) {
+				this.archiveCard();
+			}
+			// go to next card on right or 'enter'
+			if (event.isComposing || event.keyCode === 39 || event.keyCode === 13) {
+				if(this.state.inputMode === 'Flashcard') {
+					this.getCard();
+				} else {
+					this.handleSubmit(event);
+				}
+			}
+		});
 	}
 	
 	getCard() {
@@ -262,7 +285,7 @@ class TranslationApp extends React.Component {
 				{/* 
 				----------------------- Form -----------------------
 				 */}
-				<form onSubmit={this.handleSubmit} id="form">
+				<form  onSubmit={this.handleSubmit}  id="form">
 					<h3 onClick={this.switchTranslationMode}>Translate to <span>{this.state.translateMode === "1to2" ? this.state.language1 : this.state.language2}</span>:</h3>
 					<h1 className="lang-from" onClick={this.state.inputMode === 'Flashcard' ? this.showAnswerFc : ''}>"{this.state.langFrom[this.state.randomNum]}"</h1>
 					{this.state.inputMode === 'Flashcard' && [
@@ -328,9 +351,6 @@ class TranslationApp extends React.Component {
 							<div className="modal-content">
 							<div className="modal-header">
 								<h5 className="modal-title">Congralutations!</h5>
-								{/* <button type="button" className="close" id="close-custom-list-modal" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-								</button> */}
 							</div>
 							<div className="modal-body">
 								<h3>You've finished the list!</h3>
