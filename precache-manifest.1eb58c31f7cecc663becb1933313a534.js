@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c383498eac45f0e4afb697b6b2344db2",
+    "revision": "336998e9e418fcde52d418ba7bfa83d3",
     "url": "/language-learning-app/index.html"
   },
   {
-    "revision": "1a923d297ed276b60ca1",
+    "revision": "15b803e54666959caa7d",
     "url": "/language-learning-app/static/css/main.143150ac.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/language-learning-app/static/js/2.4ee49521.chunk.js"
   },
   {
-    "revision": "1a923d297ed276b60ca1",
-    "url": "/language-learning-app/static/js/main.cddfb394.chunk.js"
+    "revision": "15b803e54666959caa7d",
+    "url": "/language-learning-app/static/js/main.ed2c73ce.chunk.js"
   },
   {
     "revision": "d91ccbcb01fb7dfd3c94",

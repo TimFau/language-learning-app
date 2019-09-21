@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/language-learning-app/static/css/main.143150ac.chunk.css",
-    "main.js": "/language-learning-app/static/js/main.cddfb394.chunk.js",
-    "main.js.map": "/language-learning-app/static/js/main.cddfb394.chunk.js.map",
+    "main.js": "/language-learning-app/static/js/main.ed2c73ce.chunk.js",
+    "main.js.map": "/language-learning-app/static/js/main.ed2c73ce.chunk.js.map",
     "runtime~main.js": "/language-learning-app/static/js/runtime~main.6ed3a6ba.js",
     "runtime~main.js.map": "/language-learning-app/static/js/runtime~main.6ed3a6ba.js.map",
     "static/js/2.4ee49521.chunk.js": "/language-learning-app/static/js/2.4ee49521.chunk.js",
     "static/js/2.4ee49521.chunk.js.map": "/language-learning-app/static/js/2.4ee49521.chunk.js.map",
     "index.html": "/language-learning-app/index.html",
-    "precache-manifest.1957fe3c7af30b08eb537578ea416d7d.js": "/language-learning-app/precache-manifest.1957fe3c7af30b08eb537578ea416d7d.js",
+    "precache-manifest.1eb58c31f7cecc663becb1933313a534.js": "/language-learning-app/precache-manifest.1eb58c31f7cecc663becb1933313a534.js",
     "service-worker.js": "/language-learning-app/service-worker.js",
     "static/css/main.143150ac.chunk.css.map": "/language-learning-app/static/css/main.143150ac.chunk.css.map"
   }
