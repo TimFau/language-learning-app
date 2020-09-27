@@ -1,7 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
 import 'bootstrap/dist/js/bootstrap.js';
-//import logo from './logo.svg';
 import './css/custom.scss';
 import './css/main.scss';
 import {wordBankHelper} from './Functions';
@@ -9,6 +8,9 @@ import Nav from './components/Nav';
 import ProgressBar from './components/ProgressBar';
 import Modals from './components/Modals';
 import ButtonsContainer from './components/ButtonsContainer';
+import FlashCard from './components/Modes/FlashCard';
+import WordBank from './components/Modes/WordBank';
+import Keyboard from './components/Modes/Keyboard';
 
 // global vars
 var langOneArr = [];
@@ -101,6 +103,7 @@ class TranslationApp extends React.Component {
 				}
 			}
 		});
+		console.log(this.props)
 	}
 	
 	getCard() {
@@ -192,13 +195,13 @@ class TranslationApp extends React.Component {
 			this.setState({
 				translateMode: '2to1'
 			}, () => {
-				// this.getCard();
+				this.getCard();
 			})
 		} else {
 			this.setState({
 				translateMode: '1to2'
 			}, () => {
-				// this.getCard();
+				this.getCard();
 			})
 		}
 	}
@@ -250,37 +253,53 @@ class TranslationApp extends React.Component {
 					progressWidth={progressWidth}
 					initialCount={this.state.initialCount}
 				/>
-				<form  onSubmit={this.handleSubmit}  id="form">
+				<form onSubmit={this.handleSubmit}  id="form">
 					<h3 onClick={this.switchTranslationMode}>Translate to <span>{this.state.translateMode === "1to2" ? this.state.language1 : this.state.language2}</span>:</h3>
-					<h1 className="lang-from" onClick={this.state.inputMode === 'Flashcard' ? this.showAnswerFc : ''}>"{this.state.langFrom[this.state.randomNum]}"</h1>
-					{this.state.inputMode === 'Flashcard' && [
-						<h1 className="lang-to" onClick={this.showAnswerFc}>"{this.state.langTo[this.state.randomNum]}"</h1>,
-						<i className="material-icons swap-card" onClick={this.showAnswerFc}>swap_vertical_circle</i>,
-						<span className="navigate-next" onClick={this.getCard}><i className="material-icons">navigate_next</i></span>,
-						<span className="archive" onClick={this.archiveCard}><i className="material-icons">archive</i></span>
-					]}
-					{<input type="text" placeholder="Enter translation" value={this.state.translationInputValue} onChange={this.keyboardModehandleChange} className="form-control" />}
-					<div className="list-group word-bank">
-						{
-						this.state.wordBank.map((word) =>
-						<button type="button" className="list-group-item" value={word}  onClick={this.keyboardModehandleChange}>{word} <a className="google-translate" href={"https://translate.google.com/#view=home&textMi%20chaimo%20Tim&text=" + word + "&op=translate&sl=it&tl=en"} target="_blank"><i className="material-icons">
-						g_translate</i></a></button>
-						)}
-					</div>
+					{this.state.inputMode === 'Flashcard' ?
+						<FlashCard 
+						showAnswerFc={this.showAnswerFc}
+						getCard={this.getCard}
+						archiveCard={this.archiveCard}
+						langTo={this.state.langTo}
+						langFrom={this.state.langFrom}
+						randomNum={this.state.randomNum}
+						/>
+					: null }
+					{this.state.inputMode === 'Keyboard' ?
+						<Keyboard 
+						langTo={this.state.langTo}
+						langFrom={this.state.langFrom}
+						randomNum={this.state.randomNum}
+						translationInputValue={this.state.translationInputValue}
+						keyboardModehandleChange={this.keyboardModehandleChange}
+						/>
+					: null }
+					{this.state.inputMode === 'Wordbank' ?
+						<WordBank 
+							langTo={this.state.langTo}
+							langFrom={this.state.langFrom}
+							randomNum={this.state.randomNum}
+							wordBank={this.state.wordBank}
+							keyboardModehandleChange={this.keyboardModehandleChange}
+						/>
+					: null }
 				</form>
-				<ButtonsContainer 
-					handleSubmit={this.handleSubmit}
-					translateMode={this.state.translateMode}
-					getCard={this.getCard}
-					randomNum={this.state.randomNum}
-					langOneArr={langOneArr}
-					langTwoArr={langTwoArr}
-				/>
+				{this.state.inputMode !== 'Flashcard' ?
+					<ButtonsContainer 
+						handleSubmit={this.handleSubmit}
+						translateMode={this.state.translateMode}
+						getCard={this.getCard}
+						randomNum={this.state.randomNum}
+						langOneArr={langOneArr}
+						langTwoArr={langTwoArr}
+					/>
+				: null }
 				<Modals 
 					customListInputValue={this.state.customListInputValue}
 					customListhandleChange={this.customListhandleChange}
 					setList={this.setList}
-					getData={this.getData}
+					getData={this.getData.bind(this)}
+					currentList={this.state.currentList}
 				/>
 			</div>
 		)

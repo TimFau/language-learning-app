@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Modals({customListInputValue, customListhandleChange, setList, getData}) {
+const modals = (props) => {
     return (
         <div className="modals">
             {/* Set Custom List Modal */}
@@ -15,10 +15,10 @@ export default function Modals({customListInputValue, customListhandleChange, se
                     </div>
                     <div className="modal-body">
                         <p>Enter list ID from Google Sheets Document.</p>
-                        <input value={customListInputValue} onChange={customListhandleChange} placeholder="ID Here"></input>
+                        <input value={props.customListInputValue} onChange={props.customListhandleChange} placeholder="ID Here"></input>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-primary" onClick={(value) => setList(customListInputValue)}>Load</button>
+                        <button type="button" className="btn btn-primary" onClick={(value) => props.setList(props.customListInputValue)}>Load</button>
                     </div>
                     </div>
                 </div>
@@ -32,14 +32,14 @@ export default function Modals({customListInputValue, customListhandleChange, se
                     </div>
                     <div className="modal-body">
                         <h3>You've finished the list!</h3>
-                        <button className="btn btn-secondary"  onClick={(value) => getData(this.state.currentList)}>Repeat List</button>
+                        <button className="btn btn-secondary"  onClick={(value) => props.getData(props.currentList)}>Repeat List</button>
                         <div className="dropdown">
                             <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select New</button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <span className="dropdown-item"  onClick={(value) => setList('it-basics')}>Italian Basics</span>
-                                <span className="dropdown-item" onClick={(value) => setList('it-other')}>Italian Other</span>
-                                <span className="dropdown-item" onClick={(value) => setList('es-basics')}>Spanish</span>
-                                <span className="dropdown-item" onClick={(value) => setList('test')}>Test List</span>
+                                <span className="dropdown-item"  onClick={(value) => props.setList('it-basics')}>Italian Basics</span>
+                                <span className="dropdown-item" onClick={(value) => props.setList('it-other')}>Italian Other</span>
+                                <span className="dropdown-item" onClick={(value) => props.setList('es-basics')}>Spanish</span>
+                                <span className="dropdown-item" onClick={(value) => props.setList('test')}>Test List</span>
                             </div>
                         </div>
                     </div>
@@ -49,3 +49,5 @@ export default function Modals({customListInputValue, customListhandleChange, se
         </div>
     )
 }
+
+export default modals;

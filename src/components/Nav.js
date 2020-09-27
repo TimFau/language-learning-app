@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Nav({setList, switchInput}) {
+const nav = (props) => {
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -15,19 +15,19 @@ export default function Nav({setList, switchInput}) {
                     <li className="nav-item dropdown">
                         <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select List</a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <span className="dropdown-item"  onClick={(value) => setList('it-basics')}>Italian Basics</span>
-                            <span className="dropdown-item" onClick={(value) => setList('it-other')}>Italian Other</span>
-                            <span className="dropdown-item" onClick={(value) => setList('es-basics')}>Spanish</span>
-                            <span className="dropdown-item" onClick={(value) => setList('test')}>Test List</span>
+                            <span className="dropdown-item"  onClick={(value) => props.setList('it-basics')}>Italian Basics</span>
+                            <span className="dropdown-item" onClick={(value) => props.setList('it-other')}>Italian Other</span>
+                            <span className="dropdown-item" onClick={(value) => props.setList('es-basics')}>Spanish</span>
+                            <span className="dropdown-item" onClick={(value) => props.setList('test')}>Test List</span>
                             <button type="button" className="dropdown-item" data-toggle="modal" data-target="#custom-list-modal">Load Custom</button>
                         </div>
                     </li>
                     <li className="nav-item dropdown">
                         <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Input Mode</a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <span className="dropdown-item" onClick={(Keyboard) => switchInput('Flashcard')}>Flashcard</span>
-                            <span className="dropdown-item" onClick={(Keyboard) => switchInput('Keyboard')}>Keyboard</span>
-                            <span className="dropdown-item" onClick={(Keyboard) => switchInput('Wordbank')}>Wordbank</span>
+                            <span className="dropdown-item" onClick={(Keyboard) => props.switchInput('Flashcard')}>Flashcard</span>
+                            <span className="dropdown-item" onClick={(Keyboard) => props.switchInput('Keyboard')}>Keyboard</span>
+                            <span className="dropdown-item" onClick={(Keyboard) => props.switchInput('Wordbank')}>Wordbank</span>
                             
                         </div>
                     </li>
@@ -37,3 +37,5 @@ export default function Nav({setList, switchInput}) {
     </div>
     )
 }
+
+export default nav;
