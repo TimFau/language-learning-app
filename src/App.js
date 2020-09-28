@@ -1,5 +1,4 @@
 import React from 'react';
-import $ from 'jquery';
 import 'bootstrap/dist/js/bootstrap.js';
 import './css/custom.scss';
 import './css/main.scss';
@@ -54,30 +53,34 @@ class TranslationApp extends React.Component {
 		if (value === undefined) {
 			value = "1DntQwj2nfvobtxkOExsSMm2DLHQNlzf2q48WhWlMqAM"
 		}
-		$.get("https://spreadsheets.google.com/feeds/list/" + value + "/od6/public/values?alt=json", function(json) {
-			langOneArr = [];
-			langTwoArr = [];
-			progressWidth = {};
-			$(json.feed.entry).each(function(){
-				langOneArr.push(this.gsx$language1.$t);
-				langTwoArr.push(this.gsx$langauge2.$t);
+		let request = "https://spreadsheets.google.com/feeds/list/" + value + "/od6/public/values?alt=json";
+		fetch(request, {mode: 'cors'})
+			.then( response => {
+				return response.json();
 			})
-			this.setState(state => ({
-				language1: langOneArr.shift(),
-				language2: langTwoArr.shift(),
-				initialCount: langOneArr.length,
-				randomNum: Math.floor(Math.random() * langOneArr.length),
-				randomNum2: (Math.floor(Math.random() * langOneArr.length) - 4),
-				success: '',
-				currentList: value
-			}))
-			langOneArrInit = langOneArr.slice();
-			langTwoArrInit = langTwoArr.slice();
-			this.handleWordBank();
-			this.getCard();
-		}.bind(this)
-		
-		);
+			.then( data => {
+				console.log(data.feed.entry)
+				langOneArr = [];
+				langTwoArr = [];
+				progressWidth = {};
+				data.feed.entry.forEach(function(item){
+					langOneArr.push(item.gsx$language1.$t);
+					langTwoArr.push(item.gsx$langauge2.$t);
+				})
+				this.setState(state => ({
+					language1: langOneArr.shift(),
+					language2: langTwoArr.shift(),
+					initialCount: langOneArr.length,
+					randomNum: Math.floor(Math.random() * langOneArr.length),
+					randomNum2: (Math.floor(Math.random() * langOneArr.length) - 4),
+					success: '',
+					currentList: value
+				}))
+				langOneArrInit = langOneArr.slice();
+				langTwoArrInit = langTwoArr.slice();
+				this.handleWordBank();
+				this.getCard();
+			})//.bind(this);
 	}
 
 	componentWillMount() {
@@ -107,8 +110,8 @@ class TranslationApp extends React.Component {
 	}
 	
 	getCard() {
-		$('#root').removeClass('success').removeClass('incorrect').removeClass('show-answer');
-		$('.modal').hide();
+		document.getElementById('root').classList.remove('success','incorrect','show-answer');
+		document.querySelectorAll('.modal').forEach(modal => {modal.style.display = "none"})
 		if (this.state.success === 'yes') {
 			langOneArr.splice(this.state.randomNum, 1);
 			langTwoArr.splice(this.state.randomNum, 1);
@@ -126,14 +129,14 @@ class TranslationApp extends React.Component {
 			width: (this.state.initialCount - langOneArr.length) * (100 / this.state.initialCount) + '%'
 		}
 		if(langOneArr.length === 0){
-			$('#success-modal').show();
+			document.getElementById('success-modal').style.display = "block";
 		}
 	}
 
 	archiveCard() {
 		langOneArr.splice(this.state.randomNum, 1) ;
 		langTwoArr.splice(this.state.randomNum, 1);
-		$('#root').removeClass('show-answer');
+		document.getElementById('root').classList.remove('show-answer');
 		this.getCard();
 	}
 
@@ -163,14 +166,14 @@ class TranslationApp extends React.Component {
 			inputValueRegex = inputValueRegex.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 			correctAnswerRegex = correctAnswerRegex.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 		}
-		if (this.state.success === 'yes' || $('.success, .incorrect')[0]) {
+		if (this.state.success === 'yes') {
 			this.getCard();
 		}
 		else if (inputValueRegex === correctAnswerRegex) {
-			$('#root').addClass('success');
+			document.getElementById('root').classList.add('success');
 			this.setState({success: 'yes'})
 		}  else {
-			$('#root').addClass('incorrect');
+			document.getElementById('root').classList.add('incorrect');
 		}
 	}
 
@@ -207,7 +210,7 @@ class TranslationApp extends React.Component {
 	}
 
 	showAnswerFc() {
-		$('#root').toggleClass('show-answer');
+		document.getElementById('root').classList.toggle('show-answer');
 	}
 
 	setList(value) {
@@ -231,7 +234,7 @@ class TranslationApp extends React.Component {
 		} else {
 			let spreadsheetID = value;
 			this.getData(spreadsheetID);
-			$('#close-custom-list-modal').click();
+			document.getElementById('close-custom-list-modal').click();
 			alert('List Changed to custom list')
 
 		}
@@ -247,6 +250,10 @@ class TranslationApp extends React.Component {
 				<Nav 
 					setList={this.setList}
 					switchInput={this.switchInput}
+					switchTranslationMode={this.switchTranslationMode}
+					language1={this.state.language1}
+					language2={this.state.language2}
+					translateMode={this.state.translateMode}
 				/>
 				<ProgressBar 
 					langOneArrLength={langOneArr.length}
@@ -254,7 +261,7 @@ class TranslationApp extends React.Component {
 					initialCount={this.state.initialCount}
 				/>
 				<form onSubmit={this.handleSubmit}  id="form">
-					<h3 onClick={this.switchTranslationMode}>Translate to <span>{this.state.translateMode === "1to2" ? this.state.language1 : this.state.language2}</span>:</h3>
+					<h3>Translate to <span>{this.state.translateMode === "1to2" ? this.state.language1 : this.state.language2}</span>:</h3>
 					{this.state.inputMode === 'Flashcard' ?
 						<FlashCard 
 						showAnswerFc={this.showAnswerFc}

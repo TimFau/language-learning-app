@@ -9,9 +9,6 @@ const nav = (props) => {
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav">
-                    {/* <li className="nav-item active">
-                        <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
-                    </li> */}
                     <li className="nav-item dropdown">
                         <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select List</a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -28,7 +25,16 @@ const nav = (props) => {
                             <span className="dropdown-item" onClick={(Keyboard) => props.switchInput('Flashcard')}>Flashcard</span>
                             <span className="dropdown-item" onClick={(Keyboard) => props.switchInput('Keyboard')}>Keyboard</span>
                             <span className="dropdown-item" onClick={(Keyboard) => props.switchInput('Wordbank')}>Wordbank</span>
-                            
+                        </div>
+                    </li>
+                    <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Translation Mode</a>
+                        <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            {props.translateMode === "1to2" ? 
+                            <span className="dropdown-item" onClick={props.switchTranslationMode}>{props.language1} to {props.language2}</span>
+                            :
+                            <span className="dropdown-item" onClick={props.switchTranslationMode}>{props.language2} to {props.language1}</span>
+                            }
                         </div>
                     </li>
                 </ul>
