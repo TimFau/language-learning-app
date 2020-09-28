@@ -34,7 +34,8 @@ class TranslationApp extends React.Component {
 			// set default state values
 			translateMode: '1to2',
 			inputMode: 'Flashcard',
-			checkAccents: false
+			checkAccents: false,
+			dataLoaded: false
 		};
 		// bindings
 		this.getCard = this.getCard.bind(this);
@@ -80,6 +81,7 @@ class TranslationApp extends React.Component {
 				langTwoArrInit = langTwoArr.slice();
 				this.handleWordBank();
 				this.getCard();
+				this.setState({ dataLoaded: true })
 			})//.bind(this);
 	}
 
@@ -160,8 +162,8 @@ class TranslationApp extends React.Component {
 	
 	handleSubmit(event) {
 		event.preventDefault();
-		var inputValueRegex = this.state.translationInputValue.toLowerCase().trim();
-		var correctAnswerRegex = this.state.langTo[this.state.randomNum].toLowerCase().trim()
+		var inputValueRegex = this.state.translationInputValue.toLowerCase().trim().replace(/\./g,'');
+		var correctAnswerRegex = this.state.langTo[this.state.randomNum].toLowerCase().trim().replace(/\./g,'');
 		if(this.state.checkAccents === false) {
 			inputValueRegex = inputValueRegex.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 			correctAnswerRegex = correctAnswerRegex.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -255,42 +257,52 @@ class TranslationApp extends React.Component {
 					language2={this.state.language2}
 					translateMode={this.state.translateMode}
 				/>
-				<ProgressBar 
-					langOneArrLength={langOneArr.length}
-					progressWidth={progressWidth}
-					initialCount={this.state.initialCount}
-				/>
-				<form onSubmit={this.handleSubmit}  id="form">
-					<h3>Translate to <span>{this.state.translateMode === "1to2" ? this.state.language1 : this.state.language2}</span>:</h3>
-					{this.state.inputMode === 'Flashcard' ?
-						<FlashCard 
-						showAnswerFc={this.showAnswerFc}
-						getCard={this.getCard}
-						archiveCard={this.archiveCard}
-						langTo={this.state.langTo}
-						langFrom={this.state.langFrom}
-						randomNum={this.state.randomNum}
-						/>
-					: null }
-					{this.state.inputMode === 'Keyboard' ?
-						<Keyboard 
-						langTo={this.state.langTo}
-						langFrom={this.state.langFrom}
-						randomNum={this.state.randomNum}
-						translationInputValue={this.state.translationInputValue}
-						keyboardModehandleChange={this.keyboardModehandleChange}
-						/>
-					: null }
-					{this.state.inputMode === 'Wordbank' ?
-						<WordBank 
+				{this.state.dataLoaded ?
+				<div className="wrapper">
+					<ProgressBar 
+						langOneArrLength={langOneArr.length}
+						progressWidth={progressWidth}
+						initialCount={this.state.initialCount}
+					/>
+					<form onSubmit={this.handleSubmit}  id="form">
+						<h3>Translate to <span>{this.state.translateMode === "1to2" ? this.state.language1 : this.state.language2}</span>:</h3>
+						{this.state.inputMode === 'Flashcard' ?
+							<FlashCard 
+							showAnswerFc={this.showAnswerFc}
+							getCard={this.getCard}
+							archiveCard={this.archiveCard}
 							langTo={this.state.langTo}
 							langFrom={this.state.langFrom}
 							randomNum={this.state.randomNum}
-							wordBank={this.state.wordBank}
+							/>
+						: null }
+						{this.state.inputMode === 'Keyboard' ?
+							<Keyboard 
+							langTo={this.state.langTo}
+							langFrom={this.state.langFrom}
+							randomNum={this.state.randomNum}
+							translationInputValue={this.state.translationInputValue}
 							keyboardModehandleChange={this.keyboardModehandleChange}
-						/>
-					: null }
-				</form>
+							/>
+						: null }
+						{this.state.inputMode === 'Wordbank' ?
+							<WordBank 
+								langTo={this.state.langTo}
+								langFrom={this.state.langFrom}
+								randomNum={this.state.randomNum}
+								wordBank={this.state.wordBank}
+								keyboardModehandleChange={this.keyboardModehandleChange}
+							/>
+						: null }
+					</form>
+				</div>
+				: 
+				<div className="spinner">
+					<div className="spinner-border" role="status">
+					<span className="sr-only">Loading...</span>
+					</div>
+				</div>
+				}
 				{this.state.inputMode !== 'Flashcard' ?
 					<ButtonsContainer 
 						handleSubmit={this.handleSubmit}

@@ -201,6 +201,9 @@ form {
 		color: $white;
 		box-shadow: 2px 2px #efefef;
 		margin: 0;
+		@media screen and (min-width: 660px) {
+			padding: 100px 75px;
+		}
 	}
 	.swap-card, .navigate-next, .archive{
 		position: absolute;
@@ -267,4 +270,11 @@ form {
 	.dropdown {
 		display: inline;
 	}
+}
+
+// Misc
+.spinner {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
 }
