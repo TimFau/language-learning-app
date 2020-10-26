@@ -194,58 +194,17 @@ form {
 	.word-bank, .form-control, .button-container {
 		display: none;
 	}
-	h1.lang-from, h1.lang-to {
-		padding: 100px 25px;
-		background: $blue;
-		border-radius: 10px;
-		color: $white;
-		box-shadow: 2px 2px #efefef;
-		margin: 0;
-		@media screen and (min-width: 660px) {
-			padding: 100px 75px;
+	.btn-group {
+		padding: 10px;
+		button {
+			width: 200px;
 		}
 	}
-	.swap-card, .navigate-next, .archive{
-		position: absolute;
-		cursor: pointer;
-		i {
-			font-size: 50px;
-		}
+	.card {
+		padding: 10px;
 	}
-	.swap-card {
-		right: 50%;
-		transform: translate(50%, -37%);
-		font-size: 170px;
-		opacity: .2;
-		top: 50%;
-	}
-	.navigate-next {
-		bottom: 0%;
-		right: 0;
-		padding: 96px 15px 96px 20px;
-		&:hover {
-			@media screen and (min-width: 660px){
-				background: #80808047;
-				border-radius: 0 10px 10px 0;
-			}
-		}
-		@media screen and (max-width: 660px){
-			padding: 0;
-		}
-	}
-	.archive {
-		bottom: 0%;
-		left: 0;
-		padding: 96px 15px 96px 20px;
-		&:hover {
-			@media screen and (min-width: 660px){
-				background: #80808047;
-				border-radius: 10px 0px 0px 10px;
-			}
-		}
-		@media screen and (max-width: 660px){
-			padding: 0 0 0 8px;
-		}
+	h1 {
+		padding: 25px 0;
 	}
 	.show-answer &{
 		h1.lang-from {
@@ -277,4 +236,11 @@ form {
 	position: relative;
 	top: 50%;
 	transform: translateY(-50%);
+}
+.btn {
+	.material-icons {
+		position: absolute;
+		top: 7px;
+		margin-left: 5px;
+	}
 }
