@@ -1,15 +1,12 @@
 import React from 'react';
-import 'bootstrap/dist/js/bootstrap.js';
-import './css/custom.scss';
+import ReactDOM from 'react-dom';
 import './css/main.scss';
 import {wordBankHelper} from './Functions';
 import Nav from './components/Nav';
 import ProgressBar from './components/ProgressBar';
-import Modals from './components/Modals';
 import ButtonsContainer from './components/ButtonsContainer';
-import FlashCard from './components/Modes/FlashCard';
-import WordBank from './components/Modes/WordBank';
-import Keyboard from './components/Modes/Keyboard';
+import Form from './components/Form';
+import DeckSelector from './components/DeckSelector';
 
 // global vars
 var langOneArr = [];
@@ -29,24 +26,29 @@ class TranslationApp extends React.Component {
 			langTo: '',
 			translationInputValue: '',
 			wordBank: [],
-			customListInputValue: '',
 			currentList: '',
 			// set default state values
 			translateMode: '1to2',
 			inputMode: 'Flashcard',
 			checkAccents: false,
-			dataLoaded: false
+			dataLoaded: false,
+			showAnswer: false,
+			deckStarted: false,
+			success: false,
+			incorrect: false
 		};
 		// bindings
 		this.getCard = this.getCard.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.keyboardModehandleChange = this.keyboardModehandleChange.bind(this);
+		this.keyboardModeHandleChange = this.keyboardModeHandleChange.bind(this);
 		this.switchInput = this.switchInput.bind(this);
 		this.switchTranslationMode = this.switchTranslationMode.bind(this);
 		this.showAnswerFc = this.showAnswerFc.bind(this);
 		this.archiveCard = this.archiveCard.bind(this);
 		this.setList = this.setList.bind(this);
-		this.customListhandleChange = this.customListhandleChange.bind(this);
+		this.goToDeckSelector = this.goToDeckSelector.bind(this);
+		this.setTranslationMode1 = this.setTranslationMode1.bind(this);
+		this.setTranslationMode2 = this.setTranslationMode2.bind(this);
 	}
 	  
 	getData(value) {
@@ -74,7 +76,8 @@ class TranslationApp extends React.Component {
 					initialCount: langOneArr.length,
 					randomNum: Math.floor(Math.random() * langOneArr.length),
 					randomNum2: (Math.floor(Math.random() * langOneArr.length) - 4),
-					success: '',
+					success: false,
+					incorrect: false,
 					currentList: value
 				}))
 				langOneArrInit = langOneArr.slice();
@@ -92,8 +95,8 @@ class TranslationApp extends React.Component {
 	componentDidMount() {
 		document.addEventListener("keydown", event => {
 			// show card on space, up, or down
-			if (event.isComposing || event.keyCode === 32 || event.keyCode === 40 || event.keyCode === 38) {
-				this.showAnswerFc();
+			if (event.isComposing || event.keyCode === 40 || event.keyCode === 38) {
+				this.setState({showAnswer: true})
 			}
 			// archive card/skip on left or '~'
 			if (event.isComposing || event.keyCode === 37 || event.keyCode === 192) {
@@ -112,33 +115,34 @@ class TranslationApp extends React.Component {
 	}
 	
 	getCard() {
-		document.getElementById('root').classList.remove('success','incorrect','show-answer');
+		console.log('getCard');
 		document.querySelectorAll('.modal').forEach(modal => {modal.style.display = "none"})
-		if (this.state.success === 'yes') {
+		if (this.state.success) {
 			langOneArr.splice(this.state.randomNum, 1);
 			langTwoArr.splice(this.state.randomNum, 1);
 		}
 		this.setState((state, props) =>  ({
 			randomNum: Math.floor(Math.random() * langOneArr.length),
 			randomNum2: Math.floor(Math.random() * langOneArrInit.length),
-			success: '',
+			success: false,
+			incorrect: false,
 			translationInputValue: '',
 			langFrom: this.state.translateMode === '1to2' ? langOneArr : langTwoArr,
 			langTo: this.state.translateMode === '1to2' ? langTwoArr : langOneArr,
+			showAnswer: false
 		}));
 		this.handleWordBank();
 		progressWidth = {
 			width: (this.state.initialCount - langOneArr.length) * (100 / this.state.initialCount) + '%'
 		}
-		if(langOneArr.length === 0){
-			document.getElementById('success-modal').style.display = "block";
-		}
+		// if(langOneArr.length === 0){
+		// 	document.getElementById('success-modal').style.display = "block";
+		// }
 	}
 
 	archiveCard() {
-		langOneArr.splice(this.state.randomNum, 1) ;
+		langOneArr.splice(this.state.randomNum, 1);
 		langTwoArr.splice(this.state.randomNum, 1);
-		document.getElementById('root').classList.remove('show-answer');
 		this.getCard();
 	}
 
@@ -156,8 +160,10 @@ class TranslationApp extends React.Component {
 		})
 	}
 	
-	keyboardModehandleChange(event) {
-		this.setState({translationInputValue: event.target.value})
+	keyboardModeHandleChange(e) {
+		console.log('keyboardModeHandleChange');
+		console.log(e.currentTarget.value);
+		this.setState({translationInputValue: e.currentTarget.value})
 	}
 	
 	handleSubmit(event) {
@@ -168,15 +174,16 @@ class TranslationApp extends React.Component {
 			inputValueRegex = inputValueRegex.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 			correctAnswerRegex = correctAnswerRegex.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 		}
-		if (this.state.success === 'yes') {
-			this.getCard();
-		}
-		else if (inputValueRegex === correctAnswerRegex) {
-			document.getElementById('root').classList.add('success');
-			this.setState({success: 'yes'})
+		console.log(inputValueRegex, correctAnswerRegex);
+		console.log(inputValueRegex === correctAnswerRegex);
+		if (inputValueRegex === correctAnswerRegex) {
+			this.setState({success: true})
+			console.log('if', this.state.success)
 		}  else {
-			document.getElementById('root').classList.add('incorrect');
+			this.setState({incorrect: true})
+			console.log('else', this.state.success)
 		}
+		this.setState({showAnswer: true});
 	}
 
 	switchInput(value) {
@@ -193,6 +200,18 @@ class TranslationApp extends React.Component {
 				inputMode: 'Flashcard'
 			})
 		}
+	}
+
+	setTranslationMode1() {
+		this.setState({
+			translateMode: '1to2'
+		})
+	}
+
+	setTranslationMode2() {
+		this.setState({
+			translateMode: '2to1'
+		})
 	}
 
 	switchTranslationMode() {
@@ -212,38 +231,25 @@ class TranslationApp extends React.Component {
 	}
 
 	showAnswerFc() {
-		document.getElementById('root').classList.toggle('show-answer');
+		console.log('showAnswerFc');
+		this.setState({showAnswer: true})
 	}
 
-	setList(value) {
-		if (value === 'es-basics') {
-			let spreadsheetID = "1DNL5d4bJXOdAMnWtQesxksF4aTDFjtAV5xnFVfVbc5w";
-			this.getData(spreadsheetID);
-			this.getCard();
-			alert('List Changed to Spanish Basics')
-		} else if (value === 'it-basics') {
-			let spreadsheetID  = "1DntQwj2nfvobtxkOExsSMm2DLHQNlzf2q48WhWlMqAM";
-			this.getData(spreadsheetID);
-			alert('List Changed to Italian Basics')
-		} else if (value === 'it-other') {
-			let spreadsheetID  = "16PNgsOyvfz6BIpjCqHMtMWBg59qLhyj5TVvmXzSzmPA";
-			this.getData(spreadsheetID);
-			alert('List Changed to Italian Other')
-		} else if (value === 'test') {
-			let spreadsheetID  = "1_qux2HIN3GhyYmaDF2KCg1JAAoe8c6xhPV228mR5hq8";
-			this.getData(spreadsheetID);
-			alert('List Changed to Test List')
-		} else {
-			let spreadsheetID = value;
-			this.getData(spreadsheetID);
-			document.getElementById('close-custom-list-modal').click();
-			alert('List Changed to custom list')
-
-		}
+	goToDeckSelector() {
+		this.setState({
+			deckStarted: false
+		})
 	}
 
-	customListhandleChange(event) {
-		this.setState({customListInputValue: event.target.value})
+	setList = (listId) => {
+		console.log('setList')
+		console.log(listId)
+		let spreadsheetID = listId;
+		this.getData(spreadsheetID);
+		this.setState({
+			deckStarted: true
+		})
+		console.log(listId)
 	}
 	
 	render() {
@@ -256,54 +262,49 @@ class TranslationApp extends React.Component {
 					language1={this.state.language1}
 					language2={this.state.language2}
 					translateMode={this.state.translateMode}
+					goToDeckSelector={this.goToDeckSelector}
 				/>
-				{this.state.dataLoaded ?
-				<div className="wrapper">
+				{this.state.deckStarted ?
+				<Form
+					dataLoaded={this.state.dataLoaded}
+					handleSubmit={this.handleSubmit}
+					inputMode={this.state.inputMode}
+					showAnswerFc={this.showAnswerFc}
+					showAnswer={this.state.showAnswer}
+					getCard={this.getCard}
+					archiveCard={this.archiveCard}
+					langTo={this.state.langTo}
+					langFrom={this.state.langFrom}
+					randomNum={this.state.randomNum}
+					translateMode={this.state.translateMode}
+					language1={this.state.language1}
+					language2={this.state.language2}
+					translationInputValue={this.state.translationInputValue}
+					keyboardModeHandleChange={this.keyboardModeHandleChange}
+					wordBank={this.state.wordBank}
+					goToDeckSelector={this.goToDeckSelector}
+					langOneArrLength={langOneArr.length}
+				>
 					<ProgressBar 
-						langOneArrLength={langOneArr.length}
-						progressWidth={progressWidth}
-						initialCount={this.state.initialCount}
+					langOneArrLength={langOneArr.length}
+					progressWidth={progressWidth}
+					initialCount={this.state.initialCount}
 					/>
-					<form onSubmit={this.handleSubmit}  id="form">
-						<h3>Translate to <span>{this.state.translateMode === "1to2" ? this.state.language1 : this.state.language2}</span>:</h3>
-						{this.state.inputMode === 'Flashcard' ?
-							<FlashCard 
-							showAnswerFc={this.showAnswerFc}
-							getCard={this.getCard}
-							archiveCard={this.archiveCard}
-							langTo={this.state.langTo}
-							langFrom={this.state.langFrom}
-							randomNum={this.state.randomNum}
-							/>
-						: null }
-						{this.state.inputMode === 'Keyboard' ?
-							<Keyboard 
-							langTo={this.state.langTo}
-							langFrom={this.state.langFrom}
-							randomNum={this.state.randomNum}
-							translationInputValue={this.state.translationInputValue}
-							keyboardModehandleChange={this.keyboardModehandleChange}
-							/>
-						: null }
-						{this.state.inputMode === 'Wordbank' ?
-							<WordBank 
-								langTo={this.state.langTo}
-								langFrom={this.state.langFrom}
-								randomNum={this.state.randomNum}
-								wordBank={this.state.wordBank}
-								keyboardModehandleChange={this.keyboardModehandleChange}
-							/>
-						: null }
-					</form>
-				</div>
+				</Form>
 				: 
-				<div className="spinner">
-					<div className="spinner-border" role="status">
-					<span className="sr-only">Loading...</span>
-					</div>
-				</div>
+				<DeckSelector 
+					language1={this.state.language1}
+					language2={this.state.language2}
+					setList={this.setList}
+					translateMode={this.state.translateMode}
+					setTranslationMode1={this.setTranslationMode1}
+					setTranslationMode2={this.setTranslationMode2}
+					switchInput={this.switchInput}
+				>
+					
+				</DeckSelector>
 				}
-				{this.state.inputMode !== 'Flashcard' ?
+				{this.state.inputMode !== 'Flashcard' && this.state.deckStarted ?
 					<ButtonsContainer 
 						handleSubmit={this.handleSubmit}
 						translateMode={this.state.translateMode}
@@ -311,15 +312,11 @@ class TranslationApp extends React.Component {
 						randomNum={this.state.randomNum}
 						langOneArr={langOneArr}
 						langTwoArr={langTwoArr}
+						success={this.state.success}
+						incorrect={this.state.incorrect}
+						showAnswer={this.state.showAnswer}
 					/>
 				: null }
-				<Modals 
-					customListInputValue={this.state.customListInputValue}
-					customListhandleChange={this.customListhandleChange}
-					setList={this.setList}
-					getData={this.getData.bind(this)}
-					currentList={this.state.currentList}
-				/>
 			</div>
 		)
 	}

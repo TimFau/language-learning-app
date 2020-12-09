@@ -1,9 +1,6 @@
 @import 'custom';
 
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
 }
 #root {
@@ -20,7 +17,6 @@ body {
 	}
 	input {
 		margin: 0 auto;
-		margin-top: 20px;
 		width: 90%;
 		@media screen and (min-width: 660px) {
 			width: 350px;
@@ -38,7 +34,30 @@ body {
 		left: 0;
 	}
 }
-form {
+header{
+	.MuiToolbar-root button {
+		color: #fff;
+	}
+}
+.deck-selector {
+	h1 {
+		margin-bottom: 5px;
+	}
+	.MuiGrid-container {
+		margin: 50px 0;
+	}
+	.MuiCard-root {
+		width: 250px;
+		margin: 10px;
+		text-align: left;
+	}
+}
+.deck-dialog {
+	.MuiFormControl-root {
+		margin-bottom: 15px;
+	}
+}
+#mainApp {
 	position: fixed;
 	width: 100%;
 	left: 50%;
@@ -47,41 +66,11 @@ form {
 	@media screen and (max-height: 700px) {
 		top: 60%;
 	}
-	h1.lang-to{
-		display: none;
-	}
-	h3 {
-		width: fit-content;
-		position: relative;
-		margin: 0 auto;
-		padding-bottom: 10px;
-		&:hover .switch-icon {
-			display: inline;
-		}
-	}
-	h4 {
-		color: grey;
-	}
-	@media screen and (max-width: 660px) {
-		h1 {
-			font-size: 2em;
-		}
-	}
-	span{
-		color: $blue;
-	}
-	.switch-icon {
-		color: $blue;
-		display: none;
-		padding-right: 6px;
-	}
-	.material-icons {
-		color: $white;
-	}
 }
 .progress-container {
-	padding-top: 90px;
-	position: absolute;
+	padding-top: 25px;
+	// position: absolute;
+	width: 100%;
 	.progress {
 		height: 30px;
 	}
@@ -92,33 +81,6 @@ form {
 	}
 }
 .button-container {
-	border-top: 1px solid grey;
-	position: absolute;
-	min-height: 100px;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	background: $gray-800;
-	button {
-		top: 50%;
-		transform: translatey(-50%);
-	}
-	.btn-left {
-		position: absolute;
-		left: 20px;
-	}
-	.btn-right {
-		position: absolute;
-		right: 20px;
-	}
-	.btn-center {
-		position: absolute;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		@media screen and (max-width: 660px) {
-			top: -33px;
-		}
-	}
 	.alert {
 		margin-bottom: 0;
 		padding-bottom: 25px;
@@ -135,19 +97,85 @@ form {
 		top: 50px;
 	}
 }
+.bottom-button-wrap {
+	bottom: 0;
+	position: fixed;
+	background: white;
+	padding: 25px 25%;
+	width: 100%;
+	box-sizing: border-box;
+	@media screen and (max-width: 660px) {
+		padding: 25px;
+	}
+	button:first-of-type {
+		float: left;
+	}
+	button:last-of-type {
+		float: right;
+	}
+	&.success {
+		background: #cbffc1;
+		.alert h4 {
+			color: $green;
+			display: block;
+			margin: 0;
+			font-size: 24px;
+		}
+	}
+	&.incorrect {
+		background: #ffe5e9;
+		.alert span {
+			display: block;
+			font-weight: bold;
+			text-align: left;
+		}
+		.alert h4 {
+			color: $red;
+			display: block;
+			margin: 0;
+			font-size: 24px;
+			font-weight: bold;
+		}
+	}
+	.alert {
+		float: left;
+		h4, span {
+			display: inline-block;
+		}
+	}
+}
 .dropdown-menu {
 	.dropdown-item {
 		cursor: pointer;
 	}
 }
 .Wordbank {
-	.form-control {
-		display: none;
+	.word-bank {
+		flex-direction: column;
+		.MuiCard-root > div {
+			justify-content: center;
+		}
+		.MuiCardActions-root {
+			flex-direction: column;
+			margin: 0px 30%;
+			button {
+				margin-bottom: 15px;
+			}
+			@media screen and (max-width: 660px) {
+				margin: 0;
+			}
+		}
+		h1 {
+			@media screen and (max-width: 660px) {
+				font-size: 4em;
+			}
+		}
 	}
 }
 .word-bank {
 	button:focus {
-		background: #e8e8e8;
+		background: #fff;
+		color: #000;
 		outline: none;
 	}
 	.google-translate {
@@ -159,17 +187,8 @@ form {
 	.material-icons {
 		color: $black;
 	}
-}
-.alert-success {
-	display: none;
-	#root.success & {
-		display: block;
-	}
-}
-.alert-danger {
-	display: none;
-	#root.incorrect & {
-		display: block;
+	.MuiCardActions-spacing > :not(:first-child) {
+		margin-left: 0;
 	}
 }
 
@@ -183,36 +202,27 @@ form {
 	}
 	.form-control {
 		display: block;
+		margin: 0 30%;
 	}
 }
 
+.bottom-app-bar {
+	top: auto;
+	bottom: 0;
+}
 /// Flashcard
 .Flashcard {
 	form {
 		max-width: 800px;
 	}
-	.word-bank, .form-control, .button-container {
-		display: none;
-	}
-	.btn-group {
-		padding: 10px;
-		button {
-			width: 200px;
-		}
-	}
-	.card {
-		padding: 10px;
-	}
-	h1 {
-		padding: 25px 0;
-	}
-	.show-answer &{
-		h1.lang-from {
-			display: none;
-		}
-		#form h1.lang-to {
-			display: block;
-			background: $green;
+	.btn-container {
+		&.flipped button {
+			&:first-of-type {
+				margin-right: 5px;
+			}
+			&:last-of-type {
+				margin-left: 5px;
+			}
 		}
 	}
 }
