@@ -1,11 +1,11 @@
 import React from 'react';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const progressBar = (props) => {
+    const normalise = value => (value - props.initialCount) * 100 / (0 - props.initialCount);
     return (
         <div className="container progress-container">
-            <div className="progress">
-                <div className="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow={props.initialCount - props.langOneArrLength} aria-valuemin="0" aria-valuemax={props.initialCount} style={props.progressWidth} />
-            </div>
+            <LinearProgress variant="determinate" value={normalise(props.langOneArrLength)}/>
             <span>{props.langOneArrLength} out of {props.initialCount} words left</span>
         </div>
     )

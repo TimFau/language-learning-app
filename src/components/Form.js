@@ -1,25 +1,71 @@
 import React from 'react';
+import FlashCard from './Modes/FlashCard';
+import WordBank from './Modes/WordBank';
+import Keyboard from './Modes/Keyboard';
+import Button from '@material-ui/core/Button';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Dialog from '@material-ui/core/Dialog';
 
-const form = ({props, handleSubmit}) => {
+const form = (props) => {
     return (
-        <form  onSubmit={handleSubmit}  id="form">
-            <h3 onClick={this.switchTranslationMode}>Translate to <span>{this.state.translateMode === "1to2" ? this.state.language1 : this.state.language2}</span>:</h3>
-            <h1 className="lang-from" onClick={this.state.inputMode === 'Flashcard' ? this.showAnswerFc : ''}>"{this.state.langFrom[this.state.randomNum]}"</h1>
-            {this.state.inputMode === 'Flashcard' && [
-                <h1 className="lang-to" onClick={this.showAnswerFc}>"{this.state.langTo[this.state.randomNum]}"</h1>,
-                <i className="material-icons swap-card" onClick={this.showAnswerFc}>swap_vertical_circle</i>,
-                <span className="navigate-next" onClick={this.getCard}><i className="material-icons">navigate_next</i></span>,
-                <span className="archive" onClick={this.archiveCard}><i className="material-icons">archive</i></span>
-            ]}
-            {<input type="text" placeholder="Enter translation" value={this.state.translationInputValue} onChange={this.keyboardModehandleChange} className="form-control" />}
-            <div className="list-group word-bank">
-                {
-                this.state.wordBank.map((word) =>
-                <button type="button" className="list-group-item" value={word}  onClick={this.keyboardModehandleChange}>{word} <a className="google-translate" href={"https://translate.google.com/#view=home&textMi%20chaimo%20Tim&text=" + word + "&op=translate&sl=it&tl=en"} target="_blank"><i className="material-icons">
-                g_translate</i></a></button>
-                )}
-            </div>
-        </form>
+        <div className="wrapper">
+            {props.children /* Progress bar */}
+            <form onSubmit={props.handleSubmit}  id="mainApp">
+                {props.inputMode === 'Flashcard' ?
+                    <FlashCard 
+                    showAnswerFc={() => props.showAnswerFc()}
+                    showAnswer={props.showAnswer}
+                    getCard={props.getCard}
+                    archiveCard={props.archiveCard}
+                    langTo={props.langTo}
+                    langFrom={props.langFrom}
+                    randomNum={props.randomNum}
+                    >
+                        Translate to <span>{props.translateMode === "1to2" ? props.language1 : props.language2}</span>
+                    </FlashCard>
+                : null }
+                {props.inputMode === 'Keyboard' ?
+                    <Keyboard 
+                        langTo={props.langTo}
+                        langFrom={props.langFrom}
+                        randomNum={props.randomNum}
+                        translationInputValue={props.translationInputValue}
+                        keyboardModeHandleChange={(e) => props.keyboardModeHandleChange(e)}
+                    >
+                        Translate to <span>{props.translateMode === "1to2" ? props.language2 : props.language1}</span>
+                    </Keyboard>
+                : null }
+                {props.inputMode === 'Wordbank' ?
+                    <WordBank 
+                        langTo={props.langTo}
+                        langFrom={props.langFrom}
+                        randomNum={props.randomNum}
+                        wordBank={props.wordBank}
+                        keyboardModeHandleChange={(e) => props.keyboardModeHandleChange(e)}
+                        translateMode={props.translateMode}
+                    >
+                        Translate to <span>{props.translateMode === "1to2" ? props.language2 : props.language1}</span>
+                    </WordBank>
+                : null }
+            </form>
+            <Dialog id="success-modal" open={props.langOneArrLength === 0}>
+                <DialogTitle>
+                    Congralutations!
+                </DialogTitle>
+                <DialogContent>
+                    <h3>You've finished the list!</h3>
+                </DialogContent>
+                <ButtonGroup
+                    color="primary"
+                    variant="outlined"
+                    fullWidth
+                >
+                    <Button variant="contained" onClick={props.goToDeckSelector}>Return to Deck Selector</Button>
+                </ButtonGroup>
+            </Dialog>
+        </div>
     )
 }
 

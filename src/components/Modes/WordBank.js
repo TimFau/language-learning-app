@@ -1,15 +1,35 @@
 import React from 'react';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 const flashCard = (props) => {
     return(
-        <div className="list-group word-bank">
-            <h1 className="lang-from">"{props.langFrom[props.randomNum]}"</h1>
-            <h1 className="lang-to">"{props.langTo[props.randomNum]}"</h1>
-            { props.wordBank.map((word) =>
-            <button type="button" className="list-group-item" value={word}  onClick={props.keyboardModehandleChange}>{word} <a className="google-translate" href={"https://translate.google.com/#view=home&textMi%20chaimo%20Tim&text=" + word + "&op=translate&sl=it&tl=en"} target="_blank"><i className="material-icons">
-            g_translate</i></a></button>
+        <Card className="list-group word-bank">
+            <CardContent>
+                <Typography color="textSecondary">{props.children}</Typography>
+                <Typography variant="h1">"{props.langFrom[props.randomNum]}"</Typography>
+                {/* <Typography variant="h1">"{props.langTo[props.randomNum]}"</Typography> */}
+            </CardContent>
+            <CardActions>
+            { props.wordBank.map((word, index) =>
+                <Button
+                    type="button"
+                    className="list-group-item"
+                    value={word}
+                    onClick={(e) => props.keyboardModeHandleChange(e)}
+                    color="primary"
+                    variant="contained"
+                    fullWidth
+                    key={index}>
+                        {word} 
+                        {/* <a className="google-translate" href={"https://translate.google.com/#view=home&textMi%20chaimo%20Tim&text=" + word + "&op=translate&sl=it&tl=en"} target="_blank"><i className="material-icons">g_translate</i></a> */}
+                </Button>
             ) }
-        </div>
+            </CardActions>
+        </Card>
     )
 }
 
