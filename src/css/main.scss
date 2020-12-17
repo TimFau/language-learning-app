@@ -1,0 +1,256 @@
+@import 'custom';
+
+body {
+  height: 100vh;
+}
+#root {
+	width: 100%;
+	height: 100%;
+	background: white;
+	border-radius: 2%;
+	text-align: center;
+	padding: 0px;
+	background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(239, 239, 239) 100%);
+	.main-container {
+		padding: 0px;
+		height: 100%;
+	}
+	input {
+		margin: 0 auto;
+		width: 90%;
+		@media screen and (min-width: 660px) {
+			width: 350px;
+		}
+	}
+	&.success, &.incorrect {
+		.button-container > button {
+			display: none;
+		}
+	}
+	nav {
+		z-index: 1;
+		position: absolute;
+		width: 100%;
+		left: 0;
+	}
+}
+header{
+	.MuiToolbar-root button {
+		color: #fff;
+	}
+}
+.deck-selector {
+	h1 {
+		margin-bottom: 5px;
+	}
+	.MuiGrid-container {
+		margin: 50px 0;
+	}
+	.MuiCard-root {
+		width: 250px;
+		margin: 10px;
+		text-align: left;
+	}
+}
+.deck-dialog {
+	.MuiFormControl-root {
+		margin-bottom: 15px;
+	}
+}
+#mainApp {
+	position: fixed;
+	width: 100%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	top: 45%;
+	@media screen and (max-height: 700px) {
+		top: 60%;
+	}
+}
+.progress-container {
+	padding-top: 25px;
+	// position: absolute;
+	width: 100%;
+	.progress {
+		height: 30px;
+	}
+	span {
+		position: relative;
+		top: 10px;
+		color: grey;
+	}
+}
+.button-container {
+	.alert {
+		margin-bottom: 0;
+		padding-bottom: 25px;
+		border-radius: 0;
+		.message {
+			text-align: left;
+		}
+		button {
+			position: absolute;
+			right: 20px;
+		}
+	}
+	.dropdown-toggle {
+		top: 50px;
+	}
+}
+.bottom-button-wrap {
+	bottom: 0;
+	position: fixed;
+	background: white;
+	padding: 25px 25%;
+	width: 100%;
+	box-sizing: border-box;
+	@media screen and (max-width: 660px) {
+		padding: 25px;
+	}
+	button:first-of-type {
+		float: left;
+	}
+	button:last-of-type {
+		float: right;
+	}
+	&.success {
+		background: #cbffc1;
+		.alert h4 {
+			color: $green;
+			display: block;
+			margin: 0;
+			font-size: 24px;
+		}
+	}
+	&.incorrect {
+		background: #ffe5e9;
+		.alert span {
+			display: block;
+			font-weight: bold;
+			text-align: left;
+		}
+		.alert h4 {
+			color: $red;
+			display: block;
+			margin: 0;
+			font-size: 24px;
+			font-weight: bold;
+		}
+	}
+	.alert {
+		float: left;
+		h4, span {
+			display: inline-block;
+		}
+	}
+}
+.dropdown-menu {
+	.dropdown-item {
+		cursor: pointer;
+	}
+}
+.Wordbank {
+	.word-bank {
+		flex-direction: column;
+		.MuiCard-root > div {
+			justify-content: center;
+		}
+		.MuiCardActions-root {
+			flex-direction: column;
+			margin: 0px 30%;
+			button {
+				margin-bottom: 15px;
+			}
+			@media screen and (max-width: 660px) {
+				margin: 0;
+			}
+		}
+		h1 {
+			@media screen and (max-width: 660px) {
+				font-size: 4em;
+			}
+		}
+	}
+}
+.word-bank {
+	button:focus {
+		background: #fff;
+		color: #000;
+		outline: none;
+	}
+	.google-translate {
+		float: right;
+	}
+	.Wordbank & {
+		display: flex;
+	}
+	.material-icons {
+		color: $black;
+	}
+	.MuiCardActions-spacing > :not(:first-child) {
+		margin-left: 0;
+	}
+}
+
+.flash-card-button {
+	margin-bottom: 30px;
+}
+
+.Keyboard {
+	.word-bank {
+		display: none;
+	}
+	.form-control {
+		display: block;
+		margin: 0 30%;
+	}
+}
+
+.bottom-app-bar {
+	top: auto;
+	bottom: 0;
+}
+/// Flashcard
+.Flashcard {
+	form {
+		max-width: 800px;
+	}
+	.btn-container {
+		&.flipped button {
+			&:first-of-type {
+				margin-right: 5px;
+			}
+			&:last-of-type {
+				margin-left: 5px;
+			}
+		}
+	}
+}
+
+/// Modals
+.modal {
+	background: #000000d6;
+}
+#success-modal {
+	//display: block;
+	.modal-body button {
+		margin: 15px;
+	}
+	.dropdown {
+		display: inline;
+	}
+}
+
+// Misc
+.spinner {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.btn {
+	.material-icons {
+		position: absolute;
+		top: 7px;
+		margin-left: 5px;
+	}
+}
