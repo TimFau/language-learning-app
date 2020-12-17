@@ -2,13 +2,11 @@ import React from 'react';
 import FlashCard from './Modes/FlashCard';
 import WordBank from './Modes/WordBank';
 import Keyboard from './Modes/Keyboard';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Dialog from '@material-ui/core/Dialog';
-import TextField from '@material-ui/core/TextField';
 
 const form = (props) => {
     return (

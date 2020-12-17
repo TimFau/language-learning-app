@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './css/main.scss';
 import {wordBankHelper} from './Functions';
 import Nav from './components/Nav';
