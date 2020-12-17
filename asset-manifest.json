@@ -1,15 +1,22 @@
 {
   "files": {
-    "main.css": "/language-learning-app/static/css/main.143150ac.chunk.css",
-    "main.js": "/language-learning-app/static/js/main.ed2c73ce.chunk.js",
-    "main.js.map": "/language-learning-app/static/js/main.ed2c73ce.chunk.js.map",
-    "runtime~main.js": "/language-learning-app/static/js/runtime~main.6ed3a6ba.js",
-    "runtime~main.js.map": "/language-learning-app/static/js/runtime~main.6ed3a6ba.js.map",
-    "static/js/2.4ee49521.chunk.js": "/language-learning-app/static/js/2.4ee49521.chunk.js",
-    "static/js/2.4ee49521.chunk.js.map": "/language-learning-app/static/js/2.4ee49521.chunk.js.map",
+    "main.css": "/language-learning-app/static/css/main.0e2d9dd3.chunk.css",
+    "main.js": "/language-learning-app/static/js/main.68250af2.chunk.js",
+    "main.js.map": "/language-learning-app/static/js/main.68250af2.chunk.js.map",
+    "runtime-main.js": "/language-learning-app/static/js/runtime-main.0a94f2bc.js",
+    "runtime-main.js.map": "/language-learning-app/static/js/runtime-main.0a94f2bc.js.map",
+    "static/js/2.82adc6a2.chunk.js": "/language-learning-app/static/js/2.82adc6a2.chunk.js",
+    "static/js/2.82adc6a2.chunk.js.map": "/language-learning-app/static/js/2.82adc6a2.chunk.js.map",
     "index.html": "/language-learning-app/index.html",
-    "precache-manifest.1eb58c31f7cecc663becb1933313a534.js": "/language-learning-app/precache-manifest.1eb58c31f7cecc663becb1933313a534.js",
+    "precache-manifest.27ff9f8798305a669f7967d982937fe3.js": "/language-learning-app/precache-manifest.27ff9f8798305a669f7967d982937fe3.js",
     "service-worker.js": "/language-learning-app/service-worker.js",
-    "static/css/main.143150ac.chunk.css.map": "/language-learning-app/static/css/main.143150ac.chunk.css.map"
-  }
+    "static/css/main.0e2d9dd3.chunk.css.map": "/language-learning-app/static/css/main.0e2d9dd3.chunk.css.map",
+    "static/js/2.82adc6a2.chunk.js.LICENSE.txt": "/language-learning-app/static/js/2.82adc6a2.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0a94f2bc.js",
+    "static/js/2.82adc6a2.chunk.js",
+    "static/css/main.0e2d9dd3.chunk.css",
+    "static/js/main.68250af2.chunk.js"
+  ]
 }
