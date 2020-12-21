@@ -1,0 +1,81 @@
+.btn {
+	.material-icons {
+		position: absolute;
+		top: 7px;
+		margin-left: 5px;
+	}
+}
+#root input {
+	margin: 0 auto;
+	width: 90%;
+	@media screen and (min-width: 660px) {
+		width: 350px;
+	}
+}
+.bottom-button-wrap {
+	bottom: 0;
+	position: fixed;
+	background: white;
+	padding: 25px 25%;
+	width: 100%;
+	box-sizing: border-box;
+	@media screen and (max-width: 660px) {
+		padding: 25px;
+	}
+	button:first-of-type {
+		float: left;
+	}
+	button:last-of-type {
+		float: right;
+	}
+	&.success {
+		background: #cbffc1;
+		.alert h4 {
+			color: $green;
+			display: block;
+			margin: 0;
+			font-size: 24px;
+		}
+	}
+	&.incorrect {
+		background: #ffe5e9;
+		.alert span {
+			display: block;
+			font-weight: bold;
+			text-align: left;
+		}
+		.alert h4 {
+			color: $red;
+			display: block;
+			margin: 0;
+			font-size: 24px;
+			font-weight: bold;
+		}
+	}
+	.alert {
+		float: left;
+		h4, span {
+			display: inline-block;
+		}
+	}
+}
+.button-container {
+	.alert {
+		margin-bottom: 0;
+		padding-bottom: 25px;
+		border-radius: 0;
+		.message {
+			text-align: left;
+		}
+		button {
+			position: absolute;
+			right: 20px;
+		}
+	}
+	.dropdown-toggle {
+		top: 50px;
+	}
+}
+header .MuiToolbar-root button {
+	color: #fff;
+}

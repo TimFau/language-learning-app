@@ -3,7 +3,7 @@ import './css/main.scss';
 import {wordBankHelper} from './Functions';
 import Nav from './components/Nav';
 import ProgressBar from './components/ProgressBar';
-import ButtonsContainer from './components/ButtonsContainer';
+import BottomButtonsContainer from './components/BottomButtonsContainer';
 import Form from './components/Form';
 import DeckSelector from './components/DeckSelector';
 
@@ -25,43 +25,40 @@ class TranslationApp extends React.Component {
 			langTo: '',
 			translationInputValue: '',
 			wordBank: [],
-			currentList: '',
+			deckLoadingMsg: '',
 			// set default state values
 			translateMode: '1to2',
 			inputMode: 'Flashcard',
 			checkAccents: false,
-			dataLoaded: false,
 			showAnswer: false,
 			deckStarted: false,
 			success: false,
-			incorrect: false
+			incorrect: false,
+			deckLoadingError: false,
+			deckDialogOpen: false
 		};
 		// bindings
 		this.getCard = this.getCard.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.keyboardModeHandleChange = this.keyboardModeHandleChange.bind(this);
 		this.switchInput = this.switchInput.bind(this);
-		this.switchTranslationMode = this.switchTranslationMode.bind(this);
 		this.showAnswerFc = this.showAnswerFc.bind(this);
 		this.archiveCard = this.archiveCard.bind(this);
-		this.setList = this.setList.bind(this);
+		this.getData = this.getData.bind(this);
 		this.goToDeckSelector = this.goToDeckSelector.bind(this);
 		this.setTranslationMode1 = this.setTranslationMode1.bind(this);
 		this.setTranslationMode2 = this.setTranslationMode2.bind(this);
+		this.setDeckDialogOpen = this.setDeckDialogOpen.bind(this);
 	}
 	  
 	getData(value) {
-		// Set default list
-		if (value === undefined) {
-			value = "1DntQwj2nfvobtxkOExsSMm2DLHQNlzf2q48WhWlMqAM"
-		}
 		let request = "https://spreadsheets.google.com/feeds/list/" + value + "/od6/public/values?alt=json";
 		fetch(request, {mode: 'cors'})
 			.then( response => {
 				return response.json();
 			})
 			.then( data => {
-				console.log(data.feed.entry)
+				// console.log(data.feed.entry)
 				langOneArr = [];
 				langTwoArr = [];
 				progressWidth = {};
@@ -77,45 +74,26 @@ class TranslationApp extends React.Component {
 					randomNum2: (Math.floor(Math.random() * langOneArr.length) - 4),
 					success: false,
 					incorrect: false,
-					currentList: value
+					deckLoadingError: false,
+					deckLoadingMsg: ''
 				}))
 				langOneArrInit = langOneArr.slice();
 				langTwoArrInit = langTwoArr.slice();
 				this.handleWordBank();
 				this.getCard();
-				this.setState({ dataLoaded: true })
-			})//.bind(this);
-	}
-
-	componentWillMount() {
-		this.getData();
-	}
-	
-	componentDidMount() {
-		document.addEventListener("keydown", event => {
-			// show card on space, up, or down
-			if (event.isComposing || event.keyCode === 40 || event.keyCode === 38) {
-				this.setState({showAnswer: true})
-			}
-			// archive card/skip on left or '~'
-			if (event.isComposing || event.keyCode === 37 || event.keyCode === 192) {
-				this.archiveCard();
-			}
-			// go to next card on right or 'enter'
-			if (event.isComposing || event.keyCode === 39 || event.keyCode === 13) {
-				if(this.state.inputMode === 'Flashcard') {
-					this.getCard();
-				} else {
-					this.handleSubmit(event);
-				}
-			}
-		});
-		console.log(this.props)
+				this.setDeckDialogOpen(true);
+			})
+			.catch((error) => {
+				console.error('Error', error)
+				this.setState({
+					deckLoadingError: true,
+					deckLoadingMsg: 'There was an issue loading the deck. Please check the Spreadsheet ID and share settings.'
+				})
+				this.setDeckDialogOpen(false);
+			})
 	}
 	
 	getCard() {
-		console.log('getCard');
-		document.querySelectorAll('.modal').forEach(modal => {modal.style.display = "none"})
 		if (this.state.success) {
 			langOneArr.splice(this.state.randomNum, 1);
 			langTwoArr.splice(this.state.randomNum, 1);
@@ -134,9 +112,6 @@ class TranslationApp extends React.Component {
 		progressWidth = {
 			width: (this.state.initialCount - langOneArr.length) * (100 / this.state.initialCount) + '%'
 		}
-		// if(langOneArr.length === 0){
-		// 	document.getElementById('success-modal').style.display = "block";
-		// }
 	}
 
 	archiveCard() {
@@ -159,12 +134,6 @@ class TranslationApp extends React.Component {
 		})
 	}
 	
-	keyboardModeHandleChange(e) {
-		console.log('keyboardModeHandleChange');
-		console.log(e.currentTarget.value);
-		this.setState({translationInputValue: e.currentTarget.value})
-	}
-	
 	handleSubmit(event) {
 		event.preventDefault();
 		var inputValueRegex = this.state.translationInputValue.toLowerCase().trim().replace(/\./g,'');
@@ -173,18 +142,18 @@ class TranslationApp extends React.Component {
 			inputValueRegex = inputValueRegex.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 			correctAnswerRegex = correctAnswerRegex.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 		}
-		console.log(inputValueRegex, correctAnswerRegex);
-		console.log(inputValueRegex === correctAnswerRegex);
 		if (inputValueRegex === correctAnswerRegex) {
 			this.setState({success: true})
-			console.log('if', this.state.success)
 		}  else {
 			this.setState({incorrect: true})
-			console.log('else', this.state.success)
 		}
 		this.setState({showAnswer: true});
 	}
 
+	// State Handlers
+	keyboardModeHandleChange(e) {
+		this.setState({translationInputValue: e.currentTarget.value})
+	}
 	switchInput(value) {
 		if(value === 'Wordbank' && this.state.inputMode !== 'Wordbank'){
 			this.setState({
@@ -200,72 +169,45 @@ class TranslationApp extends React.Component {
 			})
 		}
 	}
-
 	setTranslationMode1() {
 		this.setState({
 			translateMode: '1to2'
 		})
 	}
-
 	setTranslationMode2() {
 		this.setState({
 			translateMode: '2to1'
 		})
 	}
-
-	switchTranslationMode() {
-		if(this.state.translateMode === '1to2'){
-			this.setState({
-				translateMode: '2to1'
-			}, () => {
-				this.getCard();
-			})
-		} else {
-			this.setState({
-				translateMode: '1to2'
-			}, () => {
-				this.getCard();
-			})
-		}
-	}
-
 	showAnswerFc() {
-		console.log('showAnswerFc');
 		this.setState({showAnswer: true})
 	}
-
 	goToDeckSelector() {
 		this.setState({
 			deckStarted: false
 		})
+		this.setDeckDialogOpen(false);
 	}
-
-	setList = (listId) => {
-		console.log('setList')
-		console.log(listId)
-		let spreadsheetID = listId;
-		this.getData(spreadsheetID);
+	startDeck = () => {
 		this.setState({
 			deckStarted: true
 		})
-		console.log(listId)
+	}
+	setDeckDialogOpen(boolean) {
+		this.setState({
+			deckDialogOpen: boolean
+		})
 	}
 	
 	render() {
     	return (
 			<div className={"container main-container " + this.state.inputMode}>
-				<Nav 
-					setList={this.setList}
-					switchInput={this.switchInput}
-					switchTranslationMode={this.switchTranslationMode}
-					language1={this.state.language1}
-					language2={this.state.language2}
-					translateMode={this.state.translateMode}
+				<Nav
 					goToDeckSelector={this.goToDeckSelector}
+					deckStarted={this.state.deckStarted}
 				/>
 				{this.state.deckStarted ?
 				<Form
-					dataLoaded={this.state.dataLoaded}
 					handleSubmit={this.handleSubmit}
 					inputMode={this.state.inputMode}
 					showAnswerFc={this.showAnswerFc}
@@ -294,17 +236,22 @@ class TranslationApp extends React.Component {
 				<DeckSelector 
 					language1={this.state.language1}
 					language2={this.state.language2}
-					setList={this.setList}
+					getData={this.getData}
 					translateMode={this.state.translateMode}
 					setTranslationMode1={this.setTranslationMode1}
 					setTranslationMode2={this.setTranslationMode2}
 					switchInput={this.switchInput}
+					startDeck={this.startDeck}
+					deckLoadingError={this.state.deckLoadingError}
+					deckLoadingMsg={this.state.deckLoadingMsg}
+					setDeckDialogOpen={this.setDeckDialogOpen}
+					deckDialogOpen={this.state.deckDialogOpen}
 				>
 					
 				</DeckSelector>
 				}
 				{this.state.inputMode !== 'Flashcard' && this.state.deckStarted ?
-					<ButtonsContainer 
+					<BottomButtonsContainer 
 						handleSubmit={this.handleSubmit}
 						translateMode={this.state.translateMode}
 						getCard={this.getCard}
