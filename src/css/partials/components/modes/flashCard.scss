@@ -1,0 +1,19 @@
+/// Flashcard
+.Flashcard {
+	form {
+		max-width: 800px;
+	}
+	.btn-container {
+		&.flipped button {
+			&:first-of-type {
+				margin-right: 5px;
+			}
+			&:last-of-type {
+				margin-left: 5px;
+			}
+		}
+	}
+}
+.flash-card-button {
+	margin-bottom: 30px;
+}

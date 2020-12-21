@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 
-const buttonsContainer = (props) => {
+const bottomButtonsContainer = (props) => {
     return (
         <div 
             className={'bottom-button-wrap ' + (props.success ? 'success' : '') + (props.incorrect ? 'incorrect' : '')} 
@@ -45,4 +45,4 @@ const buttonsContainer = (props) => {
     )
 }
 
-export default buttonsContainer;
+export default bottomButtonsContainer;

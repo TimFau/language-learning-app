@@ -13,52 +13,37 @@ import TextField from '@material-ui/core/TextField';
 
 
 export default function DeckSelector(props) {
-    const [dialogOpen, setDialogOpen] = useState(false);
-    const [newList, setNewList] = useState(false);
-    const [currentList, setCurrentList] = useState(null);
+    const [currentListName, setCurrentListName] = useState(null);
     const [currentListId, setCurrentListId] = useState(null);
     const [inputMode, setInputMode] = useState('Flashcard');
     const [customListInputValue, setCustomListInputValue] = useState(null);
+    const [showTestLists, setShowTestLists] = useState(null);
     
     function deckOptions(listName, listId) {
-        setCurrentList(listName)
+        props.getData(listId)
+        setCurrentListName(listName)
         setCurrentListId(listId)
-        setNewList(false)
-        setDialogOpen(true)
-    }
-
-    function addNewList() {
-        setNewList(true)
-        setDialogOpen(true)
     }
 
     function startDeck(listId) {
         props.switchInput(inputMode)
-        props.setList(listId)
+        props.startDeck()
     }
 
     function customListHandleChange(event) {
-        console.log(event)
-        console.log(event.target.value)
         setCustomListInputValue(event.target.value)
-	}
+    }
+    
+    function handleShowTestLists(boolean) {
+        setShowTestLists(boolean)
+    }
 
     function deckDialog() {
         return (
-            <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} className="deck-dialog">
-                <DialogTitle id="simple-dialog-title">{ newList ? 'Load new' : 'Deck Options' }</DialogTitle>
+            <Dialog open={props.deckDialogOpen} onClose={() => props.setDeckDialogOpen(false)} className="deck-dialog">
+                <DialogTitle id="simple-dialog-title">Deck Options</DialogTitle>
                 <DialogContent dividers>
-                    {!newList ? 
-                        <Typography gutterBottom>Selected List: <strong>{currentList}</strong></Typography>
-                    : 
-                        <TextField 
-                            value={customListInputValue}
-                            onChange={customListHandleChange} 
-                            variant="outlined"
-                            label="Google Spreadsheet ID"
-                            fullWidth
-                        />
-                    }
+                    <Typography gutterBottom>Selected List: <strong>{currentListName}</strong></Typography>
                     <Typography >Choose Mode</Typography>
                     <ButtonGroup
                         color="primary"
@@ -95,17 +80,11 @@ export default function DeckSelector(props) {
                         >{props.language2} to {props.language1}</Button>
                     </ButtonGroup>
                 </DialogContent>
-                {!newList ? 
-                    <Button
-                        // On Click
-                            // Send value to setList in App.js
-                        onClick={() => startDeck(currentListId)}
-                    >Start Deck</Button>
-                : 
-                    <Button
-                        onClick={(value) => props.setList(customListInputValue)}
-                    >Load</Button>
-                }
+                <Button
+                    // On Click
+                        // Send value to getData in App.js
+                    onClick={() => startDeck(currentListId)}
+                >Start Deck</Button>
             </Dialog>
         )
     }
@@ -113,57 +92,96 @@ export default function DeckSelector(props) {
     return (
         <div className="wrapper deck-selector">
             <div className="lang-wrapper">
-                <h1>Choose a Deck</h1> 
                 <Grid
                     container
                     direction="row"
                     justify="center"
+                    className="deck-inputs-wrapper"
                 >
-                    <Card onClick={() => deckOptions('Italian Basics', '1DntQwj2nfvobtxkOExsSMm2DLHQNlzf2q48WhWlMqAM')}>
-                        <CardContent>
-                            <Typography gutterBottom variant="h6" component="h2">
-                            Italian Basics
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button size="small" color="palette.secondary.dark">Select List</Button>
-                        </CardActions>
-                    </Card>
-                    <Card onClick={() => deckOptions('Italian Other', '16PNgsOyvfz6BIpjCqHMtMWBg59qLhyj5TVvmXzSzmPA')}>
-                        <CardContent>
-                            <Typography gutterBottom variant="h6" component="h2">
-                            Italian Other
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button size="small">Select List</Button>
-                        </CardActions>
-                    </Card>
-                    <Card onClick={() => deckOptions('Spanish Basics', '1DNL5d4bJXOdAMnWtQesxksF4aTDFjtAV5xnFVfVbc5w')}>
-                        <CardContent>
-                            <Typography gutterBottom variant="h6" component="h2">
-                            Spanish
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button size="small">Select List</Button>
-                        </CardActions>
-                    </Card>
-                    <Card onClick={() => deckOptions('Test List', '1_qux2HIN3GhyYmaDF2KCg1JAAoe8c6xhPV228mR5hq8')}>
-                        <CardContent>
-                            <Typography gutterBottom variant="h6" component="h2">
-                            Test List
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button size="small">Select List</Button>
-                        </CardActions>
-                    </Card>
+                    <h1>Load Your Deck</h1>
+                    <TextField 
+                        value={customListInputValue}
+                        onChange={customListHandleChange} 
+                        error={props.deckLoadingError}
+                        helperText={props.deckLoadingMsg}
+                        variant="outlined"
+                        label="Google Spreadsheet ID"
+                        fullWidth
+                    />
+                    <Button
+                        onClick={() => deckOptions('Custom List', customListInputValue)}
+                        variant="contained"
+                        color="primary"
+                    >Load Deck</Button>
                 </Grid>
-                <Button onClick={() => addNewList()}>Load Custom</Button>
+                <div class="try-it">
+                    {!showTestLists ? 
+                    <div>
+                        <p>Want to try it out first?</p>
+                        <Button 
+                            onClick={() => handleShowTestLists(!showTestLists)}
+                            variant="contained"
+                            color="secondary"
+                        >Load a Demo Deck</Button>
+                    </div>
+                    :
+                    <div>
+                        <Button 
+                            onClick={() => handleShowTestLists(!showTestLists)}
+                            variant="contained"
+                            color="secondary"
+                        >X</Button>
+                        <Grid
+                            container
+                            direction="row"
+                            justify="center"
+                        >
+                            <Card onClick={() => deckOptions('Italian Basics', '1DntQwj2nfvobtxkOExsSMm2DLHQNlzf2q48WhWlMqAM')}>
+                                <CardContent>
+                                    <Typography gutterBottom variant="h6" component="h2">
+                                    Italian Basics
+                                    </Typography>
+                                </CardContent>
+                                <CardActions>
+                                    <Button size="small">Select List</Button>
+                                </CardActions>
+                            </Card>
+                            <Card onClick={() => deckOptions('Italian Other', '16PNgsOyvfz6BIpjCqHMtMWBg59qLhyj5TVvmXzSzmPA')}>
+                                <CardContent>
+                                    <Typography gutterBottom variant="h6" component="h2">
+                                    Italian Other
+                                    </Typography>
+                                </CardContent>
+                                <CardActions>
+                                    <Button size="small">Select List</Button>
+                                </CardActions>
+                            </Card>
+                            <Card onClick={() => deckOptions('Spanish Basics', '1DNL5d4bJXOdAMnWtQesxksF4aTDFjtAV5xnFVfVbc5w')}>
+                                <CardContent>
+                                    <Typography gutterBottom variant="h6" component="h2">
+                                    Spanish
+                                    </Typography>
+                                </CardContent>
+                                <CardActions>
+                                    <Button size="small">Select List</Button>
+                                </CardActions>
+                            </Card>
+                            <Card onClick={() => deckOptions('Test List', '1_qux2HIN3GhyYmaDF2KCg1JAAoe8c6xhPV228mR5hq8')}>
+                                <CardContent>
+                                    <Typography gutterBottom variant="h6" component="h2">
+                                    Test List
+                                    </Typography>
+                                </CardContent>
+                                <CardActions>
+                                    <Button size="small">Select List</Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                    </div>
+                    }
+                </div>
             </div>
             { deckDialog() }
-            {/* { loadNewDialog() } */}
         </div>
     )
 }

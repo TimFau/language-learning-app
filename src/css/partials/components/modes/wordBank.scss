@@ -1,0 +1,42 @@
+.Wordbank {
+	.word-bank {
+		flex-direction: column;
+		.MuiCard-root > div {
+			justify-content: center;
+		}
+		.MuiCardActions-root {
+			flex-direction: column;
+			margin: 0px 30%;
+			button {
+				margin-bottom: 15px;
+			}
+			@media screen and (max-width: 660px) {
+				margin: 0;
+			}
+		}
+		h1 {
+			@media screen and (max-width: 660px) {
+				font-size: 4em;
+			}
+		}
+	}
+}
+.word-bank {
+	button:focus {
+		background: #fff;
+		color: #000;
+		outline: none;
+	}
+	.google-translate {
+		float: right;
+	}
+	.Wordbank & {
+		display: flex;
+	}
+	.material-icons {
+		color: $black;
+	}
+	.MuiCardActions-spacing > :not(:first-child) {
+		margin-left: 0;
+	}
+}

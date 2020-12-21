@@ -8,11 +8,12 @@ export default function Nav(props) {
     return (
         <AppBar position="static">
             <ToolBar>
+                {props.deckStarted ?
                 <Button
                     onClick={props.goToDeckSelector}
-                    variant="link"
                     color="primary"
                 >Change Deck</Button>
+                : null }
             </ToolBar>
         </AppBar>
     )
