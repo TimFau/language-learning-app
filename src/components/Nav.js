@@ -13,7 +13,12 @@ export default function Nav(props) {
                     onClick={props.goToDeckSelector}
                     color="primary"
                 >Change Deck</Button>
-                : null }
+                : 
+                <Button
+                    onClick={() => props.introHandler(true)}
+                    color="primary"
+                >Open Tutorial</Button>
+                }
             </ToolBar>
         </AppBar>
     )

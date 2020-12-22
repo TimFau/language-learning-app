@@ -10,13 +10,14 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField';
+import Tutorial from './Tutorial';
 
 
 export default function DeckSelector(props) {
     const [currentListName, setCurrentListName] = useState(null);
     const [currentListId, setCurrentListId] = useState(null);
     const [inputMode, setInputMode] = useState('Flashcard');
-    const [customListInputValue, setCustomListInputValue] = useState(null);
+    const [customListInputValue, setCustomListInputValue] = useState('');
     const [showTestLists, setShowTestLists] = useState(null);
     
     function deckOptions(listName, listId) {
@@ -91,30 +92,23 @@ export default function DeckSelector(props) {
 
     return (
         <div className="wrapper deck-selector">
-            <div className="lang-wrapper">
-                <Grid
-                    container
-                    direction="row"
-                    justify="center"
-                    className="deck-inputs-wrapper"
-                >
-                    <h1>Load Your Deck</h1>
-                    <TextField 
-                        value={customListInputValue}
-                        onChange={customListHandleChange} 
-                        error={props.deckLoadingError}
-                        helperText={props.deckLoadingMsg}
-                        variant="outlined"
-                        label="Google Spreadsheet ID"
-                        fullWidth
-                    />
-                    <Button
-                        onClick={() => deckOptions('Custom List', customListInputValue)}
-                        variant="contained"
-                        color="primary"
-                    >Load Deck</Button>
-                </Grid>
-                <div class="try-it">
+            <Card className="lang-wrapper">
+                <h1>Load Your Deck</h1>
+                <TextField 
+                    value={customListInputValue}
+                    onChange={customListHandleChange} 
+                    error={props.deckLoadingError}
+                    helperText={props.deckLoadingMsg}
+                    variant="outlined"
+                    label="Google Spreadsheet ID"
+                />
+                <Button
+                    onClick={() => deckOptions('Custom List', customListInputValue)}
+                    variant="contained"
+                    color="primary"
+                >Load Deck</Button>
+            </Card>
+                <div className="try-it">
                     {!showTestLists ? 
                     <div>
                         <p>Want to try it out first?</p>
@@ -180,8 +174,12 @@ export default function DeckSelector(props) {
                     </div>
                     }
                 </div>
-            </div>
+            
             { deckDialog() }
+            <Tutorial 
+                introOpen={props.introOpen}
+                introHandler={props.introHandler}
+            />
         </div>
     )
 }

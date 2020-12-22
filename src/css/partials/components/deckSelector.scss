@@ -1,20 +1,27 @@
 .deck-selector {
 	.lang-wrapper {
-		min-height: 90vh;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
+		width: 100%;
+		max-width: 800px;
+		text-align: center;
+		padding: 25px;
+		margin: 0 auto;
+		position: fixed;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		top: 45%;
+		button {
+			display: block;
+			margin: 15px auto 0 auto;
+		}
+		@media screen and (max-width: 850px) {
+			max-width: 80%;
+		}
 	}
 	h1 {
-		margin-bottom: 5px;
+		margin-bottom: 10px;
 	}
 	.MuiGrid-container {
 		margin: 50px 0;
-	}
-	.MuiCard-root {
-		width: 250px;
-		margin: 10px;
-		text-align: left;
 	}
 	.try-it {
 		padding: 15px 0 30px 0;
@@ -22,15 +29,20 @@
 		bottom: 0;
 		width: 100%;
 		background: $white;
+		.MuiCard-root {
+			width: 250px;
+			margin: 10px;
+			text-align: left;
+		}
 	}
 }
 .deck-inputs-wrapper.MuiGrid-container {
-	max-width: 400px;
-	margin: 0;
-	position: absolute;
-	top: 35%;
-	left: 50%;
-	transform: translateX(-50%);
+	// max-width: 400px;
+	// margin: 0;
+	// position: absolute;
+	// top: 35%;
+	// left: 50%;
+	// transform: translateX(-50%);
 	@media screen and (max-width: 660px) {
 		max-width: 100%;
 		padding: 15px;

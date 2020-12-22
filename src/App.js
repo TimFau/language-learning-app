@@ -6,6 +6,7 @@ import ProgressBar from './components/ProgressBar';
 import BottomButtonsContainer from './components/BottomButtonsContainer';
 import Form from './components/Form';
 import DeckSelector from './components/DeckSelector';
+import Cookies from 'universal-cookie';
 
 // global vars
 var langOneArr = [];
@@ -13,6 +14,7 @@ var langTwoArr = [];
 var progressWidth = {};
 var langOneArrInit = [];
 var langTwoArrInit = [];
+const cookies = new Cookies();
 
 class TranslationApp extends React.Component {
   	constructor(props) {
@@ -35,7 +37,8 @@ class TranslationApp extends React.Component {
 			success: false,
 			incorrect: false,
 			deckLoadingError: false,
-			deckDialogOpen: false
+			deckDialogOpen: false,
+			introOpen: false
 		};
 		// bindings
 		this.getCard = this.getCard.bind(this);
@@ -49,6 +52,7 @@ class TranslationApp extends React.Component {
 		this.setTranslationMode1 = this.setTranslationMode1.bind(this);
 		this.setTranslationMode2 = this.setTranslationMode2.bind(this);
 		this.setDeckDialogOpen = this.setDeckDialogOpen.bind(this);
+		this.introHandler = this.introHandler.bind(this);
 	}
 	  
 	getData(value) {
@@ -198,6 +202,23 @@ class TranslationApp extends React.Component {
 			deckDialogOpen: boolean
 		})
 	}
+	introHandler(boolean) {
+        this.setState({
+			introOpen: boolean
+		})
+		if (boolean === false) {
+			let date = new Date();
+			date.setTime(date.getTime()+(30*24*60*60*1000));
+			cookies.set('prevViewed', '1', { path: '/', expires: date });
+		}
+	}
+	
+	//Lifecycle hooks
+	componentDidMount() {
+		if (!cookies.get('prevViewed')) {
+			this.introHandler(true);
+		}
+	}
 	
 	render() {
     	return (
@@ -205,6 +226,7 @@ class TranslationApp extends React.Component {
 				<Nav
 					goToDeckSelector={this.goToDeckSelector}
 					deckStarted={this.state.deckStarted}
+					introHandler={this.introHandler}
 				/>
 				{this.state.deckStarted ?
 				<Form
@@ -246,6 +268,8 @@ class TranslationApp extends React.Component {
 					deckLoadingMsg={this.state.deckLoadingMsg}
 					setDeckDialogOpen={this.setDeckDialogOpen}
 					deckDialogOpen={this.state.deckDialogOpen}
+					introOpen={this.state.introOpen}
+					introHandler={this.introHandler}
 				>
 					
 				</DeckSelector>
