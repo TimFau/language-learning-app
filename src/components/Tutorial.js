@@ -72,7 +72,7 @@ export default function Intro(props) {
             <TabPanel className="step-intro" value={value} index={0}>
                 <Typography>This app is designed to allow you to use spreadsheet data from your own Google Sheets to quiz yourself on translations.</Typography>
                 <Typography>Follow this tutorial to learn how to format an existing sheet or create a new one to use with this app.</Typography>
-                <Typography>If you want to test the functionality first, <button onClick={() => props.introHandler(false)}>close this tutorial</button> and click the "Load a Demo Deck" button at the bottom of the page. You can still view this any time you want by clicking "Open Tutortial" in the top navigation bar.</Typography>
+                <Typography>If you want to test the functionality first, <button onClick={() => props.introHandler(false)}>close this tutorial</button> and click the "Load a Demo Deck" button at the bottom of the page. You can still view this any time you want by clicking "Open Tutorial" in the top navigation bar.</Typography>
             </TabPanel>
             <TabPanel className="step-one" value={value} index={1}>
                 <Typography>You can make a spreadsheet from scratch if you'd like, but it's easiest to copy an existing template.</Typography>
@@ -138,14 +138,14 @@ export default function Intro(props) {
                 </TableContainer>
                 <Typography>The value for <strong>A1</strong> and <strong>B1</strong> should literally be <strong>"Language 1"</strong> and <strong>"Language 2"</strong></Typography>
                 <Typography>The value of <strong>A2</strong> should be the name of the language you're learning. <strong>B2</strong> should be the name of your native language.</Typography>
-                <Typography>The reaming cells for <strong>B</strong> should contain the words you want to learn in your native language. <strong>A</strong> should contain the translations.</Typography>
+                <Typography>The remaining cells for <strong>B</strong> should contain the words you want to learn in your native language. <strong>A</strong> should contain the translations.</Typography>
                 <Typography>You can fill in these translations manually, or automate them using the GOOGLETRANSLATE functionality. You can see how to do that <a href="https://gsuitetips.com/tips/sheets/translate-languages-in-google-sheets/#:~:text=To%20get%20started%20simply%20enter,to%20more%20than%20one%20cell." target="_blank" rel="noopener noreferrer">here</a> (external link). Note that this method may not be as accurate as sourcing the translations from other sources.</Typography>
             </TabPanel>
             <TabPanel className="step-three" value={value} index={3}>
                 <Typography>In order for this app to be able to access your sheet, you will need to set the share settings to "anyone with this link".</Typography>
                 <Typography>To do this, click the "Share" button in the top right corner of the screen and then select "Change to anyone with link"</Typography>
                 <img src={shareSettings} alt="Screenshot of Google sheet share settings" />
-                <Typography>After the permisions are set, you need to get the spreadsheet ID to use with this app. To do this, select the characters after "/d/" and before "/edit". Copy this for the next step.</Typography>
+                <Typography>After the permissions are set, you need to get the spreadsheet ID to use with this app. To do this, select the characters after "/d/" and before "/edit". Copy this for the next step.</Typography>
                 <img src={sheetId} alt="Screenshot of Google sheet share settings" />
             </TabPanel>
             <TabPanel className="step-four" value={value} index={4}>
