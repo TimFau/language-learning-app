@@ -1,22 +1,24 @@
 {
   "files": {
-    "main.css": "/language-learning-app/static/css/main.0e2d9dd3.chunk.css",
-    "main.js": "/language-learning-app/static/js/main.68250af2.chunk.js",
-    "main.js.map": "/language-learning-app/static/js/main.68250af2.chunk.js.map",
+    "main.css": "/language-learning-app/static/css/main.fc91ff95.chunk.css",
+    "main.js": "/language-learning-app/static/js/main.4e7e6591.chunk.js",
+    "main.js.map": "/language-learning-app/static/js/main.4e7e6591.chunk.js.map",
     "runtime-main.js": "/language-learning-app/static/js/runtime-main.0a94f2bc.js",
     "runtime-main.js.map": "/language-learning-app/static/js/runtime-main.0a94f2bc.js.map",
-    "static/js/2.82adc6a2.chunk.js": "/language-learning-app/static/js/2.82adc6a2.chunk.js",
-    "static/js/2.82adc6a2.chunk.js.map": "/language-learning-app/static/js/2.82adc6a2.chunk.js.map",
+    "static/js/2.9523834b.chunk.js": "/language-learning-app/static/js/2.9523834b.chunk.js",
+    "static/js/2.9523834b.chunk.js.map": "/language-learning-app/static/js/2.9523834b.chunk.js.map",
     "index.html": "/language-learning-app/index.html",
-    "precache-manifest.27ff9f8798305a669f7967d982937fe3.js": "/language-learning-app/precache-manifest.27ff9f8798305a669f7967d982937fe3.js",
+    "precache-manifest.be77564b1f298adf1c6d61eee68bf15e.js": "/language-learning-app/precache-manifest.be77564b1f298adf1c6d61eee68bf15e.js",
     "service-worker.js": "/language-learning-app/service-worker.js",
-    "static/css/main.0e2d9dd3.chunk.css.map": "/language-learning-app/static/css/main.0e2d9dd3.chunk.css.map",
-    "static/js/2.82adc6a2.chunk.js.LICENSE.txt": "/language-learning-app/static/js/2.82adc6a2.chunk.js.LICENSE.txt"
+    "static/css/main.fc91ff95.chunk.css.map": "/language-learning-app/static/css/main.fc91ff95.chunk.css.map",
+    "static/js/2.9523834b.chunk.js.LICENSE.txt": "/language-learning-app/static/js/2.9523834b.chunk.js.LICENSE.txt",
+    "static/media/load-deck.jpg": "/language-learning-app/static/media/load-deck.5395c585.jpg",
+    "static/media/sheet-id.jpg": "/language-learning-app/static/media/sheet-id.ddf30a42.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.0a94f2bc.js",
-    "static/js/2.82adc6a2.chunk.js",
-    "static/css/main.0e2d9dd3.chunk.css",
-    "static/js/main.68250af2.chunk.js"
+    "static/js/2.9523834b.chunk.js",
+    "static/css/main.fc91ff95.chunk.css",
+    "static/js/main.4e7e6591.chunk.js"
   ]
 }
