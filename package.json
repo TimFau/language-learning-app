@@ -4,20 +4,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.11.0",
-    "@material-ui/icons": "^4.9.1",
-    "@material-ui/lab": "^4.0.0-alpha.56",
-    "bootstrap": "^4.5.3",
+    "@material-ui/core": "^4.11.2",
+    "@material-ui/icons": "^4.11.2",
     "gity": "^1.0.5",
-    "jquery": "^3.5.1",
     "node-sass": "^4.14.1",
     "popper.js": "^1.16.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "react-redux": "^7.2.2",
     "react-scripts": "^3.4.4",
-    "redux": "^4.0.5",
-    "redux-starter-kit": "^0.6.3"
+    "universal-cookie": "^4.0.4"
   },
   "scripts": {
     "start": "react-scripts start",

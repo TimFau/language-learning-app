@@ -52,7 +52,7 @@ const form = (props) => {
             </form>
             <Dialog id="success-modal" open={props.langOneArrLength === 0}>
                 <DialogTitle>
-                    Congralutations!
+                    Congratulations!
                 </DialogTitle>
                 <DialogContent>
                     <h3>You've finished the list!</h3>
