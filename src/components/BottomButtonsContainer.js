@@ -22,15 +22,14 @@ const bottomButtonsContainer = (props) => {
                     size="large"
                 >Check</Button>
             </div>
-            : 
-                <Button variant="contained" onClick={props.getCard} className="btn btn-danger btn-lg">Continue</Button>
-            }
+            :  null }
             {props.success && props.showAnswer ?
             <div className="alert alert-success container-fluid">
                 <div className="message">
                     <h4>Correct!</h4>
                     {/* <span>{props.translateMode === "1to2" ? props.langTwoArr[props.randomNum] : props.langOneArr[props.randomNum]}</span> */}
                 </div>
+                <Button variant="contained" onClick={props.getCard} className="btn btn-danger btn-lg">Continue</Button>
             </div>
             : null }
             {props.incorrect && props.showAnswer ?
@@ -39,6 +38,7 @@ const bottomButtonsContainer = (props) => {
                     <h4>Correct answer:</h4>
                     <span>{props.translateMode === "1to2" ? props.langTwoArr[props.randomNum] : props.langOneArr[props.randomNum]}</span>
                 </div>
+                <Button variant="contained" onClick={props.getCard} className="btn btn-danger btn-lg">Continue</Button>
             </div>
             : null }
         </div>

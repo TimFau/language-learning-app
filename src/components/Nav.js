@@ -6,18 +6,24 @@ import Button from '@material-ui/core/Button';
 export default function Nav(props) {
       
     return (
-        <AppBar position="static">
+        <AppBar position="static" color="primary">
             <ToolBar>
                 {props.deckStarted ?
                 <Button
                     onClick={props.goToDeckSelector}
                     color="primary"
-                >Change Deck</Button>
-                : 
-                <Button
-                    onClick={() => props.introHandler(true)}
-                    color="primary"
-                >Open Tutorial</Button>
+                >Return to Deck Loader</Button>
+                :
+                <div>
+                    <Button
+                        onClick={() => props.introHandler(true)}
+                        color="primary"
+                    >Open Tutorial</Button>
+                    <Button
+                        onClick={() => props.toggleDemoDrawer(true)}
+                        color="primary"
+                    >Load Demo Deck</Button>
+                </div>
                 }
             </ToolBar>
         </AppBar>

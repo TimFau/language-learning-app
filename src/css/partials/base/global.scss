@@ -12,6 +12,8 @@ body {
 	.main-container {
 		padding: 0px;
 		height: 100%;
+		display: flex;
+		flex-flow: column;
 	}
 	&.success, &.incorrect {
 		.button-container > button {
@@ -25,15 +27,17 @@ body {
 		left: 0;
 	}
 }
+.main-container .wrapper {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}
 #mainApp {
-	position: fixed;
-	width: 100%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	top: 45%;
-	@media screen and (max-height: 700px) {
-		top: 60%;
-	}
+	justify-content: center;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	align-items: center;
 }
 .progress-container {
 	padding-top: 25px;
@@ -52,8 +56,23 @@ body {
 	top: 50%;
 	transform: translateY(-50%);
 }
+.max-width-wrapper {
+	max-width: 1400px;
+	margin: 0 auto;
+}
 #success-modal {
+	text-align: center;
 	.MuiPaper-root {
-		
+		padding: 25px;
+	}
+	.congrats-icon {
+		margin: 0 auto;
+		font-size: 85px;
+	}
+	.MuiDialogTitle-root {
+		padding: 7px 24px;
+	}
+	h3 {
+		margin: 0 0 15px 0;
 	}
 }

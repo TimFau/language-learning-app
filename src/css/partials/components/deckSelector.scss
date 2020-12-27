@@ -1,48 +1,48 @@
 .deck-selector {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	.main-content {
+		flex-grow: 1;
+		justify-content: center;
+		align-items: center;
+		display: flex;
+	}
 	.lang-wrapper {
-		width: 100%;
-		max-width: 800px;
 		text-align: center;
 		padding: 25px;
-		margin: 0 auto;
-		position: fixed;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		top: 45%;
-		button {
-			display: block;
-			margin: 15px auto 0 auto;
+		margin: 0 3%;
+		position: relative;
+		h1 {
+			margin: 0 0 15px 0;
+			position: relative;
 		}
-		@media screen and (max-width: 850px) {
-			max-width: 80%;
+		.deck-load-buttons {
+			padding: 8px 16px 16px 16px;
+			justify-content: center;
 		}
 	}
-	h1 {
-		margin-bottom: 10px;
+	.material-icons {
+		position: absolute;
+		right: 15px;
+		top: 15px;
+		cursor: pointer;
+	}
+	// .try-it {
+	// 	padding: 20px 0;
+	// }
+}
+.demo-drawer {
+	.MuiCard-root {
+		width: 250px;
+		margin: 10px;
+		text-align: left;
 	}
 	.MuiGrid-container {
 		margin: 50px 0;
 	}
-	.try-it {
-		padding: 15px 0 30px 0;
-		position: absolute;
-		bottom: 0;
-		width: 100%;
-		background: $white;
-		.MuiCard-root {
-			width: 250px;
-			margin: 10px;
-			text-align: left;
-		}
-	}
 }
 .deck-inputs-wrapper.MuiGrid-container {
-	// max-width: 400px;
-	// margin: 0;
-	// position: absolute;
-	// top: 35%;
-	// left: 50%;
-	// transform: translateX(-50%);
 	@media screen and (max-width: 660px) {
 		max-width: 100%;
 		padding: 15px;
