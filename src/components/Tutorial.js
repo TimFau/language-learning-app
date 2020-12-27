@@ -19,6 +19,7 @@ import makeACopy from '../images/make-copy.jpg'
 import shareSettings from '../images/share-settings.jpg';
 import sheetId from '../images/sheet-id.jpg';
 import loadDeck from '../images/load-deck.jpg';
+import publish from '../images/publish-to-web.jpg';
 
 export default function Intro(props) {
     const [value, setValue] = React.useState(0);
@@ -67,12 +68,19 @@ export default function Intro(props) {
                     <Tab label ="Step 2"></Tab>
                     <Tab label ="Step 3"></Tab>
                     <Tab label ="Step 4"></Tab>
+                    <Tab label ="Step 5"></Tab>
                 </Tabs>
             </AppBar>
             <TabPanel className="step-intro" value={value} index={0}>
                 <Typography>This app is designed to allow you to use spreadsheet data from your own Google Sheets to quiz yourself on translations.</Typography>
                 <Typography>Follow this tutorial to learn how to format an existing sheet or create a new one to use with this app.</Typography>
-                <Typography>If you want to test the functionality first, <button onClick={() => props.introHandler(false)}>close this tutorial</button> and click the "Load a Demo Deck" button at the bottom of the page. You can still view this any time you want by clicking "Open Tutorial" in the top navigation bar.</Typography>
+                <Typography>If you want to test the functionality first, click the button below to load a demo deck. You can still view this tutorial any time you want by clicking "Open Tutorial" on the Deck Loader page.</Typography>
+                <Button 
+                    onClick={() => props.toggleDemoDrawer(true)}
+                    variant="contained"
+                    color="primary"
+                    className="demo-btn"
+                >Load a Demo Deck</Button>
             </TabPanel>
             <TabPanel className="step-one" value={value} index={1}>
                 <Typography>You can make a spreadsheet from scratch if you'd like, but it's easiest to copy an existing template.</Typography>
@@ -142,17 +150,22 @@ export default function Intro(props) {
                 <Typography>You can fill in these translations manually, or automate them using the GOOGLETRANSLATE functionality. You can see how to do that <a href="https://gsuitetips.com/tips/sheets/translate-languages-in-google-sheets/#:~:text=To%20get%20started%20simply%20enter,to%20more%20than%20one%20cell." target="_blank" rel="noopener noreferrer">here</a> (external link). Note that this method may not be as accurate as sourcing the translations from other sources.</Typography>
             </TabPanel>
             <TabPanel className="step-three" value={value} index={3}>
-                <Typography>In order for this app to be able to access your sheet, you will need to set the share settings to "anyone with this link".</Typography>
+                <Typography>In order for this app to be able to access your sheet, you will need to publish it to the web.</Typography>
+                <Typography>To do this, select "File > Publish to Web". You can use all the default settings.</Typography>
+                <img src={publish} alt="Screenshot of Google Publish to Web Button" />
+            </TabPanel>
+            <TabPanel className="step-three" value={value} index={4}>
+                <Typography>You will also need to set the share settings to "anyone with this link".</Typography>
                 <Typography>To do this, click the "Share" button in the top right corner of the screen and then select "Change to anyone with link"</Typography>
                 <img src={shareSettings} alt="Screenshot of Google sheet share settings" />
                 <Typography>After the permissions are set, you need to get the spreadsheet ID to use with this app. To do this, select the characters after "/d/" and before "/edit". Copy this for the next step.</Typography>
                 <img src={sheetId} alt="Screenshot of Google sheet share settings" />
             </TabPanel>
-            <TabPanel className="step-four" value={value} index={4}>
+            <TabPanel className="step-four" value={value} index={5}>
                 <Typography>You're almost done! Go ahead and close this tutorial and paste your Sheet ID in the input field under "Load Your Deck"</Typography>
                 <img src={loadDeck} alt="Screenshot of ID input field" />
             </TabPanel>
-            {value < 4 ?
+            {value < 5 ?
             <ButtonGroup>
                 {value > 0 ?
                 <Button
@@ -162,10 +175,14 @@ export default function Intro(props) {
                 <Button
                 onClick={nextTab}
                 variant="contained"
-                >Next</Button>
+                >{value === 0 ? 'Start Tutorial' : 'Next' }</Button>
             </ButtonGroup>
             :
             <ButtonGroup>
+                <Button
+                onClick={prevTab}
+                variant="contained"
+                >Previous</Button>
                 <Button
                 onClick={() => props.introHandler(false)}
                 variant="contained"

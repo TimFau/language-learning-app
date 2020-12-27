@@ -1,0 +1,62 @@
+.bottom-button-wrap {
+	bottom: 0;
+	// position: fixed;
+	background: white;
+	padding: 25px 10%;
+	width: 100%;
+	box-sizing: border-box;
+	@media screen and (max-width: 660px) {
+		padding: 25px;
+	}
+	button:first-of-type {
+		float: left;
+	}
+	button:last-of-type {
+		float: right;
+	}
+	> div {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		width: 100%;
+	}
+	&.success {
+		background: #cbffc1;
+		.alert h4 {
+			color: $green;
+			display: block;
+			margin: 0;
+			font-size: 24px;
+		}
+		button {
+			background: #51B53F;
+			color: $white;
+		}
+	}
+	&.incorrect {
+		background: #ffe5e9;
+		.alert span {
+			display: block;
+			font-weight: bold;
+			text-align: left;
+		}
+		.alert h4 {
+			color: $red;
+			display: block;
+			margin: 0 0 5px 0;
+			font-size: 24px;
+			font-weight: bold;
+			line-height: 15px;
+		}
+		button {
+			background: #B53F51;
+			color: $white;
+		}
+	}
+	.alert {
+		float: left;
+		h4, span {
+			display: inline-block;
+		}
+	}
+}

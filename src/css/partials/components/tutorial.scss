@@ -11,14 +11,17 @@
         width: 100%;
     }
 }
-.intro-dialog .step-intro {
-    button {
+.intro-dialog {
+    .link-btn {
         background: none;
         border: none;
         text-decoration: underline;
         font: inherit;
         padding: 0;
         cursor: pointer;
+    }
+    .demo-btn {
+        margin-top: 10px;
     }
 }
 .intro-dialog .step-one { 

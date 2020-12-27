@@ -7,6 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Dialog from '@material-ui/core/Dialog';
+import Icon from '@material-ui/core/Icon';
 
 const form = (props) => {
     return (
@@ -23,7 +24,7 @@ const form = (props) => {
                     langFrom={props.langFrom}
                     randomNum={props.randomNum}
                     >
-                        Translate to <span>{props.translateMode === "1to2" ? props.language1 : props.language2}</span>
+                        Translate to <span>{props.translateMode === "1to2" ? props.language2 : props.language1}</span>
                     </FlashCard>
                 : null }
                 {props.inputMode === 'Keyboard' ?
@@ -51,6 +52,7 @@ const form = (props) => {
                 : null }
             </form>
             <Dialog id="success-modal" open={props.langOneArrLength === 0}>
+                <Icon color="primary" className="congrats-icon">emoji_events</Icon>
                 <DialogTitle>
                     Congratulations!
                 </DialogTitle>
@@ -62,7 +64,7 @@ const form = (props) => {
                     variant="outlined"
                     fullWidth
                 >
-                    <Button variant="contained" onClick={props.goToDeckSelector}>Return to Deck Selector</Button>
+                    <Button variant="contained" onClick={props.goToDeckSelector}>Return to Deck Loader</Button>
                 </ButtonGroup>
             </Dialog>
         </div>

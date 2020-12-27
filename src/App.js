@@ -38,7 +38,8 @@ class TranslationApp extends React.Component {
 			incorrect: false,
 			deckLoadingError: false,
 			deckDialogOpen: false,
-			introOpen: false
+			introOpen: false,
+			demoDrawerOpen: false
 		};
 		// bindings
 		this.getCard = this.getCard.bind(this);
@@ -53,6 +54,7 @@ class TranslationApp extends React.Component {
 		this.setTranslationMode2 = this.setTranslationMode2.bind(this);
 		this.setDeckDialogOpen = this.setDeckDialogOpen.bind(this);
 		this.introHandler = this.introHandler.bind(this);
+		this.toggleDemoDrawer = this.toggleDemoDrawer.bind(this);
 	}
 	  
 	getData(value) {
@@ -83,7 +85,6 @@ class TranslationApp extends React.Component {
 				}))
 				langOneArrInit = langOneArr.slice();
 				langTwoArrInit = langTwoArr.slice();
-				this.handleWordBank();
 				this.getCard();
 				this.setDeckDialogOpen(true);
 			})
@@ -159,10 +160,11 @@ class TranslationApp extends React.Component {
 		this.setState({translationInputValue: e.currentTarget.value})
 	}
 	switchInput(value) {
-		if(value === 'Wordbank' && this.state.inputMode !== 'Wordbank'){
+		if(value === 'Wordbank'){
 			this.setState({
 				inputMode: 'Wordbank'
 			})
+			this.handleWordBank();
 		} else if(value === 'Keyboard' && this.state.inputMode !== 'Keyboard'){
 			this.setState({
 				inputMode: 'Keyboard'
@@ -175,12 +177,16 @@ class TranslationApp extends React.Component {
 	}
 	setTranslationMode1() {
 		this.setState({
-			translateMode: '1to2'
+			translateMode: '1to2',
+			langFrom: langOneArr,
+			langTo:  langTwoArr 
 		})
 	}
 	setTranslationMode2() {
 		this.setState({
-			translateMode: '2to1'
+			translateMode: '2to1',
+			langFrom: langTwoArr,
+			langTo: langOneArr
 		})
 	}
 	showAnswerFc() {
@@ -212,6 +218,11 @@ class TranslationApp extends React.Component {
 			cookies.set('prevViewed', '1', { path: '/', expires: date });
 		}
 	}
+	toggleDemoDrawer(boolean) {
+		this.setState({
+			demoDrawerOpen: boolean
+		})
+	}
 	
 	//Lifecycle hooks
 	componentDidMount() {
@@ -227,6 +238,7 @@ class TranslationApp extends React.Component {
 					goToDeckSelector={this.goToDeckSelector}
 					deckStarted={this.state.deckStarted}
 					introHandler={this.introHandler}
+					toggleDemoDrawer={this.toggleDemoDrawer}
 				/>
 				{this.state.deckStarted ?
 				<Form
@@ -270,6 +282,8 @@ class TranslationApp extends React.Component {
 					deckDialogOpen={this.state.deckDialogOpen}
 					introOpen={this.state.introOpen}
 					introHandler={this.introHandler}
+					toggleDemoDrawer={this.toggleDemoDrawer}
+					demoDrawerOpen={this.state.demoDrawerOpen}
 				>
 					
 				</DeckSelector>
