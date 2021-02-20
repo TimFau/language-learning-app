@@ -5,6 +5,9 @@
 		width: 350px;
 	}
 }
-header .MuiToolbar-root button {
-	color: #fff;
+header {
+	.MuiToolbar-root button,
+	.MuiButton-label {
+		color: #fff;
+	}
 }

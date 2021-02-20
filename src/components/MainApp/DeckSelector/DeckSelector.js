@@ -1,37 +1,33 @@
 import React, { useState } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Typography from '@material-ui/core/Typography';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import Dialog from '@material-ui/core/Dialog';
-import TextField from '@material-ui/core/TextField';
-import Tutorial from './Tutorial';
-import Icon from '@material-ui/core/Icon';
-import ToolTip from '@material-ui/core/ToolTip';
-import Drawer from '@material-ui/core/Drawer';
+import { useSelector, useDispatch } from 'react-redux';
 
+import Tutorial from '../../Modals/Tutorial';
+import DemoDeck from './DemoDecks';
+import { Card, CardActions, CardContent, Button, ButtonGroup, Typography, DialogTitle, DialogContent, Dialog, TextField, Icon, Drawer } from '@material-ui/core/';
+import ToolTip from '@material-ui/core/ToolTip'
 
 export default function DeckSelector(props) {
     const [currentListName, setCurrentListName] = useState(null);
     const [currentListId, setCurrentListId] = useState(null);
     const [inputMode, setInputMode] = useState('Flashcard');
     const [customListInputValue, setCustomListInputValue] = useState('');
+
+    const dispatch = useDispatch();
+
+    const demoDrawerOpen = useSelector((state) => state.demoDrawerOpen);
+    const deckDialogOpen = useSelector((state) => state.deckDialogOpen);
     
     function deckOptions(listName, listId) {
         props.getData(listId)
         setCurrentListName(listName)
         setCurrentListId(listId)
-        props.toggleDemoDrawer(false)
+        dispatch({type: 'deck/setDemoDrawer', value: false});
+        dispatch({type: 'deck/setDialog', value: true})
     }
 
     function startDeck(listId) {
         props.switchInput(inputMode)
-        props.startDeck()
+        dispatch({type: 'deck/setDeckStarted', value: true})
     }
 
     function customListHandleChange(event) {
@@ -40,7 +36,7 @@ export default function DeckSelector(props) {
 
     function deckDialog() {
         return (
-            <Dialog open={props.deckDialogOpen} onClose={() => props.setDeckDialogOpen(false)} className="deck-dialog">
+            <Dialog open={deckDialogOpen} onClose={() => dispatch({type: 'deck/setDialog', value: false})} className="deck-dialog">
                 <DialogTitle id="simple-dialog-title">Deck Options</DialogTitle>
                 <DialogContent dividers>
                     <Typography gutterBottom>Selected List: <strong>{currentListName}</strong></Typography>
@@ -94,7 +90,7 @@ export default function DeckSelector(props) {
             <div className="main-content">
                 <Card className="lang-wrapper">
                     <ToolTip title="Info">
-                        <Icon color="primary" onClick={() => props.introHandler(true)}>info</Icon>
+                        <Icon color="primary" onClick={() => dispatch({type: 'modals/setIntroOpen', value: true})}>info</Icon>
                     </ToolTip>
                     <CardContent>
                         <h1>Load Your Deck</h1>
@@ -118,59 +114,12 @@ export default function DeckSelector(props) {
             </div>
             
             { deckDialog() }
-            <Tutorial 
-                introOpen={props.introOpen}
-                introHandler={props.introHandler}
-                toggleDemoDrawer={props.toggleDemoDrawer}
+            <Tutorial />
+            <DemoDeck 
+                deckOptions={deckOptions}
+                open={demoDrawerOpen}
+                onClose={() => dispatch({type: 'deck/setDemoDrawer', value: false})}
             />
-            <Drawer anchor="bottom" open={props.demoDrawerOpen} onClose={() => props.toggleDemoDrawer(false)} className="demo-drawer">
-                <Grid
-                    container
-                    direction="row"
-                    justify="center"
-                >
-                    <Card onClick={() => deckOptions('Top 100 French', '1gHgH-O7K2YOPzI0VFSBpGqqGX6YdO4bO6AMjBfEaQ4M')}>
-                        <CardContent>
-                            <Typography gutterBottom variant="h6" component="h2">
-                            Top 100 French
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button size="small">Select List</Button>
-                        </CardActions>
-                    </Card>
-                    <Card onClick={() => deckOptions('Top 100 Italian', '1RLHRTSRMoierkjBUCZD2ViXr17ScwLz8ghPheBG8GEQ')}>
-                        <CardContent>
-                            <Typography gutterBottom variant="h6" component="h2">
-                            Top 100 Italian
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button size="small">Select List</Button>
-                        </CardActions>
-                    </Card>
-                    <Card onClick={() => deckOptions('Top 100 Spanish', '123uJsttzL6EmedjHzR2n8LSVFljlu1ZRVW84K5h74wI')}>
-                        <CardContent>
-                            <Typography gutterBottom variant="h6" component="h2">
-                            Top 100 Spanish
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button size="small">Select List</Button>
-                        </CardActions>
-                    </Card>
-                    <Card onClick={() => deckOptions('Top 10 Spanish', '1fyA1Ce3nvtvCESzL67uUSCLkmE-Z9c0LGHFc8fE0oa4')}>
-                        <CardContent>
-                            <Typography gutterBottom variant="h6" component="h2">
-                            Top 10 Spanish
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button size="small">Select List</Button>
-                        </CardActions>
-                    </Card>
-                </Grid>
-            </Drawer>
         </div>
     )
 }

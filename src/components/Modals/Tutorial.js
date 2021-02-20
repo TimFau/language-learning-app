@@ -1,4 +1,8 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import Cookies from 'universal-cookie';
+
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
@@ -14,12 +18,15 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
+
 // Images
-import makeACopy from '../images/make-copy.jpg'
-import shareSettings from '../images/share-settings.jpg';
-import sheetId from '../images/sheet-id.jpg';
-import loadDeck from '../images/load-deck.jpg';
-import publish from '../images/publish-to-web.jpg';
+import makeACopy from '../../images/make-copy.jpg'
+import shareSettings from '../../images/share-settings.jpg';
+import sheetId from '../../images/sheet-id.jpg';
+import loadDeck from '../../images/load-deck.jpg';
+import publish from '../../images/publish-to-web.jpg';
+
+const cookies = new Cookies();
 
 export default function Intro(props) {
     const [value, setValue] = React.useState(0);
@@ -32,6 +39,9 @@ export default function Intro(props) {
     const nextTab = (event, newValue) => {
         setValue(value + 1)
     }
+
+    const introOpen = useSelector((state) => state.introOpen)
+    const dispatch = useDispatch();
 
     function TabPanel(props) {
         const { children, value, index, ...other } = props;
@@ -53,8 +63,15 @@ export default function Intro(props) {
         );
     }
 
+    function closeIntro() {
+        dispatch({type: 'modals/setIntroOpen', value: false})
+        let date = new Date();
+        date.setTime(date.getTime()+(30*24*60*60*1000));
+        cookies.set('prevViewed', '1', { path: '/', expires: date });
+    }
+
     return (
-        <Dialog open={props.introOpen} onClose={() => props.introHandler(false)} className="intro-dialog">
+        <Dialog open={introOpen} onClose={() => closeIntro()} className="intro-dialog">
             <AppBar position="static">
                 <Tabs 
                     value={value}
@@ -76,7 +93,7 @@ export default function Intro(props) {
                 <Typography>Follow this tutorial to learn how to format an existing sheet or create a new one to use with this app.</Typography>
                 <Typography>If you want to test the functionality first, click the button below to load a demo deck. You can still view this tutorial any time you want by clicking "Open Tutorial" on the Deck Loader page.</Typography>
                 <Button 
-                    onClick={() => props.toggleDemoDrawer(true)}
+                    onClick={() => dispatch({type: 'deck/setDemoDrawer', value: true})}
                     variant="contained"
                     color="primary"
                     className="demo-btn"
@@ -184,7 +201,7 @@ export default function Intro(props) {
                 variant="contained"
                 >Previous</Button>
                 <Button
-                onClick={() => props.introHandler(false)}
+                onClick={() => dispatch({type: 'modals/setIntroOpen', value: false})}
                 variant="contained"
                 color="secondary"
                 >Close Tutorial</Button>

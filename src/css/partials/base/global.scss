@@ -32,6 +32,12 @@ body {
 	flex-direction: column;
 	flex-grow: 1;
 }
+header {
+	a {
+		color: white;
+		text-decoration: none;
+	}
+}
 #mainApp {
 	justify-content: center;
 	display: flex;
