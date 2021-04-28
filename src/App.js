@@ -1,11 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
-import Nav from './components/Nav';
 import MainApp from './components/MainApp/MainApp';
-import Account from './components/Account/Account';
-import Login from './components/Modals/Login/Login';
 import {getCookie} from './Helpers';
 import Cookies from 'universal-cookie';
 
@@ -14,10 +12,27 @@ import './css/main.scss';
 // Global Vars
 const cookies = new Cookies();
 
+const theme = createMuiTheme({
+	palette: {
+	  primary: {
+		light: '#80c2ff',
+		main: '#1273E6',
+		dark: '#0065bd',
+		contrastText: '#fff',
+	  },
+	  secondary: {
+		light: '#4e5486',
+		main: '#212c59',
+		dark: '#00002f',
+		contrastText: '#fff',
+	  },
+	  white: {
+		  main: "#fff"
+	  }
+	},
+});
+
 class TranslationApp extends React.Component {
-	constructor(props) {
-		super(props);
-	}
 	componentDidMount () {
 		if (getCookie('token')) {
 			console.log('token cookie exists')
@@ -26,15 +41,17 @@ class TranslationApp extends React.Component {
 			console.log('token cookie does not exist')
 		}
 	}
+	// logout() {
+	// 	cookies.remove('token');
+	// 	setUserData(null);
+	// 	dispatch({type: 'user/setToken', value: null})
+	// };
 	render() {
     	return (
 			<BrowserRouter>
-				<Nav />
-				<Route path="/" exact component={MainApp} />
-				<Route path="/language-learning-app" component={MainApp} />
-				<Route path="/account" exact component={Account} />
-				{/* Modals */}
-				<Login />
+				<ThemeProvider theme={theme}>
+					<MainApp />
+				</ThemeProvider>
 			</BrowserRouter>
 		)
 	}

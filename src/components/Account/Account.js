@@ -54,7 +54,7 @@ export default function account(props) {
             {isReady ? 
             <div>
                 <h1>Welcome, {userName}</h1>
-                <UserLists userId={userId} />
+                <UserLists userId={userId} deckOptions={props.deckOptions} />
             </div>
             :
             <CircularProgress />

@@ -1,16 +1,31 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-
-import AppBar from '@material-ui/core/AppBar';
+import { AppBar, Button, makeStyles } from '@material-ui/core/';
 import ToolBar from '@material-ui/core/ToolBar';
-import Button from '@material-ui/core/Button';
+
+const useStyles = makeStyles({
+    appBar: {
+        "& .MuiToolbar-root": {
+            display: "flex",
+            // flexDirection: "column",
+            // justifyContent: "center"
+        },
+        "& button": {
+            color: "#fff"
+        },
+        "& .login": {
+            justifySelf: "flex-end",
+            marginLeft: "auto"
+        }
+    }
+})
 
 export default function Nav(props) {
-
     const dispatch = useDispatch();
     const deckStarted = useSelector((state) => state.deckStarted);
     const userToken = useSelector((state) => state.token);
+    const classes = useStyles(props);
     let pathName = useLocation().pathname;
 
     function goToDeckSelector() {
@@ -19,42 +34,29 @@ export default function Nav(props) {
     }
 
     return (
-        <AppBar position="static" color="primary">
+        <AppBar position="static" color="primary" className={classes.appBar}>
             <ToolBar>
                 {pathName === '/account' ?
-                <Button
-                    color="primary"
-                >
+                <Button>
                     <Link to="/">Home</Link>
                 </Button>
                 : '' }
                 {deckStarted ?
-                <Button
-                    onClick={() => goToDeckSelector()}
-                    color="primary"
-                >Return to Deck Loader</Button>
-                : ''}
-                {pathName === '/' && !deckStarted ?
-                <div>
-                    <Button
-                        onClick={() => dispatch({type: 'modals/setIntroOpen', value: true})}
-                        color="primary"
-                    >Open Tutorial</Button>
-                    <Button
-                        onClick={() => dispatch({type: 'deck/setDemoDrawer', value: true})}
-                        color="primary"
-                    >Load Demo Deck</Button>
-                </div>
+                <Button onClick={() => goToDeckSelector()}
+                >Return to Home</Button>
                 : ''}
                 {userToken === undefined ?
                 <Button
                     onClick={() => dispatch({type: 'modals/setLoginOpen', value: true})}
-                    color="primary"
+                    className="login"
                 >Login</Button>
                 : 
-                <Button color="primary">
-                    <Link to="/account">My Account</Link>
-                </Button> }
+                <Button
+                    onClick={props.logout}
+                    color="secondary"
+                    className="login"
+                >Logout</Button>
+                }
             </ToolBar>
         </AppBar>
     )
