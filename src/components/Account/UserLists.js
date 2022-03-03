@@ -32,7 +32,7 @@ export default function UserLists(props) {
       return <CircularProgress />;
     } else if (items) {
       return (
-        <div>
+        <div id="userListsContainer">
             <Grid
                 container
                 direction="row"

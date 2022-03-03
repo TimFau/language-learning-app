@@ -63,19 +63,20 @@ class TranslationApp extends React.Component {
   
     
   getDeckData(value) {
-      let request = "https://spreadsheets.google.com/feeds/list/" + value + "/od6/public/values?alt=json";
+      console.log('speadsheet ID: ' + value)
+      let request = "https://opensheet.vercel.app/" + value + "/Sheet1";
       fetch(request, {mode: 'cors'})
           .then( response => {
               return response.json();
           })
           .then( data => {
-              // console.log(data.feed.entry)
+              console.log('deckData', data)
               langOneArr = [];
               langTwoArr = [];
               progressWidth = {};
-              data.feed.entry.forEach(function(item){
-                  langOneArr.push(item.gsx$language1.$t);
-                  langTwoArr.push(item.gsx$langauge2.$t);
+              data.forEach(function(item){
+                  langOneArr.push(item.Language1);
+                  langTwoArr.push(item.Langauge2);
               })
               this.setState(state => ({
                   language1: langOneArr.shift(),
@@ -279,25 +280,25 @@ class TranslationApp extends React.Component {
                             open={this.props.demoDrawerOpen}
                             onClose={this.props.setDemoDrawerClosed}
                         />
-                        <DeckDialog
-                            inputMode={this.state.inputMode}
-                            currentListName={this.state.currentListName}
-                            setInputMode={this.setInputMode.bind(this)}
-                            setDialogClosed={this.props.setDialogClosed}
-                            deckDialogOpen={this.props.deckDialogOpen}
-                            setTranslationMode1={this.setTranslationMode1}
-                            setTranslationMode2={this.setTranslationMode2}
-                            translateMode={this.state.translateMode}
-                            language1={this.state.language1}
-                            language2={this.state.language2}
-                            startDeck={this.startDeck.bind(this)}
-                            deckDataLoaded={this.state.deckDataLoaded}
-                        >
-                        </DeckDialog>
                     </React.Fragment>
                 :
-                    <Account />
+                    <Account deckOptions={this.deckOptions.bind(this)} />
                 }
+                <DeckDialog
+                    inputMode={this.state.inputMode}
+                    currentListName={this.state.currentListName}
+                    setInputMode={this.setInputMode.bind(this)}
+                    setDialogClosed={this.props.setDialogClosed}
+                    deckDialogOpen={this.props.deckDialogOpen}
+                    setTranslationMode1={this.setTranslationMode1}
+                    setTranslationMode2={this.setTranslationMode2}
+                    translateMode={this.state.translateMode}
+                    language1={this.state.language1}
+                    language2={this.state.language2}
+                    startDeck={this.startDeck.bind(this)}
+                    deckDataLoaded={this.state.deckDataLoaded}
+                >
+                </DeckDialog>
                   {this.state.inputMode !== 'Flashcard' && this.props.deckStarted ?
                       <BottomButtonsContainer 
                           handleSubmit={this.handleSubmit}
