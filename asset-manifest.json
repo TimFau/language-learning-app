@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/language-learning-app/static/css/main.1d60534e.chunk.css",
-    "main.js": "/language-learning-app/static/js/main.01f83d54.chunk.js",
-    "main.js.map": "/language-learning-app/static/js/main.01f83d54.chunk.js.map",
+    "main.js": "/language-learning-app/static/js/main.94a6610f.chunk.js",
+    "main.js.map": "/language-learning-app/static/js/main.94a6610f.chunk.js.map",
     "runtime-main.js": "/language-learning-app/static/js/runtime-main.0a94f2bc.js",
     "runtime-main.js.map": "/language-learning-app/static/js/runtime-main.0a94f2bc.js.map",
-    "static/js/2.98de7ed7.chunk.js": "/language-learning-app/static/js/2.98de7ed7.chunk.js",
-    "static/js/2.98de7ed7.chunk.js.map": "/language-learning-app/static/js/2.98de7ed7.chunk.js.map",
+    "static/js/2.63ac5eda.chunk.js": "/language-learning-app/static/js/2.63ac5eda.chunk.js",
+    "static/js/2.63ac5eda.chunk.js.map": "/language-learning-app/static/js/2.63ac5eda.chunk.js.map",
     "index.html": "/language-learning-app/index.html",
-    "precache-manifest.d92834c5fe962dbdb1af68041a1e5be1.js": "/language-learning-app/precache-manifest.d92834c5fe962dbdb1af68041a1e5be1.js",
+    "precache-manifest.a32b03872f1c3f3edac17470be38b48c.js": "/language-learning-app/precache-manifest.a32b03872f1c3f3edac17470be38b48c.js",
     "service-worker.js": "/language-learning-app/service-worker.js",
     "static/css/main.1d60534e.chunk.css.map": "/language-learning-app/static/css/main.1d60534e.chunk.css.map",
-    "static/js/2.98de7ed7.chunk.js.LICENSE.txt": "/language-learning-app/static/js/2.98de7ed7.chunk.js.LICENSE.txt",
+    "static/js/2.63ac5eda.chunk.js.LICENSE.txt": "/language-learning-app/static/js/2.63ac5eda.chunk.js.LICENSE.txt",
     "static/media/load-deck.jpg": "/language-learning-app/static/media/load-deck.5395c585.jpg",
     "static/media/publish-to-web.jpg": "/language-learning-app/static/media/publish-to-web.0b8297dc.jpg",
     "static/media/sheet-id.jpg": "/language-learning-app/static/media/sheet-id.ddf30a42.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.0a94f2bc.js",
-    "static/js/2.98de7ed7.chunk.js",
+    "static/js/2.63ac5eda.chunk.js",
     "static/css/main.1d60534e.chunk.css",
-    "static/js/main.01f83d54.chunk.js"
+    "static/js/main.94a6610f.chunk.js"
   ]
 }
