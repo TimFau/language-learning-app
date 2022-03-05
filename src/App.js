@@ -58,19 +58,18 @@ class TranslationApp extends React.Component {
 	}
 	  
 	getData(value) {
-		let request = "https://spreadsheets.google.com/feeds/list/" + value + "/od6/public/values?alt=json";
+		let request = "https://opensheet.vercel.app/" + value + "/Sheet1";
 		fetch(request, {mode: 'cors'})
 			.then( response => {
 				return response.json();
 			})
 			.then( data => {
-				// console.log(data.feed.entry)
 				langOneArr = [];
 				langTwoArr = [];
 				progressWidth = {};
-				data.feed.entry.forEach(function(item){
-					langOneArr.push(item.gsx$language1.$t);
-					langTwoArr.push(item.gsx$langauge2.$t);
+				data.forEach(function(item){
+					langOneArr.push(item.Language1);
+					langTwoArr.push(item.Language2);
 				})
 				this.setState(state => ({
 					language1: langOneArr.shift(),

@@ -20,6 +20,7 @@ import shareSettings from '../images/share-settings.jpg';
 import sheetId from '../images/sheet-id.jpg';
 import loadDeck from '../images/load-deck.jpg';
 import publish from '../images/publish-to-web.jpg';
+import sheetName from '../images/sheet-name.jpg';
 
 export default function Intro(props) {
     const [value, setValue] = React.useState(0);
@@ -148,6 +149,10 @@ export default function Intro(props) {
                 <Typography>The value of <strong>A2</strong> should be the name of the language you're learning. <strong>B2</strong> should be the name of your native language.</Typography>
                 <Typography>The remaining cells for <strong>B</strong> should contain the words you want to learn in your native language. <strong>A</strong> should contain the translations.</Typography>
                 <Typography>You can fill in these translations manually, or automate them using the GOOGLETRANSLATE functionality. You can see how to do that <a href="https://gsuitetips.com/tips/sheets/translate-languages-in-google-sheets/#:~:text=To%20get%20started%20simply%20enter,to%20more%20than%20one%20cell." target="_blank" rel="noopener noreferrer">here</a> (external link). Note that this method may not be as accurate as sourcing the translations from other sources.</Typography>
+                <Typography>
+                    The name of your sheet should be 'Sheet1' (not the name of the document; the name of the first sheet that appears at the bottom of the page).
+                </Typography>
+                <img src={sheetName} alt="Screenshot of Google Sheet Name" />
             </TabPanel>
             <TabPanel className="step-three" value={value} index={3}>
                 <Typography>In order for this app to be able to access your sheet, you will need to publish it to the web.</Typography>
