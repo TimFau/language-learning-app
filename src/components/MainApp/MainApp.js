@@ -212,12 +212,13 @@ class TranslationApp extends React.Component {
             currentListId: listId
         });
         this.props.setDemoDrawerClosed();
-        this.props.setDialogOpen();
+        this.props.setDeckDialogOpen();
     }
     startDeck(listId) {
         this.getCard();
         this.switchInput(this.state.inputMode)
         this.props.setDeckStartedTrue();
+        this.props.setDeckDialogClose();
     }
     setInputMode(value) {
         this.setState({inputMode: value})
@@ -288,7 +289,7 @@ class TranslationApp extends React.Component {
                     inputMode={this.state.inputMode}
                     currentListName={this.state.currentListName}
                     setInputMode={this.setInputMode.bind(this)}
-                    setDialogClosed={this.props.setDialogClosed}
+                    setDialogClosed={this.props.setDeckDialogClose}
                     deckDialogOpen={this.props.deckDialogOpen}
                     setTranslationMode1={this.setTranslationMode1}
                     setTranslationMode2={this.setTranslationMode2}
@@ -331,14 +332,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         openIntro: () => dispatch({type: 'modals/setIntroOpen', value: true}),
-        setDeckDialogOpen: () => dispatch({type: 'DECK_DIALOG', value: true}),
-        setDeckDialogClose: () => dispatch({type: 'DECK_DIALOG', value: false}),
+        setDeckDialogOpen: () => dispatch({type: 'deck/setDialog', value: true}),
+        setDeckDialogClose: () => dispatch({type: 'deck/setDialog', value: false}),
         setDeckStartedTrue: () => dispatch({type: 'deck/setDeckStarted', value: true}),
         setDeckStartedFalse: () => dispatch({type: 'deck/setDeckStarted', value: false}),
         setDemoDrawerOpen: () => dispatch({type: 'deck/setDemoDrawer', value: true}),
         setDemoDrawerClosed: () => dispatch({type: 'deck/setDemoDrawer', value: false}),
-        setDialogOpen: () => dispatch({type: 'deck/setDialog', value: true}),
-        setDialogClosed: () => dispatch({type: 'deck/setDialog', value: false}),
         setUserToken: () => dispatch({type: 'user/setToken', value: undefined})
     };
 };

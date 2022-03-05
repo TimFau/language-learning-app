@@ -9,7 +9,7 @@ from '@material-ui/core/';
 export default function deckDialog(props) {
 
     return (
-        <Dialog open={props.deckDialogOpen} onClose={props.setDialogClosed} className="deck-dialog">
+        <Dialog open={props.deckDialogOpen} onClose={props.setDialogClosed} className="deck-dialog" id="deckDialog">
             <DialogTitle id="simple-dialog-title">Deck Options</DialogTitle>
             {props.deckDataLoaded ?
             <React.Fragment>
