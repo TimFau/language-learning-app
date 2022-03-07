@@ -50,7 +50,7 @@ export default function account(props) {
     
     
     return (
-        <div className={classes.wrapper + ' wrapper'}>
+        <div className={classes.wrapper + ' wrapper'} id="account">
             {isReady ? 
             <div>
                 <h1>Welcome, {userName}</h1>

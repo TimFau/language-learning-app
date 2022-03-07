@@ -76,7 +76,7 @@ class TranslationApp extends React.Component {
               progressWidth = {};
               data.forEach(function(item){
                   langOneArr.push(item.Language1);
-                  langTwoArr.push(item.Langauge2);
+                  langTwoArr.push(item.Language2);
               })
               this.setState(state => ({
                   language1: langOneArr.shift(),

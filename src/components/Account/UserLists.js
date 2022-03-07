@@ -36,7 +36,7 @@ export default function UserLists(props) {
             <Grid
                 container
                 direction="row"
-                justify="center"
+                justifyContent="center"
                 spacing={2}
             >
                 {items.map(item => (

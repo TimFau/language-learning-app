@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import MainApp from './components/MainApp/MainApp';
 import {getCookie} from './Helpers';
@@ -12,7 +12,7 @@ import './css/main.scss';
 // Global Vars
 const cookies = new Cookies();
 
-const theme = createMuiTheme({
+const theme = createTheme({
 	palette: {
 	  primary: {
 		light: '#80c2ff',

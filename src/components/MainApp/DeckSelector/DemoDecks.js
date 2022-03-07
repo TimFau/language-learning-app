@@ -38,7 +38,7 @@ export default function DemoDecks(props) {
             <Grid
                 container
                 direction="row"
-                justify="center"
+                justifyContent="center"
             >
                 {items.map(item => (
                     <Card onClick={() => props.deckOptions(item.list_name, item.list_id)} key={item.id}>
