@@ -273,7 +273,7 @@ class TranslationApp extends React.Component {
                       />
                   </Form>
                 : null }
-                {!this.props.deckStarted && this.props.userToken === undefined ?
+                {(!this.props.deckStarted && this.props.userToken === undefined) &&
                     <React.Fragment>
                         <LandingPage />
                         <DemoDeck 
@@ -282,7 +282,8 @@ class TranslationApp extends React.Component {
                             onClose={this.props.setDemoDrawerClosed}
                         />
                     </React.Fragment>
-                :
+                }
+                {(!this.props.deckStarted && this.props.userToken) &&
                     <Account deckOptions={this.deckOptions.bind(this)} />
                 }
                 <DeckDialog
