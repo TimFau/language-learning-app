@@ -225,7 +225,7 @@ class TranslationApp extends React.Component {
     }
     logout() {
         console.log('log out')
-		cookies.remove('token');
+		cookies.remove('token', { path: '/' });
 		// setUserData(null);
 		this.props.setUserToken()
 	};
