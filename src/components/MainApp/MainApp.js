@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -15,6 +15,7 @@ import DemoDeck from './DeckSelector/DemoDecks';
 import DeckDialog from '../Modals/DeckDialog';
 import Login from '../Modals/Login';
 import Cookies from 'universal-cookie';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@material-ui/core/';
 
 // global vars
 var langOneArr = [];
@@ -46,7 +47,8 @@ class TranslationApp extends React.Component {
           deckLoadingError: false,
           currentListId: '',
           currentListName: '',
-          deckDataLoaded: false
+          deckDataLoaded: false,
+          logOutDialogOpen: false
       };
       // bindings
       this.getCard = this.getCard.bind(this);
@@ -59,6 +61,10 @@ class TranslationApp extends React.Component {
       this.goToDeckSelector = this.goToDeckSelector.bind(this);
       this.setTranslationMode1 = this.setTranslationMode1.bind(this);
       this.setTranslationMode2 = this.setTranslationMode2.bind(this);
+      this.setLogOutDialogOpen = this.setLogOutDialogOpen.bind(this);
+      this.setLogOutDialogClose = this.setLogOutDialogClose.bind(this);
+      this.logout = this.logout.bind(this);
+      this.endDeckAndLogout = this.endDeckAndLogout.bind(this);
   }
   
     
@@ -223,12 +229,25 @@ class TranslationApp extends React.Component {
     setInputMode(value) {
         this.setState({inputMode: value})
     }
-    logout() {
-        console.log('log out')
-		cookies.remove('token', { path: '/' });
-		// setUserData(null);
-		this.props.setUserToken()
+    setLogOutDialogOpen() {
+        this.setState({logOutDialogOpen: true})
+    }
+    setLogOutDialogClose() {
+        this.setState({logOutDialogOpen: false})
+    }
+    logout(props, endDeck = false) {
+        if (this.props.deckStarted && !endDeck) {
+            this.setLogOutDialogOpen()
+        } else {
+            this.props.setDeckStartedFalse();
+            cookies.remove('token', { path: '/' });
+            this.props.setUserToken()
+        }
 	};
+    endDeckAndLogout() {
+        this.logout(this, true);
+        this.setLogOutDialogClose();
+    }
   
     //Lifecycle hooks
     componentDidMount() {
@@ -244,7 +263,7 @@ class TranslationApp extends React.Component {
   render() {
       return (
           <BrowserRouter>
-            <Nav logout={this.logout.bind(this)} />
+            <Nav logout={this.logout} />
             <div className={"container main-container " + this.state.inputMode}>
                 {this.props.deckStarted ?
                     <Form
@@ -316,6 +335,27 @@ class TranslationApp extends React.Component {
                 : null }
               </div>
             <Login />
+            <Dialog
+                open={this.state.logOutDialogOpen}
+                onClose={this.setLogOutDialogClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                {"Logout and close deck?"}
+                </DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    Logging out now will close the current deck without saving your progress. Would you like to continue?
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={this.setLogOutDialogClose}>No</Button>
+                <Button onClick={this.endDeckAndLogout} autoFocus>
+                    Yes
+                </Button>
+                </DialogActions>
+            </Dialog>
           </BrowserRouter>
       )
   }
