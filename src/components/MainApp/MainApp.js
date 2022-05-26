@@ -9,7 +9,7 @@ import BottomButtonsContainer from './BottomButtonsContainer';
 import Nav from '../../components/Nav';
 import Form from '../../components/Form';
 // import DeckSelector from './DeckSelector/DeckSelector';
-import LandingPage from '../LandingPage'
+import GuestPage from '../GuestPage'
 import Account from '../Account/Account';
 import DemoDeck from './DeckSelector/DemoDecks';
 import DeckDialog from '../Modals/DeckDialog';
@@ -294,7 +294,7 @@ class TranslationApp extends React.Component {
                 : null }
                 {(!this.props.deckStarted && this.props.userToken === undefined) &&
                     <React.Fragment>
-                        <LandingPage />
+                        <GuestPage />
                         <DemoDeck 
                             deckOptions={this.deckOptions.bind(this)}
                             open={this.props.demoDrawerOpen}

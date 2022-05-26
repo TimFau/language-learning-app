@@ -1,9 +1,11 @@
 import React from 'react';
-import {  useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { Paper, Card, makeStyles, TextField, Button, FormControl, Link } from '@material-ui/core/';
+import { Paper, Card, makeStyles, TextField, Button, Link } from '@material-ui/core/';
 import hpBackground from '../images/hp-background.jpg'
+
+const accountCreatorUsername = process.env.REACT_APP_ACCOUNT_CREATOR_USER;
+const accountCreatorPw = process.env.REACT_APP_ACCOUNT_CREATOR_PW;
 
 const useStyles = makeStyles({
     paper: {
@@ -79,9 +81,34 @@ const useStyles = makeStyles({
     }
 });
 
-export default function LandingPage(props) {
+export default function GuestPage(props) {
     const classes = useStyles(props);
     const dispatch = useDispatch();
+    const [firstName, setFirstName] = React.useState('');
+    const [lastName, setLastName] = React.useState('');
+    const [userEmail, setUserEmail] = React.useState('');
+    const [userPassword, setUserPassword] = React.useState('');
+
+    const handleChange = (event) => {
+        console.log(event.target.name)
+        switch (event.target.name) {
+            case 'firstName':
+                setFirstName(event.target.value);
+                break;
+            case 'lastName':
+                setLastName(event.target.value);
+                break;
+            case 'email':
+                setUserEmail(event.target.value);
+                break;
+            case 'password':
+                setUserPassword(event.target.value);
+                break;
+            default:
+                console.log('No match for event name')
+        }
+    }
+
     function createAccount() {
         fetch("http://localhost:8080/languageApp/auth/authenticate", {
             method: 'POST',
@@ -90,8 +117,8 @@ export default function LandingPage(props) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "email": "accountcreator@timfau.com",
-                "password": "7777777"
+                "email": accountCreatorUsername,
+                "password": accountCreatorPw
             })
         })
         .then(async response => {
@@ -115,10 +142,10 @@ export default function LandingPage(props) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "first_name": "Ben3",
-                    "last_name": "Haynes3",
-                    "email": "demo3@example.com",
-                    "password": "d1r3ctu5",
+                    "first_name": firstName,
+                    "last_name": lastName,
+                    "email": userEmail,
+                    "password": userPassword,
                     "role": 3,
                     "status": "active"
                 })
@@ -129,6 +156,8 @@ export default function LandingPage(props) {
                     const resError = (data && data.message) || response.status;
                     // const errorMsg = data.error.message;
                     return Promise.reject(resError);
+                } else {
+                    alert('Account Created')
                 }
                 // setError(null);
             })
@@ -152,6 +181,8 @@ export default function LandingPage(props) {
                 fullWidth
                 label="First Name"
                 autoFocus
+                value={firstName}
+                onChange={handleChange}
                 />
                 <TextField
                 variant="outlined"
@@ -162,6 +193,8 @@ export default function LandingPage(props) {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                value={lastName}
+                onChange={handleChange}
                 />
                 <TextField
                 variant="outlined"
@@ -172,6 +205,8 @@ export default function LandingPage(props) {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={userEmail}
+                onChange={handleChange}
                 />
                 <TextField
                 variant="outlined"
@@ -183,10 +218,12 @@ export default function LandingPage(props) {
                 id="password"
                 className="input"
                 autoComplete="current-password"
+                value={userPassword}
+                onChange={handleChange}
                 />
                 <Button variant="contained" color="primary" fullWidth onClick={() => createAccount()}>Submit</Button>
                 <div>
-                    <Link onClick={() => dispatch({type: 'modals/setLoginOpen', value: true})}><span className="acctTxt">Already have an account?</span> <span className="signIn">SIGN IN</span></Link>
+                    <Link onClick={() => dispatch({type: 'modals/setLoginOpen', value: true})}><span className="acctTxt">Already have an account?</span> <span className="signIn">LOGIN</span></Link>
                 </div>
             </Card>
             <div className={classes.copy}>

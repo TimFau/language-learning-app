@@ -103,6 +103,7 @@ export default function Login(props) {
                     error={passError !== ''}
                     helperText={passError}
                     label="Password"
+                    type="password"
                     fullWidth
                 />
             </DialogContent>
