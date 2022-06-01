@@ -24,7 +24,7 @@ const bottomButtonsContainer = (props) => {
             </div>
             :  null }
             {props.success && props.showAnswer ?
-            <div className="alert alert-success container-fluid">
+            <div className="container-fluid">
                 <div className="message">
                     <h4>Correct!</h4>
                     {/* <span>{props.translateMode === "1to2" ? props.langTwoArr[props.randomNum] : props.langOneArr[props.randomNum]}</span> */}
@@ -33,7 +33,7 @@ const bottomButtonsContainer = (props) => {
             </div>
             : null }
             {props.incorrect && props.showAnswer ?
-            <div className="alert alert-danger container-fluid">
+            <div className="container-fluid">
                 <div className="message">
                     <h4>Correct answer:</h4>
                     <span>{props.translateMode === "1to2" ? props.langTwoArr[props.randomNum] : props.langOneArr[props.randomNum]}</span>

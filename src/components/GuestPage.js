@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Paper, Card, makeStyles, TextField, Button, Link } from '@material-ui/core/';
+import { Alert, AlertTitle } from '@material-ui/lab';
 import hpBackground from '../images/hp-background.jpg'
 
 const accountCreatorUsername = process.env.REACT_APP_ACCOUNT_CREATOR_USER;
@@ -78,6 +79,9 @@ const useStyles = makeStyles({
                 cursor: "pointer"
             }
         }
+    },
+    alert: {
+        marginBottom: "25px"
     }
 });
 
@@ -88,6 +92,8 @@ export default function GuestPage(props) {
     const [lastName, setLastName] = React.useState('');
     const [userEmail, setUserEmail] = React.useState('');
     const [userPassword, setUserPassword] = React.useState('');
+    const [alertMsg, setAlertMsg] = React.useState('');
+    const [fieldWithError, setFieldWithError] = React.useState('');
 
     const handleChange = (event) => {
         console.log(event.target.name)
@@ -109,31 +115,56 @@ export default function GuestPage(props) {
         }
     }
 
+    function validateFields () {
+        if (firstName === '') {
+            setFieldWithError('firstName')
+            setAlertMsg('Please enter your first name.')
+            return false
+        } else if (lastName === '') {
+            setFieldWithError('lastName')
+            setAlertMsg('Please enter your last name.')
+            return false
+        } else if (userEmail === '') {
+            setFieldWithError('email')
+            setAlertMsg('Please enter your email address.')
+            return false
+        } else if (userPassword === '') {
+            setFieldWithError('password')
+            setAlertMsg('Please enter a password.')
+            return false
+        }
+        setFieldWithError('')
+        setAlertMsg('')
+        return true
+    }
+
     function createAccount() {
-        fetch("http://localhost:8080/languageApp/auth/authenticate", {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                "email": accountCreatorUsername,
-                "password": accountCreatorPw
+        if (validateFields()) {
+            fetch("http://localhost:8080/languageApp/auth/authenticate", {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "email": accountCreatorUsername,
+                    "password": accountCreatorPw
+                })
             })
-        })
-        .then(async response => {
-            const data = await response.json();
-            console.log(data)
-            const token = data.data.token
-            if(!response.ok) {
-                const resError = (data && data.message) || response.status;
-                // const errorMsg = data.error.message;
-                return Promise.reject(resError);
-            } else {
-                console.log(token)
-                createAccountPost(token) 
-            }
-        })
+            .then(async response => {
+                const data = await response.json();
+                console.log(data)
+                const token = data.data.token
+                if(!response.ok) {
+                    const resError = (data && data.message) || response.status;
+                    // const errorMsg = data.error.message;
+                    return Promise.reject(resError);
+                } else {
+                    console.log(token)
+                    createAccountPost(token) 
+                }
+            })
+        }
         function createAccountPost(token) {
             fetch("http://localhost:8080/languageApp/users?access_token=" + token, {
                 method: 'POST',
@@ -154,10 +185,22 @@ export default function GuestPage(props) {
                 const data = await response.json();
                 if(!response.ok) {
                     const resError = (data && data.message) || response.status;
-                    // const errorMsg = data.error.message;
+                    const errorMsg = data.error.message;
+                    // require first name, last name, and password
+                    if (errorMsg.includes('Duplicate key')) {
+                        setAlertMsg('You are already registered with this email address.')
+                    } else if (errorMsg.includes('This value is not a valid email address.')) {
+                        setAlertMsg('Please enter a valid email address.')
+                        setFieldWithError('email')
+                    } else {
+                        setAlertMsg(errorMsg)
+                        setFieldWithError('')
+                    }
                     return Promise.reject(resError);
                 } else {
-                    alert('Account Created')
+                    dispatch({type: 'user/setNewUser', value: true})
+                    dispatch({type: 'modals/setLoginOpen', value: true})
+                    setAlertMsg('')
                 }
                 // setError(null);
             })
@@ -171,56 +214,65 @@ export default function GuestPage(props) {
         <Paper elevation={0} square height="100%" className={classes.paper}>
             <Card className={classes.form}>
                 <h3>Create an account</h3>
-                <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                id="firstName"
-                className="input"
-                fullWidth
-                label="First Name"
-                autoFocus
-                value={firstName}
-                onChange={handleChange}
-                />
-                <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                className="input"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-                value={lastName}
-                onChange={handleChange}
-                />
-                <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                className="input"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                value={userEmail}
-                onChange={handleChange}
-                />
-                <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                className="input"
-                autoComplete="current-password"
-                value={userPassword}
-                onChange={handleChange}
-                />
+                <form>
+                    <TextField
+                        autoComplete="fname"
+                        name="firstName"
+                        variant="outlined"
+                        required
+                        id="firstName"
+                        className="input"
+                        fullWidth
+                        label="First Name"
+                        autoFocus
+                        value={firstName}
+                        onChange={handleChange}
+                        error={fieldWithError === 'firstName'}
+                    />
+                    <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="lastName"
+                        className="input"
+                        label="Last Name"
+                        name="lastName"
+                        autoComplete="lname"
+                        value={lastName}
+                        onChange={handleChange}
+                        error={fieldWithError === 'lastName'}
+                    />
+                    <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="email"
+                        className="input"
+                        label="Email Address"
+                        name="email"
+                        autoComplete="email"
+                        value={userEmail}
+                        onChange={handleChange}
+                        error={fieldWithError === 'email'}
+                    />
+                    <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        className="input"
+                        autoComplete="current-password"
+                        value={userPassword}
+                        onChange={handleChange}
+                        error={fieldWithError === 'password'}
+                    />
+                </form>
+                {alertMsg !== '' &&
+                    <Alert severity="warning" className={classes.alert}>{alertMsg}</Alert>
+                }
                 <Button variant="contained" color="primary" fullWidth onClick={() => createAccount()}>Submit</Button>
                 <div>
                     <Link onClick={() => dispatch({type: 'modals/setLoginOpen', value: true})}><span className="acctTxt">Already have an account?</span> <span className="signIn">LOGIN</span></Link>

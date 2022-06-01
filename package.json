@@ -6,6 +6,7 @@
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.61",
     "gity": "^1.0.5",
     "node-sass": "^4.14.1",
     "popper.js": "^1.16.1",

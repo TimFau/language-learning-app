@@ -22,6 +22,7 @@ export default function Login(props) {
     const [password, setPassword] = useState('');
 
     const loginOpen = useSelector((state) => state.loginOpen);
+    const isNewUser = useSelector((state) => state.newUser);
     const dispatch = useDispatch();
 
     function login() {
@@ -58,12 +59,12 @@ export default function Login(props) {
             }
             let cookieExpires = new Date();
             cookieExpires.setMinutes(cookieExpires.getMinutes() + 20);
-            console.log('cookieExpires')
             cookies.set('token', data.data.token, { path: '/', expires: cookieExpires });
             setError(null);
             setUserData(data);
             dispatch({type: 'user/setToken', value: data.data.token})
             dispatch({type: 'modals/setLoginOpen', value: false})
+            dispatch({type: 'user/setNewUser', value: false})
         })
         .catch(error => {
             setError(error);
@@ -81,10 +82,12 @@ export default function Login(props) {
 
     return (
         <Dialog open={loginOpen} onClose={() => dispatch({type: 'modals/setLoginOpen', value: false})} className="login-dialog">
-            <DialogTitle>Login</DialogTitle>
+            <DialogTitle>
+                {isNewUser ? 'Account Created!' : 'Login'}
+            </DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    If you don't have an account, click here to register.
+                    {isNewUser && 'Please login below'}
                 </DialogContentText>
                 <TextField 
                     autoFocus
