@@ -25,16 +25,29 @@ export default function Login(props) {
     const isNewUser = useSelector((state) => state.newUser);
     const dispatch = useDispatch();
 
+    const apiToken = process.env.REACT_APP_API_TOKEN;
+    const endpoint = 'https://d3pdj2cb.directus.app/graphql/system';
+
     function login() {
-        fetch("http://localhost:8080/languageApp/auth/authenticate", {
+        fetch(endpoint, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "email": email,
-                "password": password
+                query: `
+                mutation {
+                    auth_login(
+                        email: "${email}",
+                        password: "${password}",
+                        mode: cookie
+                    ) {
+                        access_token
+                        refresh_token
+                    }
+                }
+                `
             })
         })
         .then(async response => {
@@ -43,26 +56,32 @@ export default function Login(props) {
             setPassError('');
             if(!response.ok) {
                 const resError = (data && data.message) || response.status;
-                const errorMsg = data.error.message;
-                setError(errorMsg);
-                if(errorMsg.includes('Invalid user credentials')) {
-                    setEmailError('Invalid username or password');
-                    setPassError("Invalid username or password");
-                }
-                if(errorMsg.includes('email')) {
-                    setEmailError('Please enter a valid email address');
-                }
-                if(errorMsg.includes('password')) {
-                    setPassError("Please enter your password");
-                }
                 return Promise.reject(resError);
+            } else if (data.errors) {
+                const errorMsgs = data.errors;
+                for (let i = 0; i < errorMsgs.length; i++) {
+                    let errorMsg = errorMsgs[i].message;
+                    if(errorMsg.includes('Invalid user credentials')) {
+                        setEmailError('Invalid username or password');
+                        setPassError("Invalid username or password");
+                    }
+                    if(errorMsg.includes('email')) {
+                        setEmailError('Please enter a valid email address');
+                    }
+                    if(errorMsg.includes('password')) {
+                        setPassError("Please enter your password");
+                    }
+                    setError(errorMsg);
+                }
+                return false
             }
+            console.log('userData', data, data.data.auth_login.access_token)
             let cookieExpires = new Date();
             cookieExpires.setMinutes(cookieExpires.getMinutes() + 20);
-            cookies.set('token', data.data.token, { path: '/', expires: cookieExpires });
+            cookies.set('token', data.data.auth_login.access_token, { path: '/', expires: cookieExpires });
             setError(null);
             setUserData(data);
-            dispatch({type: 'user/setToken', value: data.data.token})
+            dispatch({type: 'user/setToken', value: data.data.auth_login.access_token})
             dispatch({type: 'modals/setLoginOpen', value: false})
             dispatch({type: 'user/setNewUser', value: false})
         })

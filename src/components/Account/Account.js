@@ -18,25 +18,36 @@ export default function account(props) {
     const [isReady, setIsReady] = useState(false);
     const dispatch = useDispatch();
     const classes = useStyles();
+    const endpoint = 'https://d3pdj2cb.directus.app/graphql/system';
 
     function getAccountDetails() {
-        fetch("http://localhost:8080/languageApp/users/me?access_token=" + userToken, {
-            method: 'GET',
+        fetch(endpoint + "?access_token=" + userToken, {
+            method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify({
+                query: `
+                query {
+                    users_me {
+                        first_name
+                        email
+                        id
+                    }
+                }
+                `
+            })
         })
         .then(async response => {
             const data = await response.json();
             if(!response.ok) {
                 const resError = (data && data.message) || response.status;
-                const errorMsg = data.error.message;
                 return Promise.reject(resError);
             }
             console.log(data)
-            dispatch({type: 'user/setUserName', value: data.data.first_name})
-            setUserId(data.data.id)
+            dispatch({type: 'user/setUserName', value: data.data.users_me.first_name})
+            setUserId(data.data.users_me.id)
             setIsReady(true)
         })
         .catch(error => {

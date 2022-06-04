@@ -1,22 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Grid, Card, CardActions, CardContent, Button, Typography, CircularProgress } from '@material-ui/core/';
+import { Grid, Card, CardActions, CardContent, Button, Typography, CircularProgress, Dialog } from '@material-ui/core/';
+import AddNewListComponent from './AddNewList';
 
 export default function UserLists(props) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
+    const [addListDialogOpen, setAddListDialogOpen] = useState(false);
     const userToken = useSelector((state) => state.token)
     const userId = props.userId
-  
-    useEffect(() => {
-        let listsUrl = "http://localhost:8080/languageApp/items/list_collection?access_token=" + userToken + "&filter[user_id]=" + userId;
-        fetch(listsUrl)
+
+    function getUsersLists (userToken, userId) {
+        let listsUrl = "https://d3pdj2cb.directus.app/graphql?access_token=" + userToken;
+        fetch(listsUrl, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                query: `
+                    query {
+                        User_lists(filter: {
+                            user_id: {
+                                id: {
+                                    _eq: "${userId}"
+                                }
+                            }
+                        }) {
+                            id
+                            status
+                            date_created
+                            list_name
+                            list_id
+                            user_id {
+                                id
+                            }
+                        }
+                    }
+                `
+            })
+        })
         .then(res => res.json())
         .then(
         (result) => {
+            console.log('result', result)
             setIsLoaded(true);
-            setItems(result.data);
+            setItems(result.data.User_lists);
         },
         (error) => {
             setIsLoaded(true);
@@ -24,6 +55,10 @@ export default function UserLists(props) {
             console.log(error);
         }
         )
+    }
+  
+    useEffect(() => {
+        getUsersLists(userToken, userId)
     }, [userToken, userId])
   
     if (error) {
@@ -52,7 +87,8 @@ export default function UserLists(props) {
                     </Card>
                 ))}
             </Grid>
-            <Button size="large">Add New</Button>
+            <Button size="large" onClick={() => setAddListDialogOpen(true)}>Add New</Button>
+            <AddNewListComponent userId={userId} addListDialogOpen={addListDialogOpen} closeDialog={() => setAddListDialogOpen(false)} refreshLists={() => getUsersLists(userToken, userId)} />
         </div>
       )
     } else {

@@ -2,11 +2,12 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Paper, Card, makeStyles, TextField, Button, Link } from '@material-ui/core/';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert } from '@material-ui/lab';
+import { CheckIsEmail } from '../Helpers';
 import hpBackground from '../images/hp-background.jpg'
 
-const accountCreatorUsername = process.env.REACT_APP_ACCOUNT_CREATOR_USER;
-const accountCreatorPw = process.env.REACT_APP_ACCOUNT_CREATOR_PW;
+const apiToken = process.env.REACT_APP_API_TOKEN;
+const endpoint = 'https://d3pdj2cb.directus.app/graphql/system';
 
 const useStyles = makeStyles({
     paper: {
@@ -132,6 +133,10 @@ export default function GuestPage(props) {
             setFieldWithError('password')
             setAlertMsg('Please enter a password.')
             return false
+        } else if (!CheckIsEmail(userEmail)) {
+            setFieldWithError('email')
+            setAlertMsg('Please enter a valid email address.')
+            return false
         }
         setFieldWithError('')
         setAlertMsg('')
@@ -140,63 +145,65 @@ export default function GuestPage(props) {
 
     function createAccount() {
         if (validateFields()) {
-            fetch("http://localhost:8080/languageApp/auth/authenticate", {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "email": accountCreatorUsername,
-                    "password": accountCreatorPw
-                })
-            })
-            .then(async response => {
-                const data = await response.json();
-                console.log(data)
-                const token = data.data.token
-                if(!response.ok) {
-                    const resError = (data && data.message) || response.status;
-                    // const errorMsg = data.error.message;
-                    return Promise.reject(resError);
-                } else {
-                    console.log(token)
-                    createAccountPost(token) 
-                }
-            })
+            createAccountPost(apiToken)
         }
-        function createAccountPost(token) {
-            fetch("http://localhost:8080/languageApp/users?access_token=" + token, {
+        function createAccountPost(apiToken) {
+            fetch(endpoint + '?access_token=' + apiToken, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "first_name": firstName,
-                    "last_name": lastName,
-                    "email": userEmail,
-                    "password": userPassword,
-                    "role": 3,
-                    "status": "active"
+                    query: `
+                        mutation {
+                            create_users_item(
+                                data: {
+                                    first_name: "${firstName}",
+                                    last_name: "${lastName}",
+                                    email: "${userEmail}",
+                                    password: "${userPassword}",
+                                    status: "active",
+                                    provider: "default",
+                                    role:{
+                                        id: "c8737b56-b42b-4796-adb0-d0fc6c1ede40"
+                                        name: "User"
+                                        app_access: true
+                                        enforce_tfa: false
+                                        admin_access: false
+                                        icon: "supervised_user_circle"
+                                    }
+                                }
+                            ) {
+                                email
+                                status
+                            }
+                        }
+                    `
                 })
             })
             .then(async response => {
                 const data = await response.json();
+                console.log(response, data)
                 if(!response.ok) {
                     const resError = (data && data.message) || response.status;
-                    const errorMsg = data.error.message;
-                    // require first name, last name, and password
-                    if (errorMsg.includes('Duplicate key')) {
-                        setAlertMsg('You are already registered with this email address.')
-                    } else if (errorMsg.includes('This value is not a valid email address.')) {
-                        setAlertMsg('Please enter a valid email address.')
-                        setFieldWithError('email')
-                    } else {
-                        setAlertMsg(errorMsg)
-                        setFieldWithError('')
-                    }
                     return Promise.reject(resError);
+                } else if (data.errors) {
+                    console.log('error present', data.errors)
+                    const errorMsgs = data.errors;
+                    for (let i = 0; i < errorMsgs.length; i++) {
+                        let errorMsg = errorMsgs[i].message
+                        console.log(errorMsg)
+                        if (errorMsg.includes('Field "email" has to be unique.')) {
+                            setAlertMsg('You are already registered with this email address.')
+                        } else if (errorMsg.includes('This value is not a valid email address.')) {
+                            setAlertMsg('Please enter a valid email address.')
+                            setFieldWithError('email')
+                        } else {
+                            setAlertMsg(errorMsg)
+                            setFieldWithError('')
+                        }
+                    }
                 } else {
                     dispatch({type: 'user/setNewUser', value: true})
                     dispatch({type: 'modals/setLoginOpen', value: true})

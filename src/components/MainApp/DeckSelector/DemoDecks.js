@@ -7,17 +7,37 @@ export default function DemoDecks(props) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
-  
+    
+    const apiToken = process.env.REACT_APP_API_TOKEN;
+    const endpoint = 'https://d3pdj2cb.directus.app/graphql';
+
     // Note: the empty deps array [] means
     // this useEffect will run once
     // similar to componentDidMount()
     useEffect(() => {
-        fetch("http://localhost:8080/languageApp/items/test_collection")
+        fetch(endpoint + '?access_token=' + apiToken, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                query: `
+                    query {
+                        Demo_Lists {
+                            id
+                            list_name
+                            list_id
+                        }
+                    }
+                `
+            })
+        })
         .then(res => res.json())
         .then(
         (result) => {
             setIsLoaded(true);
-            setItems(result.data);
+            setItems(result.data.Demo_Lists);
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -28,7 +48,7 @@ export default function DemoDecks(props) {
             console.log(error);
         }
         )
-    }, [])
+    }, [apiToken])
   
     if (error) {
       return <div>Error: {error.message}</div>;
