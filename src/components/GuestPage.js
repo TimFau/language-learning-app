@@ -11,7 +11,7 @@ const endpoint = 'https://d3pdj2cb.directus.app/graphql/system';
 
 const useStyles = makeStyles({
     paper: {
-      background: "linear-gradient(0deg, rgba(18, 115, 230, 0.85), rgba(18, 115, 230, 0.85))," + "url(" + hpBackground + ")",
+      background: "linear-gradient(0deg, rgba(18, 115, 230, 0.85), rgba(18, 115, 230, 0.85)), url(" + hpBackground + ")",
       backgroundSize: "100%",
       height: "100%",
       display: "flex",
@@ -97,7 +97,6 @@ export default function GuestPage(props) {
     const [fieldWithError, setFieldWithError] = React.useState('');
 
     const handleChange = (event) => {
-        console.log(event.target.name)
         switch (event.target.name) {
             case 'firstName':
                 setFirstName(event.target.value);
@@ -184,7 +183,6 @@ export default function GuestPage(props) {
             })
             .then(async response => {
                 const data = await response.json();
-                console.log(response, data)
                 if(!response.ok) {
                     const resError = (data && data.message) || response.status;
                     return Promise.reject(resError);

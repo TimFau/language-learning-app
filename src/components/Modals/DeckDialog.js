@@ -1,9 +1,8 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+
 import { 
     CircularProgress, Button, ButtonGroup, 
-    Typography, DialogTitle, DialogContent, Dialog,
-    TextField, Icon, Drawer }
+    Typography, DialogTitle, DialogContent, Dialog }
 from '@material-ui/core/';
 
 export default function deckDialog(props) {

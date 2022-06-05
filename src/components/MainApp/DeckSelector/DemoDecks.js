@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import { Drawer, CardActions, CardContent, Button, Typography, makeStyles }  from '@material-ui/core';
+import { Drawer, CardActions, CardContent, Button, Typography }  from '@material-ui/core';
 
 export default function DemoDecks(props) {
     const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
     
     const apiToken = process.env.REACT_APP_API_TOKEN;
@@ -36,14 +35,12 @@ export default function DemoDecks(props) {
         .then(res => res.json())
         .then(
         (result) => {
-            setIsLoaded(true);
             setItems(result.data.Demo_Lists);
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
         (error) => {
-            setIsLoaded(true);
             setError(error);
             console.log(error);
         }

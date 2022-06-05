@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
@@ -35,17 +35,9 @@ const theme = createTheme({
 class TranslationApp extends React.Component {
 	componentDidMount () {
 		if (getCookie('token')) {
-			console.log('token cookie exists')
 			this.props.setUserToken(cookies.get('token'));
-		} else {
-			console.log('token cookie does not exist')
 		}
 	}
-	// logout() {
-	// 	cookies.remove('token');
-	// 	setUserData(null);
-	// 	dispatch({type: 'user/setToken', value: null})
-	// };
 	render() {
     	return (
 			<BrowserRouter>

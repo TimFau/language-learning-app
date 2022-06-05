@@ -45,7 +45,6 @@ export default function account(props) {
                 const resError = (data && data.message) || response.status;
                 return Promise.reject(resError);
             }
-            console.log(data)
             dispatch({type: 'user/setUserName', value: data.data.users_me.first_name})
             setUserId(data.data.users_me.id)
             setIsReady(true)

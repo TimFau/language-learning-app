@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Tutorial from '../../Modals/Tutorial';
-import { 
-    Card, CardActions, CardContent, Button, ButtonGroup, 
-    Typography, DialogTitle, DialogContent, Dialog,
-    TextField, Icon, Drawer }
+import { Card, CardActions, CardContent, Button, TextField, Icon }
 from '@material-ui/core/';
 import ToolTip from '@material-ui/core/ToolTip'
 

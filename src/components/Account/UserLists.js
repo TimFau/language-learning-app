@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Grid, Card, CardActions, CardContent, Button, Typography, CircularProgress, Dialog } from '@material-ui/core/';
+import { Grid, Card, CardActions, CardContent, Button, Typography, CircularProgress } from '@material-ui/core/';
 import AddNewListComponent from './AddNewList';
 
 export default function UserLists(props) {
@@ -45,7 +45,6 @@ export default function UserLists(props) {
         .then(res => res.json())
         .then(
         (result) => {
-            console.log('result', result)
             setIsLoaded(true);
             setItems(result.data.User_lists);
         },

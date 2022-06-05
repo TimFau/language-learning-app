@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import {wordBankHelper, getCookie} from '../../Helpers';
+import { wordBankHelper } from '../../Helpers';
 import ProgressBar from '../../components/ProgressBar';
 import BottomButtonsContainer from './BottomButtonsContainer';
 
@@ -69,14 +69,12 @@ class TranslationApp extends React.Component {
   
     
   getDeckData(value) {
-      console.log('speadsheet ID: ' + value)
       let request = "https://opensheet.vercel.app/" + value + "/Sheet1";
       fetch(request, {mode: 'cors'})
           .then( response => {
               return response.json();
           })
           .then( data => {
-              console.log('deckData', data)
               langOneArr = [];
               langTwoArr = [];
               progressWidth = {};
@@ -211,7 +209,6 @@ class TranslationApp extends React.Component {
     }
     deckOptions(listName, listId) {
         this.setState({deckDataLoaded: false})
-        console.log(this, listName, listId)
         this.getDeckData(listId)
         this.setState({
             currentListName: listName,
@@ -253,10 +250,6 @@ class TranslationApp extends React.Component {
     componentDidMount() {
         if (!cookies.get('prevViewed')) {
             this.props.openIntro();
-        }
-        console.log(document.cookie)
-        if (getCookie('directus-_-session')) {
-            console.log('cookie exists')
         }
     }
   

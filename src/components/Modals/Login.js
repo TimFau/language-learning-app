@@ -14,10 +14,8 @@ const cookies = new Cookies();
 
 export default function Login(props) {
 
-    const [error, setError] = useState(null);
     const [emailError, setEmailError] = useState('');
     const [passError, setPassError] = useState('');
-    const [userData, setUserData] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -25,7 +23,6 @@ export default function Login(props) {
     const isNewUser = useSelector((state) => state.newUser);
     const dispatch = useDispatch();
 
-    const apiToken = process.env.REACT_APP_API_TOKEN;
     const endpoint = 'https://d3pdj2cb.directus.app/graphql/system';
 
     function login() {
@@ -71,22 +68,17 @@ export default function Login(props) {
                     if(errorMsg.includes('password')) {
                         setPassError("Please enter your password");
                     }
-                    setError(errorMsg);
                 }
                 return false
             }
-            console.log('userData', data, data.data.auth_login.access_token)
             let cookieExpires = new Date();
             cookieExpires.setMinutes(cookieExpires.getMinutes() + 20);
             cookies.set('token', data.data.auth_login.access_token, { path: '/', expires: cookieExpires });
-            setError(null);
-            setUserData(data);
             dispatch({type: 'user/setToken', value: data.data.auth_login.access_token})
             dispatch({type: 'modals/setLoginOpen', value: false})
             dispatch({type: 'user/setNewUser', value: false})
         })
         .catch(error => {
-            setError(error);
             console.error('catch', error);
         })
     }
