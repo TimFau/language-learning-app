@@ -6,6 +6,7 @@ export default function AddNewListModal(props) {
 
     const [deckName, setDeckName] = useState('');
     const [deckId, setDeckId] = useState('');
+    const [deckErrorMsg, setDeckErrorMsg] = useState('');
 
     const userToken = useSelector((state) => state.token)
     const userId = props.userId
@@ -20,41 +21,58 @@ export default function AddNewListModal(props) {
     }
 
     function addNewList () {
-        let listsUrl = "https://d3pdj2cb.directus.app/graphql?access_token=" + userToken;
-        fetch(listsUrl, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                query: `
-                mutation {
-                    create_User_lists_item (data: {
-                        status: "published",
-                        list_name: "${deckName}" ,
-                        list_id: "${deckId}"
-                        user_id: "${userId}"
-                    }) {
-                        status
-                        list_name
-                        list_id
-                    }
-                }
-                `
-            })
-        })
-        .then(res => res.json())
-        .then(
-            (result) => {
-                console.log('new list result', result)
-                props.refreshLists();
-                handleClose()
-            },
-            (error) => {
-                console.log(error);
+        // Check if valid
+        let request = "https://opensheet.vercel.app/" + deckId + "/Sheet1";
+        fetch(request, {mode: 'cors'})
+        .then( response => {
+            if (response.status === 200) {
+                setDeckErrorMsg('')
+                sendPost()
+            } else {
+                setDeckErrorMsg('Unable to validate Sheet ID')
             }
-        )
+        })
+        .catch((error) => {
+            console.error('Error', error)
+        })
+        // Add list to user_lists
+        function sendPost() {
+            let listsUrl = "https://d3pdj2cb.directus.app/graphql?access_token=" + userToken;
+            fetch(listsUrl, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    query: `
+                    mutation {
+                        create_User_lists_item (data: {
+                            status: "published",
+                            list_name: "${deckName}" ,
+                            list_id: "${deckId}"
+                            user_id: "${userId}"
+                        }) {
+                            status
+                            list_name
+                            list_id
+                        }
+                    }
+                    `
+                })
+            })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    console.log('new list result', result)
+                    props.refreshLists();
+                    handleClose()
+                },
+                (error) => {
+                    console.log(error);
+                }
+            )
+        }
     }
 
     function handleClose() {
@@ -79,7 +97,7 @@ export default function AddNewListModal(props) {
                     label="Deck Name"
                     type="text"
                     fullWidth
-                    variant="standard"
+                    margin="normal"
                 />
                 <TextField
                     onChange={handleChange}
@@ -89,7 +107,9 @@ export default function AddNewListModal(props) {
                     label="Deck ID"
                     type="text"
                     fullWidth
-                    variant="standard"
+                    margin="normal"
+                    error={deckErrorMsg !== ''}
+                    helperText={deckErrorMsg}
                 />
             </DialogContent>
             <DialogActions>
