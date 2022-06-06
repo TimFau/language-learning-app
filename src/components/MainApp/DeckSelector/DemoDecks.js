@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import { Drawer, CardActions, CardContent, Button, Typography }  from '@material-ui/core';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import { Drawer, CardActions, CardContent, Button, Typography }  from '@mui/material';
 
 export default function DemoDecks(props) {
     const [error, setError] = useState(null);

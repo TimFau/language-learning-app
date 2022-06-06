@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider, StyledEngineProvider, adaptV4Theme } from '@mui/material/styles';
 
 import MainApp from './components/MainApp/MainApp';
 import {getCookie} from './Helpers';
@@ -12,7 +12,7 @@ import './css/main.scss';
 // Global Vars
 const cookies = new Cookies();
 
-const theme = createTheme({
+const theme = createTheme(adaptV4Theme({
 	palette: {
 	  primary: {
 		light: '#80c2ff',
@@ -30,7 +30,7 @@ const theme = createTheme({
 		  main: "#fff"
 	  }
 	},
-});
+}));
 
 class TranslationApp extends React.Component {
 	componentDidMount () {
@@ -40,12 +40,14 @@ class TranslationApp extends React.Component {
 	}
 	render() {
     	return (
-			<BrowserRouter>
-				<ThemeProvider theme={theme}>
-					<MainApp />
-				</ThemeProvider>
+            <BrowserRouter>
+				<StyledEngineProvider injectFirst>
+                    <ThemeProvider theme={theme}>
+                        <MainApp />
+                    </ThemeProvider>
+                </StyledEngineProvider>
 			</BrowserRouter>
-		)
+        );
 	}
 }
 

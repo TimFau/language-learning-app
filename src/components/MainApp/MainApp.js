@@ -15,7 +15,7 @@ import DemoDeck from './DeckSelector/DemoDecks';
 import DeckDialog from '../Modals/DeckDialog';
 import Login from '../Modals/Login';
 import Cookies from 'universal-cookie';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@material-ui/core/';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material/';
 
 // global vars
 var langOneArr = [];

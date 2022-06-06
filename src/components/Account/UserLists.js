@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Grid, Card, CardActions, CardContent, Button, Typography, CircularProgress } from '@material-ui/core/';
+import { Grid, Card, CardActions, CardContent, Button, Typography, CircularProgress } from '@mui/material/';
 import AddNewListComponent from './AddNewList';
 
 export default function UserLists(props) {

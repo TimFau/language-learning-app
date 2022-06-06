@@ -1,8 +1,9 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { AppBar, Button, makeStyles } from '@material-ui/core/';
-import ToolBar from '@material-ui/core/ToolBar';
+import { AppBar, Button } from '@mui/material/';
+import makeStyles from '@mui/styles/makeStyles';
+import ToolBar from '@mui/material/Toolbar';
 
 const useStyles = makeStyles({
     appBar: {
@@ -38,7 +39,7 @@ export default function Nav(props) {
             <ToolBar>
                 {pathName === '/account' ?
                 <Button>
-                    <Link to="/">Home</Link>
+                    <Link underline="hover" to="/">Home</Link>
                 </Button>
                 : '' }
                 {deckStarted ?
@@ -60,4 +61,4 @@ export default function Nav(props) {
             </ToolBar>
         </AppBar>
     )
-};
+}

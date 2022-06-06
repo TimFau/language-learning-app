@@ -1,5 +1,5 @@
 import React from 'react';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import LinearProgress from '@mui/material/LinearProgress';
 
 const progressBar = (props) => {
     const normalise = value => (value - props.initialCount) * 100 / (0 - props.initialCount);

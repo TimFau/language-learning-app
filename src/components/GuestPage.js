@@ -1,8 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Paper, Card, makeStyles, TextField, Button, Link } from '@material-ui/core/';
-import { Alert } from '@material-ui/lab';
+import { Paper, Card, TextField, Button, Link } from '@mui/material/';
+import makeStyles from '@mui/styles/makeStyles';
+import { Alert } from '@mui/material';
 import { CheckIsEmail } from '../Helpers';
 import hpBackground from '../images/hp-background.jpg'
 
@@ -280,7 +281,7 @@ export default function GuestPage(props) {
                 }
                 <Button variant="contained" color="primary" fullWidth onClick={() => createAccount()}>Submit</Button>
                 <div>
-                    <Link onClick={() => dispatch({type: 'modals/setLoginOpen', value: true})}><span className="acctTxt">Already have an account?</span> <span className="signIn">LOGIN</span></Link>
+                    <Link underline="hover" onClick={() => dispatch({type: 'modals/setLoginOpen', value: true})}><span className="acctTxt">Already have an account?</span> <span className="signIn">LOGIN</span></Link>
                 </div>
             </Card>
             <div className={classes.copy}>

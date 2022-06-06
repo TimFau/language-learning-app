@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { CircularProgress, makeStyles } from '@material-ui/core';
+import { CircularProgress } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import UserLists from './UserLists';
 
 const useStyles = makeStyles({

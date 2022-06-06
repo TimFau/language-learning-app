@@ -3,7 +3,7 @@ import React from 'react';
 import { 
     CircularProgress, Button, ButtonGroup, 
     Typography, DialogTitle, DialogContent, Dialog }
-from '@material-ui/core/';
+from '@mui/material/';
 
 export default function deckDialog(props) {
 

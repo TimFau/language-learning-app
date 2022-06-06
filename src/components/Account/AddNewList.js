@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -79,6 +79,7 @@ export default function AddNewListModal(props) {
                     label="Deck Name"
                     type="text"
                     fullWidth
+                    variant="standard"
                 />
                 <TextField
                     onChange={handleChange}
@@ -88,6 +89,7 @@ export default function AddNewListModal(props) {
                     label="Deck ID"
                     type="text"
                     fullWidth
+                    variant="standard"
                 />
             </DialogContent>
             <DialogActions>

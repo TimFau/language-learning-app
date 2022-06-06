@@ -2,12 +2,12 @@ import React from 'react';
 import FlashCard from './MainApp/Modes/FlashCard';
 import WordBank from './MainApp/Modes/WordBank';
 import Keyboard from './MainApp/Modes/Keyboard';
-import Button from '@material-ui/core/Button';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Dialog from '@material-ui/core/Dialog';
-import Icon from '@material-ui/core/Icon';
+import Button from '@mui/material/Button';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Dialog from '@mui/material/Dialog';
+import Icon from '@mui/material/Icon';
 
 const form = (props) => {
     return (

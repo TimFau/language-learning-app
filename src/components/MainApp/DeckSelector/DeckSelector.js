@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 
 import Tutorial from '../../Modals/Tutorial';
 import { Card, CardActions, CardContent, Button, TextField, Icon }
-from '@material-ui/core/';
-import ToolTip from '@material-ui/core/ToolTip'
+from '@mui/material/';
+import ToolTip from '@mui/material/ToolTip'
 
 export default function DeckSelector(props) {
     
