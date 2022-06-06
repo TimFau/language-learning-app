@@ -9,8 +9,6 @@ const useStyles = makeStyles({
     appBar: {
         "& .MuiToolbar-root": {
             display: "flex",
-            // flexDirection: "column",
-            // justifyContent: "center"
         },
         "& button": {
             color: "#fff"

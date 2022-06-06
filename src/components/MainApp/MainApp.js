@@ -2,13 +2,12 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { wordBankHelper } from '../../Helpers';
+import { wordBankHelper } from '../../scripts/Helpers';
 import ProgressBar from '../../components/ProgressBar';
 import BottomButtonsContainer from './BottomButtonsContainer';
 
 import Nav from '../../components/Nav';
 import Form from '../../components/Form';
-// import DeckSelector from './DeckSelector/DeckSelector';
 import GuestPage from '../GuestPage'
 import Account from '../Account/Account';
 import DemoDeck from './DeckSelector/DemoDecks';
@@ -96,7 +95,6 @@ class TranslationApp extends React.Component {
               }))
               langOneArrInit = langOneArr.slice();
               langTwoArrInit = langTwoArr.slice();
-            //   this.getCard();
               this.props.setDeckDialogOpen();
           })
           .catch((error) => {

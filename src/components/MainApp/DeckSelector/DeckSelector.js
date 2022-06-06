@@ -8,14 +8,8 @@ import ToolTip from '@mui/material/ToolTip'
 
 export default function DeckSelector(props) {
     
-    
-    // const [inputMode, setInputMode] = useState('Flashcard');
     const [customListInputValue, setCustomListInputValue] = useState('');
-
     const dispatch = useDispatch();
-
-    // const demoDrawerOpen = useSelector((state) => state.demoDrawerOpen);
-
 
     function customListHandleChange(event) {
         setCustomListInputValue(event.target.value)

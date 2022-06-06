@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Paper, Card, TextField, Button, Link } from '@mui/material/';
 import makeStyles from '@mui/styles/makeStyles';
 import { Alert } from '@mui/material';
-import { CheckIsEmail } from '../Helpers';
+import { CheckIsEmail } from '../scripts/Validation';
 import hpBackground from '../images/hp-background.jpg'
 
 const apiToken = process.env.REACT_APP_API_TOKEN;
@@ -63,7 +63,6 @@ const useStyles = makeStyles({
         },
         "& .input": {
             marginBottom: "25px",
-            // maxWidth: "325px",
             display: "block"
         },
         "& a": {
@@ -208,10 +207,8 @@ export default function GuestPage(props) {
                     dispatch({type: 'modals/setLoginOpen', value: true})
                     setAlertMsg('')
                 }
-                // setError(null);
             })
             .catch(error => {
-                // setError(error);
                 console.error('catch', error);
             })
         }

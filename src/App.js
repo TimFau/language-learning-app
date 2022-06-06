@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createTheme, ThemeProvider, StyledEngineProvider, adaptV4Theme } from '@mui/material/styles';
 
 import MainApp from './components/MainApp/MainApp';
-import {getCookie} from './Helpers';
+import {getCookie} from './scripts/Helpers';
 import Cookies from 'universal-cookie';
 
 import './css/main.scss';
