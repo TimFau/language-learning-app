@@ -43,7 +43,11 @@ export default function account(props) {
         .then(async response => {
             const data = await response.json();
             if(!response.ok) {
+                console.log('bad response', response)
                 const resError = (data && data.message) || response.status;
+                dispatch({type: 'user/setToken', value: ''})
+                dispatch({type: 'modals/setLoginOpen', value: true})
+                dispatch({type: 'user/setNewUser', value: false})
                 return Promise.reject(resError);
             }
             dispatch({type: 'user/setUserName', value: data.data.users_me.first_name})

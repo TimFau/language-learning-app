@@ -283,7 +283,7 @@ class TranslationApp extends React.Component {
                       />
                   </Form>
                 : null }
-                {(!this.props.deckStarted && this.props.userToken === undefined) &&
+                {((!this.props.deckStarted) && (this.props.userToken === undefined || this.props.userToken === '')) &&
                     <React.Fragment>
                         <GuestPage />
                         <DemoDeck 
