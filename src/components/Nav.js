@@ -42,7 +42,7 @@ export default function Nav(props) {
                 : '' }
                 {deckStarted ?
                 <Button onClick={() => goToDeckSelector()}
-                >Return to Home</Button>
+                >Exit Deck</Button>
                 : ''}
                 {userToken === undefined ?
                 <Button

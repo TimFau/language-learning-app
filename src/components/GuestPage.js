@@ -5,15 +5,16 @@ import { Paper, Card, TextField, Button, Link } from '@mui/material/';
 import makeStyles from '@mui/styles/makeStyles';
 import { Alert } from '@mui/material';
 import { CheckIsEmail } from '../scripts/Validation';
-import hpBackground from '../images/hp-background.jpg'
+import hpBackground from '../images/hp-background.jpg';
 
 const apiToken = process.env.REACT_APP_API_TOKEN;
 const endpoint = 'https://d3pdj2cb.directus.app/graphql/system';
 
 const useStyles = makeStyles({
     paper: {
-      background: "linear-gradient(0deg, rgba(18, 115, 230, 0.85), rgba(18, 115, 230, 0.85)), url(" + hpBackground + ")",
-      backgroundSize: "100%",
+      background: "linear-gradient(0deg, rgba(18, 115, 230, 0.30), rgba(18, 115, 230, 0.15)), url(" + hpBackground + ")",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
       height: "100%",
       display: "flex",
       alignItems: "center",
@@ -52,7 +53,7 @@ const useStyles = makeStyles({
         display: "inline-block"
     },
     form: {
-        marginRight: "75px",
+        marginLeft: "75px",
         padding: "15px 40px 35px 40px",
         "& h3": {
             textAlign: "left",
@@ -215,6 +216,13 @@ export default function GuestPage(props) {
     }
     return (
         <Paper elevation={0} square height="100%" className={classes.paper}>
+            <div className={classes.copy}>
+                <h1>Easy to Use Flashcards <span className={classes.span}>For Learning New Languages</span></h1>
+                <p>Create your own flashcards, work banks, and quizzes; all with one deck.</p>
+                <div className={classes.howItWorks}>
+                    <span>See how it works:</span> <Button variant="contained" onClick={() => dispatch({type: 'deck/setDemoDrawer', value: true})}>Load demo Deck</Button>
+                </div>
+            </div>
             <Card className={classes.form}>
                 <h3>Create an account</h3>
                 <form>
@@ -281,13 +289,6 @@ export default function GuestPage(props) {
                     <Link underline="hover" onClick={() => dispatch({type: 'modals/setLoginOpen', value: true})}><span className="acctTxt">Already have an account?</span> <span className="signIn">LOGIN</span></Link>
                 </div>
             </Card>
-            <div className={classes.copy}>
-                <h1>Easy to Use Flashcards <span className={classes.span}>For Learning New Languages</span></h1>
-                <p>Create your own flashcards, work banks, and quizzes; all with one deck.</p>
-                <div className={classes.howItWorks}>
-                    <span>See how it works:</span> <Button variant="contained" onClick={() => dispatch({type: 'deck/setDemoDrawer', value: true})}>Load demo Deck</Button>
-                </div>
-            </div>
         </Paper>
     )
 }
