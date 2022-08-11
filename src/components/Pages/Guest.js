@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 import { Paper, Card, TextField, Button, Link } from '@mui/material/';
 import makeStyles from '@mui/styles/makeStyles';
 import { Alert } from '@mui/material';
-import { CheckIsEmail } from '../scripts/Validation';
-import hpBackground from '../images/hp-background.jpg';
+import { CheckIsEmail } from '../../scripts/Validation';
+import hpBackground from '../../images/hp-background.jpg';
 
 const apiToken = process.env.REACT_APP_API_TOKEN;
 const endpoint = 'https://d3pdj2cb.directus.app/graphql/system';

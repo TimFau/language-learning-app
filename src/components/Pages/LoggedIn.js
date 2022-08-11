@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { CircularProgress } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import UserLists from './UserLists';
+import UserLists from '../Account/UserLists';
 
 const useStyles = makeStyles({
     wrapper: {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Grid, Card, CardActions, CardContent, Button, Typography, CircularProgress } from '@mui/material/';
-import AddNewListComponent from './AddNewList';
+import AddNewListComponent from '../Modals/AddNewList';
 
 export default function UserLists(props) {
     const [error, setError] = useState(null);

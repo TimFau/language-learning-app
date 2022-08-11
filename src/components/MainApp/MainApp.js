@@ -7,9 +7,9 @@ import ProgressBar from '../../components/ProgressBar';
 import BottomButtonsContainer from './BottomButtonsContainer';
 
 import Nav from '../../components/Nav';
-import Form from '../../components/Form';
-import GuestPage from '../GuestPage'
-import Account from '../Account/Account';
+import Deck from '../Pages/Deck';
+import GuestPage from '../Pages/Guest'
+import Account from '../Pages/LoggedIn';
 import DemoDeck from './DeckSelector/DemoDecks';
 import DeckDialog from '../Modals/DeckDialog';
 import Login from '../Modals/Login';
@@ -257,7 +257,7 @@ class TranslationApp extends React.Component {
             <Nav logout={this.logout} />
             <div className={"container main-container " + this.state.inputMode}>
                 {this.props.deckStarted ?
-                    <Form
+                    <Deck
                       handleSubmit={this.handleSubmit}
                       inputMode={this.state.inputMode}
                       showAnswerFc={this.showAnswerFc}
@@ -281,7 +281,7 @@ class TranslationApp extends React.Component {
                       progressWidth={progressWidth}
                       initialCount={this.state.initialCount}
                       />
-                  </Form>
+                  </Deck>
                 : null }
                 {((!this.props.deckStarted) && (this.props.userToken === undefined || this.props.userToken === '')) &&
                     <React.Fragment>

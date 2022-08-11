@@ -1,7 +1,7 @@
 import React from 'react';
-import FlashCard from './MainApp/Modes/FlashCard';
-import WordBank from './MainApp/Modes/WordBank';
-import Keyboard from './MainApp/Modes/Keyboard';
+import FlashCard from '../MainApp/Modes/FlashCard';
+import WordBank from '../MainApp/Modes/WordBank';
+import Keyboard from '../MainApp/Modes/Keyboard';
 import Button from '@mui/material/Button';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -9,7 +9,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Dialog from '@mui/material/Dialog';
 import Icon from '@mui/material/Icon';
 
-const form = (props) => {
+const deck = (props) => {
     return (
         <div className="wrapper">
             {props.children /* Progress bar */}
@@ -71,4 +71,4 @@ const form = (props) => {
     )
 }
 
-export default form;
+export default deck;
