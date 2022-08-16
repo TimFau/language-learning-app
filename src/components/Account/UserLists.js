@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { Grid, Card, CardActions, CardContent, Button, Typography, CircularProgress } from '@mui/material/';
 import AddNewListComponent from '../Modals/AddNewList';
 
+// Displays all the lists that a logged in user has added to their profile
+
 export default function UserLists(props) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -61,7 +63,7 @@ export default function UserLists(props) {
     }, [userToken, userId])
   
     if (error) {
-      return <div>Error: {error.message}</div>;
+      return <div>Error: {error}</div>;
     } else if (!isLoaded) {
       return <CircularProgress />;
     } else if (items) {

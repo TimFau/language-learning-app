@@ -3,6 +3,10 @@ import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import { Drawer, CardActions, CardContent, Button, Typography }  from '@mui/material';
 
+//
+// This drawer contains decks that are available for guest users to try out the app
+//
+
 export default function DemoDecks(props) {
     const [error, setError] = useState(null);
     const [items, setItems] = useState([]);

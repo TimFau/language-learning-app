@@ -7,6 +7,10 @@ import { Alert } from '@mui/material';
 import { CheckIsEmail } from '../../scripts/Validation';
 import hpBackground from '../../images/hp-background.jpg';
 
+//
+// This Page is served to guests or users that have been logged out
+//
+
 const apiToken = process.env.REACT_APP_API_TOKEN;
 const endpoint = 'https://d3pdj2cb.directus.app/graphql/system';
 

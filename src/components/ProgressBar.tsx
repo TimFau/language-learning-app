@@ -6,7 +6,7 @@ const progressBar = (props) => {
     return (
         <div className="container progress-container">
             <LinearProgress variant="determinate" value={normalise(props.langOneArrLength)}/>
-            <span>{props.langOneArrLength} out of {props.initialCount} words left</span>
+            <span className="progress-text">{props.langOneArrLength} out of {props.initialCount} words left</span>
         </div>
     )
 }

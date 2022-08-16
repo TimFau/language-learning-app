@@ -25,9 +25,6 @@ const theme = createTheme(adaptV4Theme({
 		main: '#212c59',
 		dark: '#00002f',
 		contrastText: '#fff',
-	  },
-	  white: {
-		  main: "#fff"
 	  }
 	},
 }));

@@ -168,7 +168,7 @@ export default function Intro(props) {
             </TabPanel>
             <TabPanel className="step-three" value={value} index={3}>
                 <Typography>In order for this app to be able to access your sheet, you will need to publish it to the web.</Typography>
-                <Typography>To do this, select "File > Publish to Web". You can use all the default settings.</Typography>
+                <Typography>To do this, select "File &gt; Publish to Web". You can use all the default settings.</Typography>
                 <img src={publish} alt="Screenshot of Google Publish to Web Button" />
             </TabPanel>
             <TabPanel className="step-three" value={value} index={4}>

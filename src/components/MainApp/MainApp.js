@@ -3,14 +3,14 @@ import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { wordBankHelper } from '../../scripts/Helpers';
-import ProgressBar from '../../components/ProgressBar';
+import ProgressBar from '../ProgressBar';
 import BottomButtonsContainer from './BottomButtonsContainer';
 
-import Nav from '../../components/Nav';
+import Nav from '../Nav';
 import Deck from '../Pages/Deck';
 import GuestPage from '../Pages/Guest'
 import Account from '../Pages/LoggedIn';
-import DemoDeck from './DeckSelector/DemoDecks';
+import DemoDeck from './DeckSelector/DemoDecksDrawer';
 import DeckDialog from '../Modals/DeckDialog';
 import Login from '../Modals/Login';
 import Cookies from 'universal-cookie';
@@ -77,10 +77,16 @@ class TranslationApp extends React.Component {
                 langOneArr = [];
                 langTwoArr = [];
                 progressWidth = {};
-                data.forEach(function(item){
-                    langOneArr.push(item.Language1);
-                    langTwoArr.push(item.Language2);
-                })
+                if (data.length > 0) {
+                    data.forEach(function(item){
+                        langOneArr.push(item.Language1);
+                        langTwoArr.push(item.Language2);
+                    })
+                } else if (data.error) {
+                    console.log('Deck Load Error: ' + data.error)
+                } else {
+                    console.log('Data is empty; Deck not loaded')
+                }
                 this.setState(state => ({
                     language1: langOneArr.shift(),
                     language2: langTwoArr.shift(),
