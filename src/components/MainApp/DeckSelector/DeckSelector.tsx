@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import Tutorial from '../../Modals/Tutorial';
-
 import { Card, CardActions, CardContent, Button, TextField, Icon } from '@mui/material/';
 import ToolTip from '@mui/material/ToolTip'
 
@@ -44,7 +42,6 @@ export default function DeckSelector(props) {
             </div>
             
             {/* { deckDialog() } */}
-            <Tutorial />
         </div>
     )
 }

@@ -207,10 +207,12 @@ export default function GuestPage(props) {
                             setFieldWithError('')
                         }
                     }
+                    return false
                 } else {
                     dispatch({type: 'user/setNewUser', value: true})
                     dispatch({type: 'modals/setLoginOpen', value: true})
                     setAlertMsg('')
+                    return true
                 }
             })
             .catch(error => {
@@ -219,7 +221,7 @@ export default function GuestPage(props) {
         }
     }
     return (
-        <Paper elevation={0} square height="100%" className={classes.paper}>
+        <Paper elevation={0} square={true} className={classes.paper}>
             <div className={classes.copy}>
                 <h1>Easy to Use Flashcards <span className={classes.span}>For Learning New Languages</span></h1>
                 <p>Create your own flashcards, work banks, and quizzes; all with one deck.</p>

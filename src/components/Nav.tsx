@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from 'hooks'; 
 import { Link, useLocation } from 'react-router-dom';
 import { AppBar, Button } from '@mui/material/';
 import makeStyles from '@mui/styles/makeStyles';
@@ -21,9 +21,9 @@ const useStyles = makeStyles({
 })
 
 export default function Nav(props) {
-    const dispatch = useDispatch();
-    const deckStarted = useSelector((state) => state.deckStarted);
-    const userToken = useSelector((state) => state.token);
+    const dispatch = useAppDispatch();
+    const deckStarted = useAppSelector((state) => state.deckStarted);
+    const userToken = useAppSelector((state) => state.token);
     const classes = useStyles(props);
     let pathName = useLocation().pathname;
 
@@ -44,7 +44,7 @@ export default function Nav(props) {
                 <Button onClick={() => goToDeckSelector()}
                 >Exit Deck</Button>
                 : ''}
-                {userToken === undefined ?
+                {userToken === '' ?
                 <Button
                     onClick={() => dispatch({type: 'modals/setLoginOpen', value: true})}
                     className="login"

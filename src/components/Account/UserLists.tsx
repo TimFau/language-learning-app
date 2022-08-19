@@ -101,6 +101,6 @@ export default function UserLists(props) {
         </div>
       )
     } else {
-        return 'Error'
+        return <div>Error</div>
     }
   }

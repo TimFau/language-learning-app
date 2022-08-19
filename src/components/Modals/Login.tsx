@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from 'hooks'; 
 import Cookies from 'universal-cookie';
 
 import Button from '@mui/material/Button';
@@ -19,9 +19,9 @@ export default function Login(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const loginOpen = useSelector((state) => state.loginOpen);
-    const isNewUser = useSelector((state) => state.newUser);
-    const dispatch = useDispatch();
+    const loginOpen = useAppSelector((state) => state.loginOpen);
+    const isNewUser = useAppSelector((state) => state.newUser);
+    const dispatch = useAppDispatch();
 
     const endpoint = 'https://d3pdj2cb.directus.app/graphql/system';
 
@@ -70,13 +70,15 @@ export default function Login(props) {
                     }
                 }
                 return false
+            } else {
+                let cookieExpires = new Date();
+                cookieExpires.setMinutes(cookieExpires.getMinutes() + 20);
+                cookies.set('token', data.data.auth_login.access_token, { path: '/', expires: cookieExpires });
+                dispatch({type: 'user/setToken', value: data.data.auth_login.access_token})
+                dispatch({type: 'modals/setLoginOpen', value: false})
+                dispatch({type: 'user/setNewUser', value: false})
+                return true
             }
-            let cookieExpires = new Date();
-            cookieExpires.setMinutes(cookieExpires.getMinutes() + 20);
-            cookies.set('token', data.data.auth_login.access_token, { path: '/', expires: cookieExpires });
-            dispatch({type: 'user/setToken', value: data.data.auth_login.access_token})
-            dispatch({type: 'modals/setLoginOpen', value: false})
-            dispatch({type: 'user/setNewUser', value: false})
         })
         .catch(error => {
             console.error('catch', error);

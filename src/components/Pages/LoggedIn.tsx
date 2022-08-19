@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from 'hooks';
 import { CircularProgress } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import UserLists from '../Account/UserLists';
@@ -13,11 +13,11 @@ const useStyles = makeStyles({
 
 export default function account(props) {
 
-    const userToken = useSelector((state) => state.token)
-    const userName = useSelector((state) => state.userName)
+    const userToken = useAppSelector((state) => state.token)
+    const userName = useAppSelector((state) => state.userName)
     const [userId, setUserId] = useState(null);
     const [isReady, setIsReady] = useState(false);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const classes = useStyles();
     const endpoint = 'https://d3pdj2cb.directus.app/graphql/system';
 
@@ -50,9 +50,10 @@ export default function account(props) {
                 dispatch({type: 'user/setNewUser', value: false})
                 return Promise.reject(resError);
             }
-            dispatch({type: 'user/setUserName', value: data.data.users_me.first_name})
-            setUserId(data.data.users_me.id)
-            setIsReady(true)
+                dispatch({type: 'user/setUserName', value: data.data.users_me.first_name})
+                setUserId(data.data.users_me.id)
+                setIsReady(true)
+                return true
         })
         .catch(error => {
             console.error('catch', error);

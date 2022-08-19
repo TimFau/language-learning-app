@@ -21,15 +21,15 @@ export default function deckDialog(props) {
                     fullWidth
                 >
                     <Button
-                        variant={props.inputMode === 'Flashcard' ? 'contained' : null}
+                        variant={props.inputMode === 'Flashcard' ? "contained" : 'outlined'}
                         onClick={() => props.setInputMode('Flashcard')}
                     >Flashcard</Button>
                     <Button
-                        variant={props.inputMode === 'Wordbank' ? 'contained' : null}
+                        variant={props.inputMode === 'Wordbank' ? 'contained' : 'outlined'}
                         onClick={() => props.setInputMode('Wordbank')}
                     >Wordbank</Button>
                     <Button
-                        variant={props.inputMode === 'Keyboard' ? 'contained' : null}
+                        variant={props.inputMode === 'Keyboard' ? 'contained' : 'outlined'}
                         onClick={() => props.setInputMode('Keyboard')}
                     >Keyboard</Button>
                 </ButtonGroup>
@@ -41,11 +41,11 @@ export default function deckDialog(props) {
                     fullWidth
                 >
                     <Button
-                        variant={props.translateMode === '1to2' ? 'contained' : null}
+                        variant={props.translateMode === '1to2' ? 'contained' : 'outlined'}
                         onClick={() => props.setTranslationMode1()}
                     >{props.language1} to {props.language2}</Button>
                     <Button
-                        variant={props.translateMode === '2to1' ? 'contained' : null}
+                        variant={props.translateMode === '2to1' ? 'contained' : 'outlined'}
                         onClick={() => props.setTranslationMode2()}
                     >{props.language2} to {props.language1}</Button>
                 </ButtonGroup>

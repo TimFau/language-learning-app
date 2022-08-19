@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from 'hooks';
 
 export default function AddNewListModal(props) {
 
@@ -8,7 +8,7 @@ export default function AddNewListModal(props) {
     const [deckId, setDeckId] = useState('');
     const [deckErrorMsg, setDeckErrorMsg] = useState('');
 
-    const userToken = useSelector((state) => state.token)
+    const userToken = useAppSelector((state) => state.token)
     const userId = props.userId
     const dialogOpen = props.addListDialogOpen;
 

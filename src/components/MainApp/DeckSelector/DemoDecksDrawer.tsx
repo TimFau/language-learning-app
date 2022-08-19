@@ -7,9 +7,15 @@ import { Drawer, CardActions, CardContent, Button, Typography }  from '@mui/mate
 // This drawer contains decks that are available for guest users to try out the app
 //
 
+interface listItem {
+    id: String,
+    list_id: String,
+    list_name: String
+}
+
 export default function DemoDecks(props) {
-    const [error, setError] = useState(null);
-    const [items, setItems] = useState([]);
+    const [error, setError] = useState('');
+    const [items, setItems] = useState<listItem[]>([]);
     
     const apiToken = process.env.REACT_APP_API_TOKEN;
     const endpoint = 'https://d3pdj2cb.directus.app/graphql';
@@ -52,7 +58,11 @@ export default function DemoDecks(props) {
     }, [apiToken])
   
     if (error) {
-      return <div>Error: {error.message}</div>;
+      return (
+        <Drawer anchor="bottom" open={props.open} onClose={props.onClose} className="demo-drawer">
+            <div>Error Loading Demo Deck List - Please Contact Site Admin to resume service - lla@timfau.com</div>
+        </Drawer>
+      )
     } else {
       return (
         <Drawer anchor="bottom" open={props.open} onClose={props.onClose} className="demo-drawer">
@@ -62,7 +72,7 @@ export default function DemoDecks(props) {
                 justifyContent="center"
             >
                 {items.map(item => (
-                    <Card onClick={() => props.deckOptions(item.list_name, item.list_id)} key={item.id}>
+                    <Card onClick={() => props.deckOptions(item.list_name, item.list_id)} key={item.id.toString()}>
                         <CardContent>
                             <Typography gutterBottom variant="h6" component="h2">
                             {item.list_name}
