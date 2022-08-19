@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from 'hooks'; 
 import { Grid, Card, CardActions, CardContent, Button, Typography, CircularProgress } from '@mui/material/';
 import AddNewListComponent from '../Modals/AddNewList';
 
 // Displays all the lists that a logged in user has added to their profile
 
+interface itemsChild {
+    date_created: String,
+    id: String,
+    list_id: String,
+    list_name: String,
+    status: String
+}
+
 export default function UserLists(props) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [items, setItems] = useState([]);
+    const [items, setItems] = useState<itemsChild[]>([]);
     const [addListDialogOpen, setAddListDialogOpen] = useState(false);
-    const userToken = useSelector((state) => state.token)
+    const userToken = useAppSelector((state) => state.token)
     const userId = props.userId
 
     function getUsersLists (userToken, userId) {
@@ -76,7 +84,7 @@ export default function UserLists(props) {
                 spacing={2}
             >
                 {items.map(item => (
-                    <Card onClick={() => props.deckOptions(item.list_name, item.list_id)} key={item.id} style={{margin: 10}}>
+                    <Card onClick={() => props.deckOptions(item.list_name, item.list_id)} key={item.id.toString()} style={{margin: 10}}>
                         <CardContent>
                             <Typography gutterBottom variant="h6" component="h2">
                             {item.list_name}

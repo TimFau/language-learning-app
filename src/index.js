@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 
 import TranslationApp from './App';
-import reducer from './store/reducer';
+import { reducer } from './store/reducer';
 
 import './index.css';
 

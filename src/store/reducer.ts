@@ -5,11 +5,11 @@ const initialState = {
     introOpen: false,
     loginOpen: false,
     newUser: false,
-    token: undefined,
+    token: '',
     userName: ''
 };
 
-const reducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case 'deck/setDeckStarted':
             return {
@@ -56,5 +56,3 @@ const reducer = (state = initialState, action) => {
             return state;
     }
 };
-
-export default reducer;

@@ -9,6 +9,7 @@
     "@mui/icons-material": "^5.8.2",
     "@mui/material": "^5.8.2",
     "@mui/styles": "^5.8.0",
+    "@reduxjs/toolkit": "^1.8.4",
     "gity": "^1.0.5",
     "node-sass": "^4.14.1",
     "popper.js": "^1.16.1",
