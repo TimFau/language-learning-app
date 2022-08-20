@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 
 import { wordBankHelper } from '../../scripts/Helpers';
 import ProgressBar from '../ProgressBar';
@@ -17,22 +17,47 @@ import Cookies from 'universal-cookie';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material/';
 
 // global vars
-var langOneArr = [];
-var langTwoArr = [];
+var langOneArr: String[];
+var langTwoArr: String[];
 var progressWidth = {};
-var langOneArrInit = [];
-var langTwoArrInit = [];
+var langOneArrInit: String[];
+var langTwoArrInit: String[];
 const cookies = new Cookies();
 
-class TranslationApp extends React.Component {
-    constructor(props) {
+interface RootState {
+    language1: String | undefined,
+    language2: String | undefined,
+    langFrom: Array<any>,
+    langTo: Array<any>,
+    translationInputValue: String,
+    wordBank: Array<any>,
+    deckLoadingMsg: String,
+    // set default state values
+    translateMode: String,
+    inputMode: String,
+    checkAccents: boolean,
+    showAnswer: boolean,
+    success: boolean,
+    incorrect: boolean,
+    deckLoadingError: boolean,
+    currentListId: String,
+    currentListName: String,
+    deckDataLoaded: boolean,
+    logOutDialogOpen: boolean,
+    randomNum: number,
+    randomNum2: number,
+    initialCount: number,
+}
+
+class TranslationApp extends React.Component<PropsFromRedux, RootState> {
+    constructor(props: PropsFromRedux) {
         super(props);
         // state initialization
         this.state = {
             language1: '',
             language2: '',
-            langFrom: '',
-            langTo: '',
+            langFrom: [],
+            langTo: [],
             translationInputValue: '',
             wordBank: [],
             deckLoadingMsg: '',
@@ -47,7 +72,10 @@ class TranslationApp extends React.Component {
             currentListId: '',
             currentListName: '',
             deckDataLoaded: false,
-            logOutDialogOpen: false
+            logOutDialogOpen: false,
+            randomNum: 0,
+            randomNum2: 0,
+            initialCount: 0
         };
         // bindings
         this.getCard = this.getCard.bind(this);
@@ -87,7 +115,7 @@ class TranslationApp extends React.Component {
                 } else {
                     console.log('Data is empty; Deck not loaded')
                 }
-                this.setState(state => ({
+                this.setState({
                     language1: langOneArr.shift(),
                     language2: langTwoArr.shift(),
                     initialCount: langOneArr.length,
@@ -98,7 +126,7 @@ class TranslationApp extends React.Component {
                     deckLoadingError: false,
                     deckLoadingMsg: '',
                     deckDataLoaded: true
-                }))
+                })
                 langOneArrInit = langOneArr.slice();
                 langTwoArrInit = langTwoArr.slice();
                 this.props.setDeckDialogOpen();
@@ -118,7 +146,7 @@ class TranslationApp extends React.Component {
             langOneArr.splice(this.state.randomNum, 1);
             langTwoArr.splice(this.state.randomNum, 1);
         }
-        this.setState((state, props) =>  ({
+        this.setState({
             randomNum: Math.floor(Math.random() * langOneArr.length),
             randomNum2: Math.floor(Math.random() * langOneArrInit.length),
             success: false,
@@ -127,7 +155,7 @@ class TranslationApp extends React.Component {
             langFrom: this.state.translateMode === '1to2' ? langOneArr : langTwoArr,
             langTo: this.state.translateMode === '1to2' ? langTwoArr : langOneArr,
             showAnswer: false
-        }));
+        });
         this.handleWordBank();
         progressWidth = {
             width: (this.state.initialCount - langOneArr.length) * (100 / this.state.initialCount) + '%'
@@ -358,26 +386,26 @@ class TranslationApp extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-    return {
+const mapStateToProps = (state) => ({
         deckStarted: state.deckStarted,
         deckDialogOpen: state.deckDialogOpen,
         demoDrawerOpen: state.demoDrawerOpen,
         userToken: state.token
-    };
+})
+
+const mapDispatchToProps = {
+    openIntro: () => ({type: 'modals/setIntroOpen', value: true}),
+    setDeckDialogOpen: () => ({type: 'deck/setDialog', value: true}),
+    setDeckDialogClose: () => ({type: 'deck/setDialog', value: false}),
+    setDeckStartedTrue: () => ({type: 'deck/setDeckStarted', value: true}),
+    setDeckStartedFalse: () => ({type: 'deck/setDeckStarted', value: false}),
+    setDemoDrawerOpen: () => ({type: 'deck/setDemoDrawer', value: true}),
+    setDemoDrawerClosed: () => ({type: 'deck/setDemoDrawer', value: false}),
+    setUserToken: () => ({type: 'user/setToken', value: undefined})
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        openIntro: () => dispatch({type: 'modals/setIntroOpen', value: true}),
-        setDeckDialogOpen: () => dispatch({type: 'deck/setDialog', value: true}),
-        setDeckDialogClose: () => dispatch({type: 'deck/setDialog', value: false}),
-        setDeckStartedTrue: () => dispatch({type: 'deck/setDeckStarted', value: true}),
-        setDeckStartedFalse: () => dispatch({type: 'deck/setDeckStarted', value: false}),
-        setDemoDrawerOpen: () => dispatch({type: 'deck/setDemoDrawer', value: true}),
-        setDemoDrawerClosed: () => dispatch({type: 'deck/setDemoDrawer', value: false}),
-        setUserToken: () => dispatch({type: 'user/setToken', value: undefined})
-    };
-};
+const connector = connect(mapStateToProps, mapDispatchToProps)
 
-export default connect(mapStateToProps, mapDispatchToProps)(TranslationApp);
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+export default connector(TranslationApp);
