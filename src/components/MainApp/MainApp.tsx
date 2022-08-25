@@ -387,10 +387,10 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
 }
 
 const mapStateToProps = (state) => ({
-        deckStarted: state.deckStarted,
-        deckDialogOpen: state.deckDialogOpen,
-        demoDrawerOpen: state.demoDrawerOpen,
-        userToken: state.token
+    deckStarted: state.deckStarted,
+    deckDialogOpen: state.deckDialogOpen,
+    demoDrawerOpen: state.demoDrawerOpen,
+    userToken: state.token
 })
 
 const mapDispatchToProps = {

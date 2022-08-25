@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { createTheme, ThemeProvider, StyledEngineProvider, adaptV4Theme } from '@mui/material/styles';
 
 import MainApp from './components/MainApp/MainApp';
@@ -29,7 +29,7 @@ const theme = createTheme(adaptV4Theme({
 	},
 }));
 
-class TranslationApp extends React.Component {
+class TranslationApp extends React.Component<PropsFromRedux> {
 	componentDidMount () {
 		if (getCookie('token')) {
 			this.props.setUserToken(cookies.get('token'));
@@ -48,10 +48,12 @@ class TranslationApp extends React.Component {
 	}
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        setUserToken: (value) => dispatch({type: 'user/setToken', value: value})
-    };
+const mapDispatchToProps = {
+	setUserToken: (value) => ({type: 'user/setToken', value: value})
 };
 
-export default connect(null, mapDispatchToProps)(TranslationApp);
+const connector = connect(null, mapDispatchToProps)
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+export default connector(TranslationApp);

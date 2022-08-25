@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import FlashCard from '../MainApp/Modes/FlashCard';
 import WordBank from '../MainApp/Modes/WordBank';
@@ -11,7 +10,29 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Dialog from '@mui/material/Dialog';
 import Icon from '@mui/material/Icon';
 
-class Deck extends React.Component {
+
+type RootState = {
+    language1: String | undefined,
+    language2: String | undefined,
+    langFrom: Array<any>,
+    langTo: Array<any>,
+    translationInputValue: String,
+    wordBank: Array<any>,
+    translateMode: String,
+    inputMode: String,
+    showAnswer: boolean,
+    randomNum: number,
+    langOneArrLength: number,
+    handleSubmit: (event: any) => void,
+    showAnswerFc: (event: any) => void,
+    getCard: (event: any) => void,
+    archiveCard: (event: any) => void,
+    keyboardModeHandleChange: (event: any) => void,
+    goToDeckSelector: (event: any) => void,
+    children: React.ReactNode
+}
+
+class Deck extends React.Component<RootState> {
     render() {
         return (
             <div className="wrapper">
@@ -19,7 +40,7 @@ class Deck extends React.Component {
                 <form onSubmit={this.props.handleSubmit}  id="mainApp">
                     {this.props.inputMode === 'Flashcard' ?
                         <FlashCard 
-                        showAnswerFc={() => this.props.showAnswerFc()}
+                        showAnswerFc={this.props.showAnswerFc}
                         showAnswer={this.props.showAnswer}
                         getCard={this.props.getCard}
                         archiveCard={this.props.archiveCard}
@@ -75,26 +96,4 @@ class Deck extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        deckStarted: state.deckStarted,
-        deckDialogOpen: state.deckDialogOpen,
-        demoDrawerOpen: state.demoDrawerOpen,
-        userToken: state.token
-    };
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        openIntro: () => dispatch({type: 'modals/setIntroOpen', value: true}),
-        setDeckDialogOpen: () => dispatch({type: 'deck/setDialog', value: true}),
-        setDeckDialogClose: () => dispatch({type: 'deck/setDialog', value: false}),
-        setDeckStartedTrue: () => dispatch({type: 'deck/setDeckStarted', value: true}),
-        setDeckStartedFalse: () => dispatch({type: 'deck/setDeckStarted', value: false}),
-        setDemoDrawerOpen: () => dispatch({type: 'deck/setDemoDrawer', value: true}),
-        setDemoDrawerClosed: () => dispatch({type: 'deck/setDemoDrawer', value: false}),
-        setUserToken: () => dispatch({type: 'user/setToken', value: undefined})
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Deck);
+export default Deck
