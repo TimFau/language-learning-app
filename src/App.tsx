@@ -4,7 +4,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { createTheme, ThemeProvider, StyledEngineProvider, adaptV4Theme } from '@mui/material/styles';
 
 import MainApp from './components/MainApp/MainApp';
-import {getCookie} from './scripts/Helpers';
+import {cookieExists} from './scripts/Helpers';
 import Cookies from 'universal-cookie';
 
 import './css/main.scss';
@@ -31,7 +31,7 @@ const theme = createTheme(adaptV4Theme({
 
 class TranslationApp extends React.Component<PropsFromRedux> {
 	componentDidMount () {
-		if (getCookie('token')) {
+		if (cookieExists('token')) {
 			this.props.setUserToken(cookies.get('token'));
 		}
 	}

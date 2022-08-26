@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Paper, Card, TextField, Button, Link } from '@mui/material/';
 import makeStyles from '@mui/styles/makeStyles';
 import { Alert } from '@mui/material';
-import { CheckIsEmail } from '../../scripts/Validation';
+import { CheckIsEmail } from '../../scripts/Helpers';
 import hpBackground from '../../images/hp-background.jpg';
 
 //
