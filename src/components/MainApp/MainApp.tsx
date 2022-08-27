@@ -19,7 +19,6 @@ import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, B
 // global vars
 var langOneArr: string[];
 var langTwoArr: string[];
-var progressWidth = {};
 var langOneArrInit: string[];
 var langTwoArrInit: string[];
 const cookies = new Cookies();
@@ -27,10 +26,10 @@ const cookies = new Cookies();
 interface RootState {
     language1: string | undefined,
     language2: string | undefined,
-    langFrom: Array<any>,
-    langTo: Array<any>,
+    langFrom: Array<string>,
+    langTo: Array<string>,
     translationInputValue: string,
-    wordBank: Array<any>,
+    wordBank: Array<string>,
     deckLoadingMsg: string,
     // set default state values
     translateMode: string,
@@ -91,6 +90,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
         this.setLogOutDialogOpen = this.setLogOutDialogOpen.bind(this);
         this.setLogOutDialogClose = this.setLogOutDialogClose.bind(this);
         this.logout = this.logout.bind(this);
+        this.deckOptions = this.deckOptions.bind(this);
     }
   
     
@@ -103,9 +103,9 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
             .then( data => {
                 langOneArr = [];
                 langTwoArr = [];
-                progressWidth = {};
                 if (data.length > 0) {
                     data.forEach(function(item: any){
+                        console.log('getDeckData', data)
                         langOneArr.push(item.Language1);
                         langTwoArr.push(item.Language2);
                     })
@@ -156,9 +156,6 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
             showAnswer: false
         });
         this.handleWordBank();
-        progressWidth = {
-            width: (this.state.initialCount - langOneArr.length) * (100 / this.state.initialCount) + '%'
-        }
     }
 
     archiveCard() {
@@ -308,7 +305,6 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
                   >
                       <ProgressBar 
                       langOneArrLength={langOneArr.length}
-                      progressWidth={progressWidth}
                       initialCount={this.state.initialCount}
                       />
                   </Deck>
@@ -317,14 +313,14 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
                     <React.Fragment>
                         <GuestPage />
                         <DemoDeck 
-                            deckOptions={this.deckOptions.bind(this)}
+                            deckOptions={this.deckOptions}
                             open={this.props.demoDrawerOpen}
                             onClose={this.props.setDemoDrawerClosed}
                         />
                     </React.Fragment>
                 }
                 {(!this.props.deckStarted && this.props.userToken) &&
-                    <Account deckOptions={this.deckOptions.bind(this)} />
+                    <Account deckOptions={this.deckOptions} />
                 }
                 <DeckDialog
                     inputMode={this.state.inputMode}
@@ -382,7 +378,15 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
+interface mapStateToPropsProps {
+    deckStarted: boolean,
+    deckDialogOpen: boolean,
+    demoDrawerOpen: boolean,
+    userToken: string,
+    token: string
+}
+
+const mapStateToProps = (state: mapStateToPropsProps) => ({
     deckStarted: state.deckStarted,
     deckDialogOpen: state.deckDialogOpen,
     demoDrawerOpen: state.demoDrawerOpen,

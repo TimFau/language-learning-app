@@ -4,7 +4,13 @@ import { useDispatch } from 'react-redux';
 import { Card, CardActions, CardContent, Button, TextField, Icon } from '@mui/material/';
 import ToolTip from '@mui/material/ToolTip'
 
-export default function DeckSelector(props: any) {
+interface DeckSelectorProps {
+    deckLoadingError: boolean | undefined,
+    deckLoadingMsg: string,
+    deckOptions: (name: string, value: string) => void
+}
+
+export default function DeckSelector(props: DeckSelectorProps) {
     
     const [customListInputValue, setCustomListInputValue] = useState('');
     const dispatch = useDispatch();

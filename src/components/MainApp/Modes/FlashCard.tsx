@@ -3,7 +3,18 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-const flashCard = (props: any) => {
+interface FlashCardProps {
+    showAnswer: boolean,
+    langFrom: Array<string>,
+    langTo: Array<string>,
+    randomNum: number,
+    getCard: (event: React.UIEvent<HTMLElement>) => void,
+    archiveCard: (event: React.UIEvent<HTMLElement>) => void,
+    showAnswerFc: (event: React.UIEvent<HTMLElement>) => void,
+    children: React.ReactNode    
+}
+
+const flashCard = (props: FlashCardProps) => {
     return(
         <Card className="flash-card-container">
             {props.showAnswer ? (

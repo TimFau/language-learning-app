@@ -1,6 +1,19 @@
 import Button from '@mui/material/Button';
+import React from 'react';
 
-const bottomButtonsContainer = (props: any) => {
+interface BottomButtonsContainerProps {
+    getCard: (event: React.UIEvent<HTMLElement>) => void,
+    handleSubmit: (event: React.FormEvent<HTMLInputElement>) => void,
+    langOneArr: string[],
+    langTwoArr: string[],
+    translateMode: string,
+    randomNum: number,
+    success: boolean,
+    incorrect: boolean,
+    showAnswer: boolean,
+}
+
+const bottomButtonsContainer = (props: BottomButtonsContainerProps) => {
     return (
         <div 
             className={'bottom-button-wrap ' + (props.success ? 'success' : '') + (props.incorrect ? 'incorrect' : '')} 
@@ -15,7 +28,7 @@ const bottomButtonsContainer = (props: any) => {
                 <Button
                     type="submit"
                     value="submit"
-                    onClick={props.handleSubmit}
+                    onClick={() => props.handleSubmit}
                     variant="contained"
                     color="primary"
                     size="large"
@@ -26,7 +39,6 @@ const bottomButtonsContainer = (props: any) => {
             <div className="container-fluid">
                 <div className="message">
                     <h4>Correct!</h4>
-                    {/* <span>{props.translateMode === "1to2" ? props.langTwoArr[props.randomNum] : props.langOneArr[props.randomNum]}</span> */}
                 </div>
                 <Button variant="contained" onClick={props.getCard} className="btn btn-danger btn-lg">Continue</Button>
             </div>

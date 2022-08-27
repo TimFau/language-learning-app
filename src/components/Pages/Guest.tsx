@@ -91,7 +91,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function GuestPage(props: any) {
+export default function GuestPage(props: object) {
     const classes = useStyles(props);
     const dispatch = useDispatch();
     const [firstName, setFirstName] = React.useState('');

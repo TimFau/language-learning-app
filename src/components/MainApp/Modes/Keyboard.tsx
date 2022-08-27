@@ -3,7 +3,16 @@ import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-const keyBoard = (props: any) => {
+interface KeyboardProps {
+    langFrom: Array<string>,
+    langTo: Array<string>,
+    randomNum: number,
+    translationInputValue: string,
+    keyboardModeHandleChange: (event: React.ChangeEvent<any>) => void,
+    children: React.ReactNode  
+}
+
+const keyBoard = (props: KeyboardProps) => {
     return(
         <Card className="keyboard-container">
             <CardContent>

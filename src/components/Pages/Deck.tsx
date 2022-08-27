@@ -14,21 +14,21 @@ import Icon from '@mui/material/Icon';
 type RootState = {
     language1: string | undefined,
     language2: string | undefined,
-    langFrom: Array<any>,
-    langTo: Array<any>,
+    langFrom: Array<string>,
+    langTo: Array<string>,
     translationInputValue: string,
-    wordBank: Array<any>,
+    wordBank: Array<string>,
     translateMode: string,
     inputMode: string,
     showAnswer: boolean,
     randomNum: number,
     langOneArrLength: number,
     handleSubmit: (event: any) => void,
-    showAnswerFc: (event: any) => void,
-    getCard: (event: any) => void,
-    archiveCard: (event: any) => void,
+    showAnswerFc: () => void,
+    getCard: () => void,
+    archiveCard: () => void,
     keyboardModeHandleChange: (event: any) => void,
-    goToDeckSelector: (event: any) => void,
+    goToDeckSelector: () => void,
     children: React.ReactNode
 }
 
@@ -69,7 +69,6 @@ class Deck extends React.Component<RootState> {
                             randomNum={this.props.randomNum}
                             wordBank={this.props.wordBank}
                             keyboardModeHandleChange={(event: React.ChangeEvent<HTMLInputElement>) => this.props.keyboardModeHandleChange(event)}
-                            translateMode={this.props.translateMode}
                         >
                             Translate to <span>{this.props.translateMode === "1to2" ? this.props.language2 : this.props.language1}</span>
                         </WordBank>

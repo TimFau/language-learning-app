@@ -4,7 +4,16 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-const flashCard = (props: any) => {
+interface WordBankProps {
+    langFrom: Array<string>,
+    langTo: Array<string>,
+    randomNum: number,
+    wordBank: Array<string>,
+    keyboardModeHandleChange: (event: React.ChangeEvent<any>) => void,
+    children: React.ReactNode  
+}
+
+const flashCard = (props: WordBankProps) => {
     return(
         <Card className="list-group word-bank">
             <CardContent>
@@ -13,7 +22,7 @@ const flashCard = (props: any) => {
                 {/* <Typography variant="h1">"{props.langTo[props.randomNum]}"</Typography> */}
             </CardContent>
             <CardActions>
-            { props.wordBank.map((word: any, index: any) =>
+            { props.wordBank.map((word: string, index: number) =>
                 <Button
                     type="button"
                     className="list-group-item"

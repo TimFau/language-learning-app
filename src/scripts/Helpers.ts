@@ -1,10 +1,10 @@
-function shuffle(array: Array<any>) {
+function shuffle(array: Array<string>) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     } return array;
 }
-export function wordBankHelper(ranNum1: any, curArr: Array<any>, initArr: Array<any>) {
+export function wordBankHelper(ranNum1: number, curArr: Array<string>, initArr: Array<string>) {
     var returnValue = [curArr[ranNum1]];
     var i = 0;
     while (returnValue.length < 4 && i < 10) {

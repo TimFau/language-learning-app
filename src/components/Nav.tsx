@@ -19,8 +19,12 @@ const useStyles = makeStyles({
     }
 })
 
+interface NavProps {
+    logout: (event: React.UIEvent<HTMLElement>) => void,
+}
 
-export default function Nav(props: any) {
+
+export default function Nav(props: NavProps) {
     const dispatch = useAppDispatch();
     const deckStarted = useAppSelector((state) => state.deckStarted);
     const userToken = useAppSelector((state) => state.token);

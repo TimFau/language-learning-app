@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import { Drawer, CardActions, CardContent, Button, Typography }  from '@mui/material';
@@ -13,7 +13,13 @@ interface listItem {
     list_name: string
 }
 
-export default function DemoDecks(props: any) {
+interface DemoDeckDrawerProps {
+    open: boolean,
+    onClose: (event: React.UIEvent<HTMLElement>) => void,
+    deckOptions: (listName: string, listId: string) => void
+}
+
+export default function DemoDecks(props: DemoDeckDrawerProps) {
     const [error, setError] = useState('');
     const [items, setItems] = useState<listItem[]>([]);
     

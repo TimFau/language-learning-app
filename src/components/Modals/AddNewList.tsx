@@ -2,7 +2,14 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import React, { useState } from 'react';
 import { useAppSelector } from 'hooks';
 
-export default function AddNewListModal(props: any) {
+interface AddNewListModalProps {
+    userId: string,
+    addListDialogOpen: boolean,
+    refreshLists: () => void,
+    closeDialog: () => void,
+}
+
+export default function AddNewListModal(props: AddNewListModalProps) {
 
     const [deckName, setDeckName] = useState('');
     const [deckId, setDeckId] = useState('');

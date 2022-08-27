@@ -5,7 +5,23 @@ import {
     Typography, DialogTitle, DialogContent, Dialog }
 from '@mui/material/';
 
-export default function deckDialog(props: any) {
+interface deckDialogProps {
+    language1: string | undefined,
+    language2: string | undefined,
+    translateMode: string,
+    inputMode: string,
+    currentListName: string,
+    deckDataLoaded: boolean,
+    deckDialogOpen: boolean,
+    children: React.ReactNode,
+    startDeck: () => void,
+    setInputMode: (mode: string) => void,
+    setDialogClosed: () => void,
+    setTranslationMode1: () => void,
+    setTranslationMode2: () => void
+}
+
+export default function deckDialog(props: deckDialogProps) {
 
     return (
         <Dialog open={props.deckDialogOpen} onClose={props.setDialogClosed} className="deck-dialog" id="deckDialog">
@@ -53,7 +69,7 @@ export default function deckDialog(props: any) {
             <Button
                 // On Click
                     // Send value to getDeckData in App.js
-                onClick={() => props.startDeck(props.currentListId)}
+                onClick={() => props.startDeck()}
             >Start Deck</Button>
             </React.Fragment>
             :

@@ -11,11 +11,15 @@ const useStyles = makeStyles({
     }
 });
 
-export default function account(props: any) {
+interface LoggedInProps {
+    deckOptions: (listName: string, listId: string) => void
+}
+
+export default function account(props: LoggedInProps) {
 
     const userToken = useAppSelector((state) => state.token)
     const userName = useAppSelector((state) => state.userName)
-    const [userId, setUserId] = useState(null);
+    const [userId, setUserId] = useState('');
     const [isReady, setIsReady] = useState(false);
     const dispatch = useAppDispatch();
     const classes = useStyles();

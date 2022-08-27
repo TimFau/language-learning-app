@@ -13,7 +13,12 @@ interface itemsChild {
     status: string
 }
 
-export default function UserLists(props: any) {
+interface UserListsProps {
+    userId: string,
+    deckOptions: (listName: string, listId: string) => void
+}
+
+export default function UserLists(props: UserListsProps) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState<itemsChild[]>([]);
