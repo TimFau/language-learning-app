@@ -1,9 +1,10 @@
 import Button from '@mui/material/Button';
 import React from 'react';
+import { handleSubmitType } from './MainApp';
 
 interface BottomButtonsContainerProps {
     getCard: (event: React.UIEvent<HTMLElement>) => void,
-    handleSubmit: (event: React.FormEvent<HTMLInputElement>) => void,
+    handleSubmit: (event: handleSubmitType) => void,
     langOneArr: string[],
     langTwoArr: string[],
     translateMode: string,
@@ -28,7 +29,7 @@ const bottomButtonsContainer = (props: BottomButtonsContainerProps) => {
                 <Button
                     type="submit"
                     value="submit"
-                    onClick={() => props.handleSubmit}
+                    onClick={(event) => props.handleSubmit(event)}
                     variant="contained"
                     color="primary"
                     size="large"

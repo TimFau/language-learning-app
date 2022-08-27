@@ -3,13 +3,15 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import React from 'react';
+import { keyboardModeHandleChangeEvent } from './../MainApp';
 
 interface WordBankProps {
     langFrom: Array<string>,
     langTo: Array<string>,
     randomNum: number,
     wordBank: Array<string>,
-    keyboardModeHandleChange: (event: React.ChangeEvent<any>) => void,
+    keyboardModeHandleChange: (event: keyboardModeHandleChangeEvent) => void,
     children: React.ReactNode  
 }
 

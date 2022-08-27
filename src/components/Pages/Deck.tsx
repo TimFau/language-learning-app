@@ -9,6 +9,7 @@ import DialogContent from '@mui/material/DialogContent';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Dialog from '@mui/material/Dialog';
 import Icon from '@mui/material/Icon';
+import { keyboardModeHandleChangeEvent, handleSubmitType } from '../MainApp/MainApp';
 
 
 type RootState = {
@@ -23,11 +24,11 @@ type RootState = {
     showAnswer: boolean,
     randomNum: number,
     langOneArrLength: number,
-    handleSubmit: (event: any) => void,
+    handleSubmit: (event: handleSubmitType) => void,
     showAnswerFc: () => void,
     getCard: () => void,
     archiveCard: () => void,
-    keyboardModeHandleChange: (event: any) => void,
+    keyboardModeHandleChange: (event: keyboardModeHandleChangeEvent) => void,
     goToDeckSelector: () => void,
     children: React.ReactNode
 }
@@ -57,7 +58,7 @@ class Deck extends React.Component<RootState> {
                             langFrom={this.props.langFrom}
                             randomNum={this.props.randomNum}
                             translationInputValue={this.props.translationInputValue}
-                            keyboardModeHandleChange={(event: React.ChangeEvent<HTMLInputElement>) => this.props.keyboardModeHandleChange(event)}
+                            keyboardModeHandleChange={(event: keyboardModeHandleChangeEvent) => this.props.keyboardModeHandleChange(event)}
                         >
                             Translate to <span>{this.props.translateMode === "1to2" ? this.props.language2 : this.props.language1}</span>
                         </Keyboard>
@@ -68,7 +69,7 @@ class Deck extends React.Component<RootState> {
                             langFrom={this.props.langFrom}
                             randomNum={this.props.randomNum}
                             wordBank={this.props.wordBank}
-                            keyboardModeHandleChange={(event: React.ChangeEvent<HTMLInputElement>) => this.props.keyboardModeHandleChange(event)}
+                            keyboardModeHandleChange={(event: keyboardModeHandleChangeEvent) => this.props.keyboardModeHandleChange(event)}
                         >
                             Translate to <span>{this.props.translateMode === "1to2" ? this.props.language2 : this.props.language1}</span>
                         </WordBank>

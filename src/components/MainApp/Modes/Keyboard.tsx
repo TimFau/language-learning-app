@@ -2,13 +2,14 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { keyboardModeHandleChangeEvent } from './../MainApp';
 
 interface KeyboardProps {
     langFrom: Array<string>,
     langTo: Array<string>,
     randomNum: number,
     translationInputValue: string,
-    keyboardModeHandleChange: (event: React.ChangeEvent<any>) => void,
+    keyboardModeHandleChange: (event: keyboardModeHandleChangeEvent) => void,
     children: React.ReactNode  
 }
 

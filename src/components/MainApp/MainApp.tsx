@@ -48,6 +48,10 @@ interface RootState {
     initialCount: number,
 }
 
+export type handleSubmitType = React.FormEvent<HTMLInputElement | HTMLFormElement> | React.MouseEvent<HTMLButtonElement, MouseEvent>;
+
+export type keyboardModeHandleChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLFormElement> | React.MouseEvent<HTMLButtonElement, MouseEvent>;
+
 class TranslationApp extends React.Component<PropsFromRedux, RootState> {
     constructor(props: PropsFromRedux) {
         super(props);
@@ -104,7 +108,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
                 langOneArr = [];
                 langTwoArr = [];
                 if (data.length > 0) {
-                    data.forEach(function(item: any){
+                    data.forEach(function(item: { Language1: string; Language2: string; }){
                         console.log('getDeckData', data)
                         langOneArr.push(item.Language1);
                         langTwoArr.push(item.Language2);
@@ -178,7 +182,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
         })
     }
 
-    handleSubmit(event: React.FormEvent<HTMLInputElement>) {
+    handleSubmit(event: handleSubmitType) {
         event.preventDefault();
         var inputValueRegex = this.state.translationInputValue.toLowerCase().trim().replace(/\./g,'');
         var correctAnswerRegex = this.state.langTo[this.state.randomNum].toLowerCase().trim().replace(/\./g,'');
@@ -195,7 +199,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
     }
 
     // State Handlers
-    keyboardModeHandleChange(event: React.ChangeEvent<HTMLInputElement> ) {
+    keyboardModeHandleChange(event: keyboardModeHandleChangeEvent) {
         this.setState({translationInputValue: event.currentTarget.value})
     }
     switchInput(value: string) {
