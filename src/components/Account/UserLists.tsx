@@ -6,11 +6,11 @@ import AddNewListComponent from '../Modals/AddNewList';
 // Displays all the lists that a logged in user has added to their profile
 
 interface itemsChild {
-    date_created: String,
-    id: String,
-    list_id: String,
-    list_name: String,
-    status: String
+    date_created: string,
+    id: string,
+    list_id: string,
+    list_name: string,
+    status: string
 }
 
 export default function UserLists(props: any) {
@@ -21,7 +21,7 @@ export default function UserLists(props: any) {
     const userToken = useAppSelector((state) => state.token)
     const userId = props.userId
 
-    function getUsersLists (userToken: String, userId: String) {
+    function getUsersLists (userToken: string, userId: string) {
         let listsUrl = "https://d3pdj2cb.directus.app/graphql?access_token=" + userToken;
         fetch(listsUrl, {
             method: 'POST',

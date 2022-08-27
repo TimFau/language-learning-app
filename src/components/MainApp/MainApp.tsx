@@ -17,31 +17,31 @@ import Cookies from 'universal-cookie';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material/';
 
 // global vars
-var langOneArr: String[];
-var langTwoArr: String[];
+var langOneArr: string[];
+var langTwoArr: string[];
 var progressWidth = {};
-var langOneArrInit: String[];
-var langTwoArrInit: String[];
+var langOneArrInit: string[];
+var langTwoArrInit: string[];
 const cookies = new Cookies();
 
 interface RootState {
-    language1: String | undefined,
-    language2: String | undefined,
+    language1: string | undefined,
+    language2: string | undefined,
     langFrom: Array<any>,
     langTo: Array<any>,
-    translationInputValue: String,
+    translationInputValue: string,
     wordBank: Array<any>,
-    deckLoadingMsg: String,
+    deckLoadingMsg: string,
     // set default state values
-    translateMode: String,
-    inputMode: String,
+    translateMode: string,
+    inputMode: string,
     checkAccents: boolean,
     showAnswer: boolean,
     success: boolean,
     incorrect: boolean,
     deckLoadingError: boolean,
-    currentListId: String,
-    currentListName: String,
+    currentListId: string,
+    currentListName: string,
     deckDataLoaded: boolean,
     logOutDialogOpen: boolean,
     randomNum: number,
@@ -94,7 +94,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
     }
   
     
-    getDeckData(value: String) {
+    getDeckData(value: string) {
         let request = "https://opensheet.vercel.app/" + value + "/Sheet1";
         fetch(request, {mode: 'cors'})
             .then( response => {
@@ -201,7 +201,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
     keyboardModeHandleChange(event: React.ChangeEvent<HTMLInputElement> ) {
         this.setState({translationInputValue: event.currentTarget.value})
     }
-    switchInput(value: String) {
+    switchInput(value: string) {
         if(value === 'Wordbank'){
             this.setState({
                 inputMode: 'Wordbank'
@@ -238,7 +238,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
         this.props.setDeckStartedFalse();
         this.props.setDeckDialogClose();
     }
-    deckOptions(listName: String, listId: String) {
+    deckOptions(listName: string, listId: string) {
         this.setState({deckDataLoaded: false})
         this.getDeckData(listId)
         this.setState({
@@ -254,7 +254,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
         this.props.setDeckStartedTrue();
         this.props.setDeckDialogClose();
     }
-    setInputMode(value: String) {
+    setInputMode(value: string) {
         this.setState({inputMode: value})
     }
     setLogOutDialogOpen() {

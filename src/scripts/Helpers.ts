@@ -18,7 +18,7 @@ export function wordBankHelper(ranNum1: any, curArr: Array<any>, initArr: Array<
     )
 }
 
-export function cookieExists(name: String) {
+export function cookieExists(name: string) {
 	const value = "; " + document.cookie;
 	let parts 
     parts = value.split("; " + name + "=");
@@ -30,7 +30,7 @@ export function cookieExists(name: String) {
     }
 };
 
-export function CheckIsEmail(email: String) {
+export function CheckIsEmail(email: string) {
     let regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     if (email.match(regex)) {
         return true

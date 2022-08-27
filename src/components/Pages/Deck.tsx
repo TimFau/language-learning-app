@@ -12,14 +12,14 @@ import Icon from '@mui/material/Icon';
 
 
 type RootState = {
-    language1: String | undefined,
-    language2: String | undefined,
+    language1: string | undefined,
+    language2: string | undefined,
     langFrom: Array<any>,
     langTo: Array<any>,
-    translationInputValue: String,
+    translationInputValue: string,
     wordBank: Array<any>,
-    translateMode: String,
-    inputMode: String,
+    translateMode: string,
+    inputMode: string,
     showAnswer: boolean,
     randomNum: number,
     langOneArrLength: number,

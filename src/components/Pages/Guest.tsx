@@ -151,7 +151,7 @@ export default function GuestPage(props: any) {
         if (validateFields()) {
             createAccountPost(apiToken)
         }
-        function createAccountPost(apiToken: String | undefined) {
+        function createAccountPost(apiToken: string | undefined) {
             fetch(endpoint + '?access_token=' + apiToken, {
                 method: 'POST',
                 headers: {

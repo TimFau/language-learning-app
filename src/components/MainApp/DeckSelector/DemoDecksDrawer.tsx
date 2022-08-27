@@ -8,9 +8,9 @@ import { Drawer, CardActions, CardContent, Button, Typography }  from '@mui/mate
 //
 
 interface listItem {
-    id: String,
-    list_id: String,
-    list_name: String
+    id: string,
+    list_id: string,
+    list_name: string
 }
 
 export default function DemoDecks(props: any) {
