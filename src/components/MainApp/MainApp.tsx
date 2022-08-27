@@ -91,7 +91,6 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
         this.setLogOutDialogOpen = this.setLogOutDialogOpen.bind(this);
         this.setLogOutDialogClose = this.setLogOutDialogClose.bind(this);
         this.logout = this.logout.bind(this);
-        this.endDeckAndLogout = this.endDeckAndLogout.bind(this);
     }
   
     
@@ -249,7 +248,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
         this.props.setDemoDrawerClosed();
         this.props.setDeckDialogOpen();
     }
-    startDeck(listId: String) {
+    startDeck() {
         this.getCard();
         this.switchInput(this.state.inputMode)
         this.props.setDeckStartedTrue();
@@ -264,19 +263,16 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
     setLogOutDialogClose() {
         this.setState({logOutDialogOpen: false})
     }
-    logout(props: any, endDeck = false) {
+    logout(endDeck = false) {
         if (this.props.deckStarted && !endDeck) {
             this.setLogOutDialogOpen()
         } else {
             this.props.setDeckStartedFalse();
             cookies.remove('token', { path: '/' });
-            this.props.setUserToken()
+            this.props.setUserToken();
+            this.setLogOutDialogClose();
         }
     };
-    endDeckAndLogout() {
-        this.logout(this, true);
-        this.setLogOutDialogClose();
-    }
 
     //Lifecycle hooks
     componentDidMount() {
@@ -288,7 +284,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
   render() {
       return (
           <BrowserRouter>
-            <Nav logout={this.logout} />
+            <Nav logout={() => this.logout(false)} />
             <div className={"container main-container " + this.state.inputMode}>
                 {this.props.deckStarted ?
                     <Deck
@@ -376,7 +372,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
                 </DialogContent>
                 <DialogActions>
                 <Button onClick={this.setLogOutDialogClose}>No</Button>
-                <Button onClick={this.endDeckAndLogout} autoFocus>
+                <Button onClick={() => this.logout(true)} autoFocus>
                     Yes
                 </Button>
                 </DialogActions>
@@ -401,7 +397,7 @@ const mapDispatchToProps = {
     setDeckStartedFalse: () => ({type: 'deck/setDeckStarted', value: false}),
     setDemoDrawerOpen: () => ({type: 'deck/setDemoDrawer', value: true}),
     setDemoDrawerClosed: () => ({type: 'deck/setDemoDrawer', value: false}),
-    setUserToken: () => ({type: 'user/setToken', value: undefined})
+    setUserToken: () => ({type: 'user/setToken', value: ''})
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

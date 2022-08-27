@@ -1,4 +1,3 @@
-import React from 'react';
 import LinearProgress from '@mui/material/LinearProgress';
 
 const progressBar = (props: any) => {

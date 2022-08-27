@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    "noImplicitAny": true,
-    "noImplicitThis": false,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "target": "es2015",
@@ -15,7 +13,8 @@
     "declaration": false,
     "removeComments": true,
     "noImplicitReturns": true,
-    "noUnusedLocals": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "strict": true,
     "outDir": "dist",
     "baseUrl": "src",
@@ -23,7 +22,6 @@
       "./types",
       "node_modules/@types"
     ],
-    "strictNullChecks": true,
     "allowJs": true,
     "lib": [
       "dom",
