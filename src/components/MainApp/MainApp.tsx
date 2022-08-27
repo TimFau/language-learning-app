@@ -10,7 +10,7 @@ import Nav from '../Nav';
 import Deck from '../Pages/Deck';
 import GuestPage from '../Pages/Guest'
 import Account from '../Pages/LoggedIn';
-import DemoDeck from './DeckSelector/DemoDecksDrawer';
+import DemoDecksDrawer from './DeckSelector/DemoDecksDrawer';
 import DeckDialog from '../Modals/DeckDialog';
 import Login from '../Modals/Login';
 import Cookies from 'universal-cookie';
@@ -316,7 +316,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
                 {((!this.props.deckStarted) && (this.props.userToken === undefined || this.props.userToken === '')) &&
                     <React.Fragment>
                         <GuestPage />
-                        <DemoDeck 
+                        <DemoDecksDrawer 
                             deckOptions={this.deckOptions}
                             open={this.props.demoDrawerOpen}
                             onClose={this.props.setDemoDrawerClosed}

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from 'hooks';
 import { CircularProgress } from '@mui/material';
@@ -15,7 +14,7 @@ interface LoggedInProps {
     deckOptions: (listName: string, listId: string) => void
 }
 
-export default function account(props: LoggedInProps) {
+export default function Account(props: LoggedInProps) {
 
     const userToken = useAppSelector((state) => state.token)
     const userName = useAppSelector((state) => state.userName)
