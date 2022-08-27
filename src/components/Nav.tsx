@@ -20,7 +20,8 @@ const useStyles = makeStyles({
     }
 })
 
-export default function Nav(props) {
+
+export default function Nav(props: any) {
     const dispatch = useAppDispatch();
     const deckStarted = useAppSelector((state) => state.deckStarted);
     const userToken = useAppSelector((state) => state.token);
@@ -37,7 +38,7 @@ export default function Nav(props) {
             <ToolBar>
                 {pathName === '/account' ?
                 <Button>
-                    <Link underline="hover" to="/">Home</Link>
+                    <Link to="/">Home</Link>
                 </Button>
                 : '' }
                 {deckStarted ?

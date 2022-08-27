@@ -95,7 +95,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
     }
   
     
-    getDeckData(value) {
+    getDeckData(value: String) {
         let request = "https://opensheet.vercel.app/" + value + "/Sheet1";
         fetch(request, {mode: 'cors'})
             .then( response => {
@@ -106,7 +106,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
                 langTwoArr = [];
                 progressWidth = {};
                 if (data.length > 0) {
-                    data.forEach(function(item){
+                    data.forEach(function(item: any){
                         langOneArr.push(item.Language1);
                         langTwoArr.push(item.Language2);
                     })
@@ -182,7 +182,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
         })
     }
 
-    handleSubmit(event) {
+    handleSubmit(event: React.FormEvent<HTMLInputElement>) {
         event.preventDefault();
         var inputValueRegex = this.state.translationInputValue.toLowerCase().trim().replace(/\./g,'');
         var correctAnswerRegex = this.state.langTo[this.state.randomNum].toLowerCase().trim().replace(/\./g,'');
@@ -199,10 +199,10 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
     }
 
     // State Handlers
-    keyboardModeHandleChange(e) {
-        this.setState({translationInputValue: e.currentTarget.value})
+    keyboardModeHandleChange(event: React.ChangeEvent<HTMLInputElement> ) {
+        this.setState({translationInputValue: event.currentTarget.value})
     }
-    switchInput(value) {
+    switchInput(value: String) {
         if(value === 'Wordbank'){
             this.setState({
                 inputMode: 'Wordbank'
@@ -239,7 +239,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
         this.props.setDeckStartedFalse();
         this.props.setDeckDialogClose();
     }
-    deckOptions(listName, listId) {
+    deckOptions(listName: String, listId: String) {
         this.setState({deckDataLoaded: false})
         this.getDeckData(listId)
         this.setState({
@@ -249,13 +249,13 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
         this.props.setDemoDrawerClosed();
         this.props.setDeckDialogOpen();
     }
-    startDeck(listId) {
+    startDeck(listId: String) {
         this.getCard();
         this.switchInput(this.state.inputMode)
         this.props.setDeckStartedTrue();
         this.props.setDeckDialogClose();
     }
-    setInputMode(value) {
+    setInputMode(value: String) {
         this.setState({inputMode: value})
     }
     setLogOutDialogOpen() {
@@ -264,7 +264,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
     setLogOutDialogClose() {
         this.setState({logOutDialogOpen: false})
     }
-    logout(props, endDeck = false) {
+    logout(props: any, endDeck = false) {
         if (this.props.deckStarted && !endDeck) {
             this.setLogOutDialogOpen()
         } else {
@@ -386,7 +386,7 @@ class TranslationApp extends React.Component<PropsFromRedux, RootState> {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: any) => ({
     deckStarted: state.deckStarted,
     deckDialogOpen: state.deckDialogOpen,
     demoDrawerOpen: state.demoDrawerOpen,

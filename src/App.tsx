@@ -49,7 +49,7 @@ class TranslationApp extends React.Component<PropsFromRedux> {
 }
 
 const mapDispatchToProps = {
-	setUserToken: (value) => ({type: 'user/setToken', value: value})
+	setUserToken: (value: String) => ({type: 'user/setToken', value: value})
 };
 
 const connector = connect(null, mapDispatchToProps)

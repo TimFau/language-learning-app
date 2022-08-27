@@ -9,7 +9,7 @@ const initialState = {
     userName: ''
 };
 
-export const reducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action: any) => {
     switch (action.type) {
         case 'deck/setDeckStarted':
             return {

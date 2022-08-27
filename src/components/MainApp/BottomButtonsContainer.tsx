@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 
-const bottomButtonsContainer = (props) => {
+const bottomButtonsContainer = (props: any) => {
     return (
         <div 
             className={'bottom-button-wrap ' + (props.success ? 'success' : '') + (props.incorrect ? 'incorrect' : '')} 

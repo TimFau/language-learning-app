@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-const keyBoard = (props) => {
+const keyBoard = (props: any) => {
     return(
         <Card className="keyboard-container">
             <CardContent>

@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "noImplicitAny": false,
+    "noImplicitAny": true,
+    "noImplicitThis": false,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "target": "es2015",
@@ -26,6 +27,7 @@
     "allowJs": true,
     "lib": [
       "dom",
+      "es6",
       "dom.iterable",
       "esnext"
     ],

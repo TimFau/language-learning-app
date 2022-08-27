@@ -2,7 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import React, { useState } from 'react';
 import { useAppSelector } from 'hooks';
 
-export default function AddNewListModal(props) {
+export default function AddNewListModal(props: any) {
 
     const [deckName, setDeckName] = useState('');
     const [deckId, setDeckId] = useState('');
@@ -12,7 +12,7 @@ export default function AddNewListModal(props) {
     const userId = props.userId
     const dialogOpen = props.addListDialogOpen;
 
-    function handleChange (event) {
+    function handleChange (event: React.ChangeEvent<HTMLInputElement>) {
         if (event.target.name === 'DeckName') {
             setDeckName(event.target.value)
         } else if (event.target.name === 'DeckID') {

@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-const flashCard = (props) => {
+const flashCard = (props: any) => {
     return(
         <Card className="list-group word-bank">
             <CardContent>
@@ -14,7 +14,7 @@ const flashCard = (props) => {
                 {/* <Typography variant="h1">"{props.langTo[props.randomNum]}"</Typography> */}
             </CardContent>
             <CardActions>
-            { props.wordBank.map((word, index) =>
+            { props.wordBank.map((word: any, index: any) =>
                 <Button
                     type="button"
                     className="list-group-item"
@@ -23,7 +23,8 @@ const flashCard = (props) => {
                     color="primary"
                     variant="contained"
                     fullWidth
-                    key={index}>
+                    key={index}
+                >
                         {word} 
                         {/* <a className="google-translate" href={"https://translate.google.com/#view=home&textMi%20chaimo%20Tim&text=" + word + "&op=translate&sl=it&tl=en"} target="_blank"><i className="material-icons">g_translate</i></a> */}
                 </Button>

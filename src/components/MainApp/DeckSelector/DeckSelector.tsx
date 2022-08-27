@@ -4,12 +4,12 @@ import { useDispatch } from 'react-redux';
 import { Card, CardActions, CardContent, Button, TextField, Icon } from '@mui/material/';
 import ToolTip from '@mui/material/ToolTip'
 
-export default function DeckSelector(props) {
+export default function DeckSelector(props: any) {
     
     const [customListInputValue, setCustomListInputValue] = useState('');
     const dispatch = useDispatch();
 
-    function customListHandleChange(event) {
+    function customListHandleChange(event: React.ChangeEvent<HTMLInputElement>) {
         setCustomListInputValue(event.target.value)
     }
 

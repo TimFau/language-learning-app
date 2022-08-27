@@ -13,7 +13,7 @@ interface itemsChild {
     status: String
 }
 
-export default function UserLists(props) {
+export default function UserLists(props: any) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState<itemsChild[]>([]);
@@ -21,7 +21,7 @@ export default function UserLists(props) {
     const userToken = useAppSelector((state) => state.token)
     const userId = props.userId
 
-    function getUsersLists (userToken, userId) {
+    function getUsersLists (userToken: String, userId: String) {
         let listsUrl = "https://d3pdj2cb.directus.app/graphql?access_token=" + userToken;
         fetch(listsUrl, {
             method: 'POST',

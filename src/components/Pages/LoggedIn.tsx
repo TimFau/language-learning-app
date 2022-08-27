@@ -11,7 +11,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function account(props) {
+export default function account(props: any) {
 
     const userToken = useAppSelector((state) => state.token)
     const userName = useAppSelector((state) => state.userName)

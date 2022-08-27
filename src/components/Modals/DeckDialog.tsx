@@ -5,7 +5,7 @@ import {
     Typography, DialogTitle, DialogContent, Dialog }
 from '@mui/material/';
 
-export default function deckDialog(props) {
+export default function deckDialog(props: any) {
 
     return (
         <Dialog open={props.deckDialogOpen} onClose={props.setDialogClosed} className="deck-dialog" id="deckDialog">

@@ -91,7 +91,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function GuestPage(props) {
+export default function GuestPage(props: any) {
     const classes = useStyles(props);
     const dispatch = useDispatch();
     const [firstName, setFirstName] = React.useState('');
@@ -101,7 +101,7 @@ export default function GuestPage(props) {
     const [alertMsg, setAlertMsg] = React.useState('');
     const [fieldWithError, setFieldWithError] = React.useState('');
 
-    const handleChange = (event) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         switch (event.target.name) {
             case 'firstName':
                 setFirstName(event.target.value);
@@ -151,7 +151,7 @@ export default function GuestPage(props) {
         if (validateFields()) {
             createAccountPost(apiToken)
         }
-        function createAccountPost(apiToken) {
+        function createAccountPost(apiToken: String | undefined) {
             fetch(endpoint + '?access_token=' + apiToken, {
                 method: 'POST',
                 headers: {

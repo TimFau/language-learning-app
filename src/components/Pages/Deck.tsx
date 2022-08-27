@@ -57,7 +57,7 @@ class Deck extends React.Component<RootState> {
                             langFrom={this.props.langFrom}
                             randomNum={this.props.randomNum}
                             translationInputValue={this.props.translationInputValue}
-                            keyboardModeHandleChange={(e) => this.props.keyboardModeHandleChange(e)}
+                            keyboardModeHandleChange={(event: React.ChangeEvent<HTMLInputElement>) => this.props.keyboardModeHandleChange(event)}
                         >
                             Translate to <span>{this.props.translateMode === "1to2" ? this.props.language2 : this.props.language1}</span>
                         </Keyboard>
@@ -68,7 +68,7 @@ class Deck extends React.Component<RootState> {
                             langFrom={this.props.langFrom}
                             randomNum={this.props.randomNum}
                             wordBank={this.props.wordBank}
-                            keyboardModeHandleChange={(e) => this.props.keyboardModeHandleChange(e)}
+                            keyboardModeHandleChange={(event: React.ChangeEvent<HTMLInputElement>) => this.props.keyboardModeHandleChange(event)}
                             translateMode={this.props.translateMode}
                         >
                             Translate to <span>{this.props.translateMode === "1to2" ? this.props.language2 : this.props.language1}</span>

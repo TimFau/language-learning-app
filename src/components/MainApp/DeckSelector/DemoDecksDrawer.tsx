@@ -13,7 +13,7 @@ interface listItem {
     list_name: String
 }
 
-export default function DemoDecks(props) {
+export default function DemoDecks(props: any) {
     const [error, setError] = useState('');
     const [items, setItems] = useState<listItem[]>([]);
     

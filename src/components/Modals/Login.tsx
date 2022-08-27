@@ -12,7 +12,7 @@ import TextField from '@mui/material/TextField';
 
 const cookies = new Cookies();
 
-export default function Login(props) {
+export default function Login(props: any) {
 
     const [emailError, setEmailError] = useState('');
     const [passError, setPassError] = useState('');
@@ -85,11 +85,11 @@ export default function Login(props) {
         })
     }
 
-    function handleEmail(event) {
+    function handleEmail(event: React.ChangeEvent<HTMLInputElement>) {
         setEmail(event.target.value);
     }
 
-    function handlePassword(event) {
+    function handlePassword(event: React.ChangeEvent<HTMLInputElement>) {
         setPassword(event.target.value);
     }
 
